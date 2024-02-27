@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const Listings = () => {
-  const [ListingItems, setListingItems] = useState([]); // Rename state to GalleryItems
+  const [listingItems, setListingItems] = useState([]); 
+  const [selectedListing, setSelectedListing] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,17 +19,38 @@ const Listings = () => {
 
     fetchData();
   }, []);
+
+  // Function to handle clicking on a listing
+  const handleListingClick = (listing) => {
+    setSelectedListing(listing); // Set the selected listing
+  };
   
   return (
     <div>
-      {ListingItems.map((ListingItems) => (
-        <div key={ListingItems.Id}>
-          <h1>{ListingItems.Title}</h1>
-          <p>{ListingItems.Description}</p>
+      {/* If a listing is selected, display its details */}
+      {selectedListing ? (
+        <div>
+          <h1>{selectedListing.Title}</h1>
+          <p>{selectedListing.Description}</p>
+          <img
+            src={selectedListing.Image}
+            alt={selectedListing.Title}
+          />
+          <p>End Date: {selectedListing.EndDate}</p>
+          <p>Starting Bid: {selectedListing.StartBid} Souls</p>
+          <button onClick={() => setSelectedListing(null)}>Back to Listings</button>
         </div>
-      ))}
+      ) : (
+        // If no listing is selected, display the list of listings
+        listingItems.map((listing) => (
+          <div key={listing.Id} onClick={() => handleListingClick(listing)}>
+            <h1>{listing.Title}</h1>
+            <p>{listing.Description}</p>
+          </div>
+        ))
+      )}
     </div>
-    );
+  );
 };
 
 export default Listings;
