@@ -19,19 +19,48 @@ const Gallery = () => {
     fetchData();
   }, []);
 
+  function dateDiffInDaysAndHours(a, b) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const _MS_PER_HOUR = 1000 * 60 * 60;
+
+    // Get the time difference in milliseconds
+    const timeDiff = b - a;
+
+    // Calculate days and remaining milliseconds
+    const days = Math.floor(timeDiff / _MS_PER_DAY);
+    const remainingMilliseconds = timeDiff % _MS_PER_DAY;
+
+    // Calculate hours
+    const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
+
+    return { days, hours };
+  }
+
+  function CalcEndDate(endDateString) {
+    const currentDate = new Date();
+    const endDate = new Date(endDateString);
+    const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
+    console.log(days + " days," + hours + " hours");
+    return (
+      <div>
+        Ends in: {days} days, {hours} hours
+      </div>
+    );
+  }
+
   return (
     <div className="gallery-wrapper">
       {GalleryItems.map((GalleryItem) => (
-        <div className="card">
-          <div key={GalleryItem.Id}>
-            <img
-              src={GalleryItem.Image}
-              alt={GalleryItem.Title}
-              className="gallery-image"
-            />
-            <div class="text-container">
-              <div className="gallery-title">{GalleryItem.Title}</div>
-              <div className="gallery-enddate">{GalleryItem.EndDate}</div>
+        <div className="card" key={GalleryItem.Id}>
+          <img
+            src={GalleryItem.Image}
+            alt={GalleryItem.Title}
+            className="gallery-image"
+          />
+          <div className="text-container">
+            <div className="gallery-title">{GalleryItem.Title}</div>
+            <div className="gallery-enddate">
+              {CalcEndDate(GalleryItem.EndDate)}
             </div>
           </div>
         </div>
