@@ -1,38 +1,57 @@
 import React, { useEffect, useState } from "react";
 
 const Gallery = () => {
-  const [GalleryItems, setGalleryItems] = useState([]); // Rename state to GalleryItems
+  const [GalleryItems, setGalleryItems] = useState([]);
+  const [BidPrice, setBidPrice] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Listings.json"); // Relative path from the public folder
+        const response = await fetch("/Listings.json");
         const data = await response.json();
-        setGalleryItems(data.Listings); // Update state with fetched data
-        console.log(data.Listings);
+        setGalleryItems(data.Listings);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setGalleryItems([]); // Set an empty array in case of an error
+        setGalleryItems([]);
       }
     };
 
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/Bids.json");
+        const price = await response.json();
+        setBidPrice(price.Bids);
+        console.log(price.Bids);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setBidPrice([]);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  function GetCurrentPrice(itemId, startBid) {
+    const bid = BidPrice.find((bid) => bid.ItemId === itemId);
+
+    if (bid) {
+      return <>{bid.BidAmount} Souls</>;
+    } else {
+      return <>{startBid} Souls</>;
+    }
+  }
+
   function dateDiffInDaysAndHours(a, b) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     const _MS_PER_HOUR = 1000 * 60 * 60;
-
-    // Get the time difference in milliseconds
     const timeDiff = b - a;
-
-    // Calculate days and remaining milliseconds
     const days = Math.floor(timeDiff / _MS_PER_DAY);
     const remainingMilliseconds = timeDiff % _MS_PER_DAY;
-
-    // Calculate hours
     const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
-
     return { days, hours };
   }
 
@@ -61,6 +80,9 @@ const Gallery = () => {
             <div className="gallery-title">{GalleryItem.Title}</div>
             <div className="gallery-enddate">
               {CalcEndDate(GalleryItem.EndDate)}
+            </div>
+            <div className="gallery-price">
+              {GetCurrentPrice(GalleryItem.Id, GalleryItem.StartBid)}
             </div>
           </div>
         </div>
