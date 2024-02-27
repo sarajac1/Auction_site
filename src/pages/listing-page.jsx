@@ -4,7 +4,7 @@ const ListingPage = () => {
   const [listings, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('./public/listings')
+    fetch('./public/Listings.json')
       .then((response) => response.json())
       .then((data) => setItems(data.items))
       .catch((error) => console.log(error));
