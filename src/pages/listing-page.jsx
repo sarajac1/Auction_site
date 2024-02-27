@@ -12,10 +12,20 @@ const ListingPage = () => {
 
   return (
     <div>
-      <h1>Items Listing</h1>
+      <h1>Listing</h1>
       <ul>
         {listings.map((listing) => (
-          <li key={listing.id}>{listing.title}: {listing.description} {listing.image}{listing.startDate}{listing.endDate}{listing.startBid}</li>
+
+          <li key={listing.id}>
+            {listing.title}: {listing.description}
+            <div>
+              <img src={listing.image} alt={listing.title} />
+              {listing.startDate}{listing.endDate}{listing.startBid}
+            </div>
+            Start: {new Date(listing.startDate).toLocaleDateString()} |
+            End: {new Date(listing.endDate).toLocaleDateString()} |
+            Starting Bid: ${listing.startBid}
+          </li>
         ))}
       </ul>
     </div>
