@@ -1,7 +1,12 @@
 import { useState } from "react";
+import HomePage from "./pages/HomePage";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <HomePage />
+    </>
+  );
 }
 
 export default App;
