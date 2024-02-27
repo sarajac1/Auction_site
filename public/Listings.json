@@ -1,0 +1,74 @@
+{
+  "Listings": [
+    {
+      "Id": "1",
+      "SellerId": "1",
+      "Title": "Cat Butler (Litterbox included)",
+      "Description": "Cat Butler (Litterbox included)",
+      "Image": "https://imgur.com/PrjZG6z",
+      "StartDate": "27-02-2024",
+      "EndDate": "03-03-2024",
+      "StartBid": "3000"
+    },
+    {
+      "Id": "2",
+      "SellerId": "1",
+      "Title": "Magic Mirror",
+      "Description": "The Magic mirror from feature film Occulus!",
+      "Image": "https://imgur.com/VyIx658",
+      "StartDate": "27-02-2024",
+      "EndDate": "03-03-2024",
+      "StartBid": "4000"
+    },
+    {
+      "Id": "3",
+      "SellerId": "4",
+      "Title": "Real Fairy",
+      "Description": "A fairy I found in my garden. Might need feeding",
+      "Image": "https://imgur.com/HnPj8vO",
+      "StartDate": "27-02-2024",
+      "EndDate": "03-03-2024",
+      "StartBid": "4000"
+    },
+    {
+      "Id": "4",
+      "SellerId": "4",
+      "Title": "Anabelle the Doll",
+      "Description": "Fairly active doll. Moves without batteries. Might strangle you in your sleep.",
+      "Image": "https://imgur.com/iBnyG3v",
+      "StartDate": "27-02-2024",
+      "EndDate": "03-03-2024",
+      "StartBid": "9000"
+    },
+    {
+      "Id": "5",
+      "SellerId": "4",
+      "Title": "Necronomicon",
+      "Description": "Bound in human skin. Need regular moisterization not to crack. Read on your own risk.",
+      "Image": "https://imgur.com/EtG67zw",
+      "StartDate": "27-02-2024",
+      "EndDate": "03-03-2024",
+      "StartBid": "9000"
+    },
+    {
+      "Id": "6",
+      "SellerId": "4",
+      "Title": "Ghost in a bottle",
+      "Description": "Ghost inside a bottle. Spooking and fun decoration for the whole family.",
+      "Image": "https://imgur.com/xEC9HZL",
+      "StartDate": "27-02-2024",
+      "EndDate": "03-03-2024",
+      "StartBid": "200"
+    },
+    {
+      "Id": "7",
+      "SellerId": "4",
+      "Title": "Cthulhu Statue",
+      "Description": "Worship the Greatest of the Great Old Ones with this original marble fetish from New Orleans. Has a distinct wet smell at night.\n Never submerge completely in any liquid!\n Size: 25 cm\n Weight: 12 kg \n Great gift for birthdays, baby showers, winter holidays, solstice or as graduation gift.",
+      "Image": "https://imgur.com/a/4WgoLhh",
+      "StartDate": "27-02-2024",
+      "EndDate": "03-03-2024",
+      "StartBid": "200"
+    }
+  ]
+}
