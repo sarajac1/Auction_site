@@ -13,6 +13,7 @@ const Gallery = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
         setGalleryItems([]); // Set an empty array in case of an error
+        //
       }
     };
 
