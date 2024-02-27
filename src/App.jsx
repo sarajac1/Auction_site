@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import Listing from './components/Listing';
+
+import Listings from './components/Listings.jsx';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Listing /> 
+        <Listings /> 
       </header>
     </div>
   );
