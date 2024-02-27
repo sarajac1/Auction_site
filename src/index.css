@@ -2,6 +2,20 @@ body {
   background-color: black;
 }
 
+/* Scroll bar*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #474546;
+}
+::-webkit-scrollbar-thumb {
+  background: #e4cab5;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fff2e7;
+}
+
 /* gallery view */
 .gallery-wrapper {
   background-color: #2a2829;
