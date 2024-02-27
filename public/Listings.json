@@ -1,0 +1,7 @@
+{
+  "Listings" : [
+    {
+      "Id": "1", "sellerId": "1", "title": "Conjuring", "description": "James Wan movie pic", "image": "", "startDate": "27-02-2024", "endDate": "03-03-2024", "startBid": "3000"
+    }
+  ]
+}

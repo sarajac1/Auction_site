@@ -1,0 +1,7 @@
+{
+  "Users" : [
+    {
+      "UserId": "1", "UserName": "abc123", "Password": "123abc", "JoinedDate": "27-02-2024", "address": "123, Lund", "email": "abc123@abc", "balance": "8000"
+    }
+  ]
+}
