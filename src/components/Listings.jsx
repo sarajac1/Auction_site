@@ -35,7 +35,7 @@ const Listings = () => {
   // Handle the submission of a bid
   const handleBidSubmit = (e) => {
     e.preventDefault();
-    console.log(`Bid submitted for ${selectedListing.Title}: ${bidAmount} Souls`);
+    console.log(`You bid for ${selectedListing.Title}: ${bidAmount} Souls`);
 
     setBidAmount('');
   };
