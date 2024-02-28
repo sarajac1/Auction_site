@@ -15,6 +15,21 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #fff2e7;
 }
+/* Search bar */
+.searchBar {
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px; /* Adjust the value to change the roundness of corners */
+  background-color: #e4cab5;
+  color: black;
+}
+/* site container */
+.container {
+  background-color: #2a2829;
+  padding-left: 2%;
+  padding-top: 1%;
+}
 
 /* gallery view */
 .gallery-wrapper {
@@ -23,7 +38,6 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* Four columns with equal width */
   grid-gap: 10px; /* Gap between grid items */
-  padding-left: 2%;
   padding-top: 2%;
 
   .card {
