@@ -56,3 +56,56 @@ body {
     border: 4px solid white; /* White border of 4 pixels */
   }
 }
+/* Header */
+
+.header {
+font-family: "Alegreya Sans";
+}
+
+/* NavBar */
+.nav-bar {
+   color: #FFF2E7; 
+
+  .nav-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .left-and-middle-nav{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+
+  a:link, a:visited {
+    color: #FFF2E7;
+    text-decoration: none; 
+  }
+
+
+.middle-nav-bar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; 
+
+  
+}
+
+.nav-bar-login {
+  flex-grow: 0;
+}
+
+.slogan {
+  color: #A4826D;
+  text-align: center; 
+  margin-top: 20px; 
+}
+
+}
+
+
+
