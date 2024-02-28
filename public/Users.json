@@ -1,7 +1,98 @@
 {
-  "Users" : [
+  "Users": [
     {
-      "UserId": "1", "UserName": "abc123", "Password": "123abc", "JoinedDate": "27-02-2024", "address": "123, Lund", "email": "abc123@abc", "balance": "8000"
+      "Id": "1",
+      "UserName": "admin",
+      "PassWord": "admin",
+      "JoinedDate": "27-02-2024",
+      "Address": "Admin, 123, Lund",
+      "Email": "admin@shadowbid.com",
+      "Balance": "8000"
+    },
+    {
+      "Id": "2",
+      "UserName": "Usifer",
+      "PassWord": "123abc",
+      "JoinedDate": "27-02-2024",
+      "Address": "Usifer Baloba, 123, Lund",
+      "Email": "abc123@abc.com",
+      "Balance": "8000"
+    },
+    {
+      "Id": "3",
+      "UserName": "AliceSmith",
+      "PassWord": "alice123",
+      "JoinedDate": "27-02-2024",
+      "Address": "456 Oak Ave, Townsville",
+      "Email": "alice.smith@email.com",
+      "Balance": "7000"
+    },
+    {
+      "Id": "4",
+      "UserName": "JohnDoe",
+      "PassWord": "pass123",
+      "JoinedDate": "27-02-2024",
+      "Address": "123 Main St, Cityville",
+      "Email": "john.doe@email.com",
+      "Balance": "5000"
+    },
+    {
+      "Id": "5",
+      "UserName": "BobJohnson",
+      "Password": "bob456",
+      "JoinedDate": "27-02-2024",
+      "address": "789 Pine Ln, Villagetown",
+      "email": "bob.johnson@email.com",
+      "balance": "6000"
+    },
+    {
+      "Id": "6",
+      "UserName": "MikeDavis",
+      "Password": "mike001",
+      "JoinedDate": "27-02-2024",
+      "address": "202 Maple Rd, Countryside",
+      "email": "mike.davis@email.com",
+      "balance": "5500"
+    },
+    {
+      "Id": "7",
+      "UserName": "SophieMiller",
+      "Password": "sophie789",
+      "JoinedDate": "27-02-2024",
+      "address": "303 Birch Blvd, Suburbia",
+      "email": "sophie.miller@email.com",
+      "balance": "6500"
+    },
+    {
+      "Id": "8",
+      "UserName": "AlexTurner",
+      "Password": "alex002",
+      "JoinedDate": "27-02-2024",
+      "address": "404 Elm Lane, Outskirts",
+      "email": "alex.turner@email.com",
+      "balance": "7500"
+    },
+    {
+      "Id": "9",
+      "UserName": "EmmaWhite",
+      "Password": "emma456",
+      "JoinedDate": "27-02-2024",
+      "address": "505 Oakwood Dr, Riverside",
+      "email": "emma.white@email.com",
+      "balance": "8500"
+    },
+    {
+      "Id": "10",
+      "UserName": "TaraTarantula",
+      "Password": "tara",
+      "JoinedDate": "27-02-2024",
+      "address": "606 Cedar Grove, Lakeside",
+      "email": "tara.taran@email.com",
+      "balance": "9500"
     }
   ]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c53f122b45ccd381f4586187832cad3fe3bbd110
