@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 const Gallery = () => {
   const [GalleryItems, setGalleryItems] = useState([]);
   const [BidPrice, setBidPrice] = useState([]);
+  const [selectedListing, setSelectedListing] = useState(null); //state
+  const [bidAmount, setBidAmount] = useState('');//state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +36,27 @@ const Gallery = () => {
 
     fetchData();
   }, []);
+
+
+  // Function to handle clicking on a listing
+  const handleListingClick = (listing) => {
+    setSelectedListing(listing); // Set the selected listing
+    setBidAmount(''); //bidamount resets if new listing is selected
+  };
+
+  // Handle changes to the bid input
+  const handleBidChange = (e) => {
+    setBidAmount(e.target.value);
+  };
+
+  // Handle the submission of a bid
+  const handleBidSubmit = (e) => {
+    e.preventDefault();
+    console.log(`You bid for ${selectedListing.Title}: ${bidAmount} Souls`);
+
+    setBidAmount('');
+  };
+
 
   function GetCurrentPrice(itemId, startBid) {
     const bid = BidPrice.find((bid) => bid.ItemId === itemId);
@@ -70,7 +93,7 @@ const Gallery = () => {
   return (
     <div className="gallery-wrapper">
       {GalleryItems.map((GalleryItem) => (
-        <div className="card" key={GalleryItem.Id}>
+        <div className="card" key={GalleryItem.Id} onClick={() => handleListingClick(GalleryItem)}>
           <img
             src={GalleryItem.Image}
             alt={GalleryItem.Title}
@@ -87,6 +110,37 @@ const Gallery = () => {
           </div>
         </div>
       ))}
+      {selectedListing && (
+        <div className="selected-listing">
+          <img
+            src={selectedListing.Image}
+            alt="Image is not working"
+            className="gallery-image"
+          />
+          <div className="listing-text">
+            <p>Posted {selectedListing.StartDate}</p>
+            <h1>{selectedListing.Title}</h1>
+            <p>{selectedListing.Description}</p>
+
+            <p>Starting Bid: {selectedListing.StartBid} Souls</p>
+            <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
+            <p>End Date: {selectedListing.EndDate}</p>
+            {/* Bid field */}
+            <form onSubmit={handleBidSubmit}>
+              <label>
+                <input type="number" value={bidAmount} onChange={handleBidChange} />
+                Souls
+              </label>
+              <button type="submit">Place Bid</button>
+            </form>
+            <button onClick={() => setSelectedListing(null)}>Back to Listings</button>
+          </div>
+        </div>
+
+      )}
+
+
+
     </div>
   );
 };
