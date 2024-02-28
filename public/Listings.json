@@ -92,6 +92,14 @@
       "Image": "https://imgur.com/t/pic/c4e43n9",
       "StartDate": "28-02-2024",
       "StartBid": "2"
+    },
+    {
+      "id": "ba49",
+      "Title": "test3",
+      "Description": "test3",
+      "Image": "https://imgur.com/t/pic/c4e43n9",
+      "StartDate": "2024-02-28",
+      "StartBid": "3"
     }
   ]
 }
