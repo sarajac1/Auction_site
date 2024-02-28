@@ -4,6 +4,7 @@ const Gallery = () => {
   const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
   const [GalleryItems, setGalleryItems] = useState([]);
   const [BidPrice, setBidPrice] = useState([]);
+
   const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
@@ -54,13 +55,47 @@ const Gallery = () => {
     setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   }, [searchWord, originalGalleryItems]);
 
+  const FilterGallery = (event) => {
+    const filter = event.target.value;
+
+    let sortedItems = [...originalGalleryItems];
+
+    if (filter === "LowestPrice") {
+      sortedItems.sort((a, b) => {
+        const priceA = GetCurrentPrice(a.Id, a.StartBid);
+        const priceB = GetCurrentPrice(b.Id, b.StartBid);
+        return priceA - priceB;
+      });
+    } else if (filter === "HighestPrice") {
+      sortedItems.sort((a, b) => {
+        const priceA = GetCurrentPrice(a.Id, a.StartBid);
+        const priceB = GetCurrentPrice(b.Id, b.StartBid);
+        return priceB - priceA;
+      });
+    } else if (filter === "EndsSoon") {
+      sortedItems.sort((a, b) => {
+        const endDateA = new Date(a.EndDate);
+        const endDateB = new Date(b.EndDate);
+        return endDateA - endDateB;
+      });
+    } else if (filter === "Newest") {
+      sortedItems.sort((a, b) => {
+        const dateA = new Date(a.StartDate);
+        const dateB = new Date(b.StartDate);
+        return dateB - dateA;
+      });
+    }
+
+    setGalleryItems(sortedItems);
+  };
+
   function GetCurrentPrice(itemId, startBid) {
     const bid = BidPrice.find((bid) => bid.ItemId === itemId);
 
     if (bid) {
-      return <>{bid.BidAmount} Souls</>;
+      return bid.BidAmount; // Remove "Souls" from here
     } else {
-      return <>{startBid} Souls</>;
+      return startBid;
     }
   }
 
@@ -87,12 +122,20 @@ const Gallery = () => {
 
   return (
     <div className="container">
-      <input
-        type="text"
-        className="searchBar"
-        name="searchBar"
-        onChange={SearchGallery}
-      />
+      <div className="searchbar-and-filter">
+        <input
+          type="search"
+          className="searchBar"
+          name="searchBar"
+          onChange={SearchGallery}
+        />
+        <select name="filter" className="filterBar" onChange={FilterGallery}>
+          <option value="Newest">Newest</option>
+          <option value="EndsSoon">Ends Soon</option>
+          <option value="LowestPrice">Lowest Price</option>
+          <option value="HighestPrice">Highest Price</option>
+        </select>
+      </div>
       <div className="gallery-wrapper">
         {GalleryItems.map((GalleryItem) => (
           <div className="card" key={GalleryItem.Id}>
@@ -107,7 +150,7 @@ const Gallery = () => {
                 {CalcEndDate(GalleryItem.EndDate)}
               </div>
               <div className="gallery-price">
-                {GetCurrentPrice(GalleryItem.Id, GalleryItem.StartBid)}
+                {GetCurrentPrice(GalleryItem.Id, GalleryItem.StartBid)} Souls
               </div>
             </div>
           </div>
