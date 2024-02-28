@@ -112,28 +112,30 @@ const Gallery = () => {
       ))}
       {selectedListing && (
         <div className="selected-listing">
-          <img
-            src={selectedListing.Image}
-            alt="Image is not working"
-            className="gallery-image"
-          />
-          <div className="listing-text">
-            <p>Posted {selectedListing.StartDate}</p>
-            <h1>{selectedListing.Title}</h1>
-            <p>{selectedListing.Description}</p>
+          <div className="listing-info">
+            <img
+              src={selectedListing.Image}
+              alt="Image is not working"
+              className="gallery-image"
+            />
+            <div className="listing-text">
+              <p>Posted {selectedListing.StartDate}</p>
+              <h1>{selectedListing.Title}</h1>
+              <p>{selectedListing.Description}</p>
 
-            <p>Starting Bid: {selectedListing.StartBid} Souls</p>
-            <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
-            <p>End Date: {selectedListing.EndDate}</p>
-            {/* Bid field */}
-            <form onSubmit={handleBidSubmit}>
-              <label>
-                <input type="number" value={bidAmount} onChange={handleBidChange} />
-                Souls
-              </label>
-              <button type="submit">Place Bid</button>
-            </form>
-            <button onClick={() => setSelectedListing(null)}>Back to Listings</button>
+              <p>Starting Bid: {selectedListing.StartBid} Souls</p>
+              <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
+              <p>End Date: {selectedListing.EndDate}</p>
+              {/* Bid field */}
+              <form onSubmit={handleBidSubmit}>
+                <label>
+                  <input type="number" value={bidAmount} onChange={handleBidChange} />
+                  Souls
+                </label>
+                <button type="submit">Place Bid</button>
+              </form>
+              <button onClick={() => setSelectedListing(null)}>Back to Listings</button>
+            </div>
           </div>
         </div>
 

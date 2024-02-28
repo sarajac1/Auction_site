@@ -65,4 +65,13 @@ body {
     padding: 20px;
     z-index: 999;
   }
+
+    .listing-info {
+      display: flex;
+      align-items: flex-start;
+    }
+  
+    .text-info {
+      margin-left: 20px;
+    }
 }
