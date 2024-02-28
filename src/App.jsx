@@ -1,15 +1,11 @@
-import React from 'react';
-import './App.css';
-
-import Listings from './components/Listings.jsx';
+import { useState } from "react";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Listings /> 
-      </header>
-    </div>
+    <>
+      <HomePage />
+    </>
   );
 }
 
