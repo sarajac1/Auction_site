@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 
 const AddListing = () => {
+  // Function to format today's date as DD-MM-YYYY
+    const formatDate = (date) => {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const yyyy = date.getFullYear();
+    return `${dd}-${mm}-${yyyy}`;
+  };
+
+  const today = new Date(); // Get today's date
+  const formattedToday = formatDate(today); // Format today's date
+
   const [listing, setListing] = useState({
     Title: '',
     Description: '',
     Image: '',
-    StartDate: '',
+    StartDate: formattedToday,
     StartBid: '',
   });
 
@@ -13,6 +24,7 @@ const AddListing = () => {
     const { name, value } = e.target;
     setListing({ ...listing, [name]: value });
   };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +35,7 @@ const AddListing = () => {
       Title: listing.Title,
       Description: listing.Description,
       Image: listing.Image,
-      StartDate: listing.StartDate,
+      StartDate: formattedToday,
       StartBid: listing.StartBid
     };
 
@@ -55,14 +67,16 @@ const AddListing = () => {
       alert('Failed to add listing. Please try again.');
     }
   };
+  // Calculate end date (assuming end date is 7 days after start date)
+
 
   return (
     <form onSubmit={handleSubmit}>
       <input type="text" name="Title" value={listing.Title} onChange={handleChange} placeholder="Title" required />
       <input type="text" name="Description" value={listing.Description} onChange={handleChange} placeholder="Description" required />
       <input type="text" name="Image" value={listing.Image} onChange={handleChange} placeholder="Image URL" required />
-      <input type="text" name="StartDate" value={listing.StartDate} onChange={handleChange} placeholder="Start Date (DD-MM-YYYY)" required />
-      <p>END DATE SHOULD BE AUTOMATICALLY CALCULATED. ADD A FIELD FOR THAT!</p>
+      <p>Start Date: {listing.StartDate}</p>
+      <p>End Date:</p>
       <input type="number" name="StartBid" value={listing.StartBid} onChange={handleChange} placeholder="Asking price" required />
       <button type="submit">Create Listing</button>
     </form>
