@@ -4,7 +4,7 @@ function MyNav() {
 
   return (    
     <nav>      
-      <Link to="/login-page">Login Page</Link>
+      <Link to="/login-page">Login</Link>
     </nav> 
   )
 }
