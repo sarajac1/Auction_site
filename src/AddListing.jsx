@@ -6,11 +6,21 @@ const AddListing = () => {
     const dd = String(date.getDate()).padStart(2, '0');
     const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
     const yyyy = date.getFullYear();
-    return `${dd}-${mm}-${yyyy}`;
+    return `${yyyy}-${mm}-${dd}`;
   };
 
   const today = new Date(); // Get today's date
   const formattedToday = formatDate(today); // Format today's date
+
+  const calculateEndDate = () => {
+    if (listing.StartDate) {
+      const startDate = new Date(listing.StartDate);
+      const endDate = new Date(startDate.getTime());
+      endDate.setDate(startDate.getDate() + 7); // Add 7 days
+      return formatDate(endDate);
+    }
+    return '';
+  };
 
   const [listing, setListing] = useState({
     Title: '',
@@ -76,7 +86,7 @@ const AddListing = () => {
       <input type="text" name="Description" value={listing.Description} onChange={handleChange} placeholder="Description" required />
       <input type="text" name="Image" value={listing.Image} onChange={handleChange} placeholder="Image URL" required />
       <p>Start Date: {listing.StartDate}</p>
-      <p>End Date:</p>
+      <p>End Date:{calculateEndDate()}</p>
       <input type="number" name="StartBid" value={listing.StartBid} onChange={handleChange} placeholder="Asking price" required />
       <button type="submit">Create Listing</button>
     </form>
