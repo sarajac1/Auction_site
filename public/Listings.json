@@ -69,6 +69,26 @@
       "StartDate": "27-02-2024",
       "EndDate": "29 Feb 2024 09:45:00",
       "StartBid": "200"
+    },
+    {
+      "Id": "8",
+      "SellerId": "2",
+      "Title": "Lament Configuration",
+      "Description": "Lament configuration, apparently used as a key? \n I have never used it, I don't even know if it works\n ",
+      "Image": "https://i.imgur.com/cwUJash.png",
+      "StartDate": "27-02-2024",
+      "EndDate": "1 Mar 2024 09:45:00",
+      "StartBid": "2000"
+    },
+    {
+      "Id": "9",
+      "SellerId": "2",
+      "Title": "Inconspicuous VHS tape",
+      "Description": "Send this to any friend in dire need of some female company. VHS player not included\n May smell damp.",
+      "Image": "https://i.imgur.com/azIun9z.png",
+      "StartDate": "27-02-2024",
+      "EndDate": "1 Mar 2024 09:45:00",
+      "StartBid": "2000"
     }
   ]
 }

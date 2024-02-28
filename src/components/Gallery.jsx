@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 const Gallery = () => {
+  const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
   const [GalleryItems, setGalleryItems] = useState([]);
   const [BidPrice, setBidPrice] = useState([]);
-  const [selectedListing, setSelectedListing] = useState(null); //state
-  const [bidAmount, setBidAmount] = useState('');//state
+
+  const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("/Listings.json");
         const data = await response.json();
+        setOriginalGalleryItems(data.Listings);
         setGalleryItems(data.Listings);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setOriginalGalleryItems([]);
         setGalleryItems([]);
       }
     };
@@ -27,7 +30,6 @@ const Gallery = () => {
         const response = await fetch("/Bids.json");
         const price = await response.json();
         setBidPrice(price.Bids);
-        console.log(price.Bids);
       } catch (error) {
         console.error("Error fetching data:", error);
         setBidPrice([]);
@@ -37,34 +39,63 @@ const Gallery = () => {
     fetchData();
   }, []);
 
-
-  // Function to handle clicking on a listing
-  const handleListingClick = (listing) => {
-    setSelectedListing(listing); // Set the selected listing
-    setBidAmount(''); //bidamount resets if new listing is selected
+  const SearchGallery = (event) => {
+    const searchWord = event.target.value;
+    const regex = new RegExp(`\\b${searchWord}\\b|${searchWord}`, "i");
+    const filteredItems = originalGalleryItems.filter((item) =>
+      regex.test(item.Title)
+    );
+    setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   };
 
-  // Handle changes to the bid input
-  const handleBidChange = (e) => {
-    setBidAmount(e.target.value);
+  useEffect(() => {
+    const filteredItems = originalGalleryItems.filter((item) =>
+      item.Title.includes(searchWord)
+    );
+    setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
+  }, [searchWord, originalGalleryItems]);
+
+  const FilterGallery = (event) => {
+    const filter = event.target.value;
+
+    let sortedItems = [...originalGalleryItems];
+
+    if (filter === "LowestPrice") {
+      sortedItems.sort((a, b) => {
+        const priceA = GetCurrentPrice(a.Id, a.StartBid);
+        const priceB = GetCurrentPrice(b.Id, b.StartBid);
+        return priceA - priceB;
+      });
+    } else if (filter === "HighestPrice") {
+      sortedItems.sort((a, b) => {
+        const priceA = GetCurrentPrice(a.Id, a.StartBid);
+        const priceB = GetCurrentPrice(b.Id, b.StartBid);
+        return priceB - priceA;
+      });
+    } else if (filter === "EndsSoon") {
+      sortedItems.sort((a, b) => {
+        const endDateA = new Date(a.EndDate);
+        const endDateB = new Date(b.EndDate);
+        return endDateA - endDateB;
+      });
+    } else if (filter === "Newest") {
+      sortedItems.sort((a, b) => {
+        const dateA = new Date(a.StartDate);
+        const dateB = new Date(b.StartDate);
+        return dateB - dateA;
+      });
+    }
+
+    setGalleryItems(sortedItems);
   };
-
-  // Handle the submission of a bid
-  const handleBidSubmit = (e) => {
-    e.preventDefault();
-    console.log(`You bid for ${selectedListing.Title}: ${bidAmount} Souls`);
-
-    setBidAmount('');
-  };
-
 
   function GetCurrentPrice(itemId, startBid) {
     const bid = BidPrice.find((bid) => bid.ItemId === itemId);
 
     if (bid) {
-      return <>{bid.BidAmount} Souls</>;
+      return bid.BidAmount; // Remove "Souls" from here
     } else {
-      return <>{startBid} Souls</>;
+      return startBid;
     }
   }
 
@@ -82,7 +113,6 @@ const Gallery = () => {
     const currentDate = new Date();
     const endDate = new Date(endDateString);
     const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
-    console.log(days + " days," + hours + " hours");
     return (
       <div>
         Ends in: {days} days, {hours} hours
@@ -91,58 +121,41 @@ const Gallery = () => {
   }
 
   return (
-    <div className="gallery-wrapper">
-      {GalleryItems.map((GalleryItem) => (
-        <div className="card" key={GalleryItem.Id} onClick={() => handleListingClick(GalleryItem)}>
-          <img
-            src={GalleryItem.Image}
-            alt={GalleryItem.Title}
-            className="gallery-image"
-          />
-          <div className="text-container">
-            <div className="gallery-title">{GalleryItem.Title}</div>
-            <div className="gallery-enddate">
-              {CalcEndDate(GalleryItem.EndDate)}
-            </div>
-            <div className="gallery-price">
-              {GetCurrentPrice(GalleryItem.Id, GalleryItem.StartBid)}
-            </div>
-          </div>
-        </div>
-      ))}
-      {selectedListing && (
-        <div className="selected-listing">
-          <div className="listing-info">
+    <div className="container">
+      <div className="searchbar-and-filter">
+        <input
+          type="search"
+          className="searchBar"
+          name="searchBar"
+          onChange={SearchGallery}
+        />
+        <select name="filter" className="filterBar" onChange={FilterGallery}>
+          <option value="Newest">Newest</option>
+          <option value="EndsSoon">Ends Soon</option>
+          <option value="LowestPrice">Lowest Price</option>
+          <option value="HighestPrice">Highest Price</option>
+        </select>
+      </div>
+      <div className="gallery-wrapper">
+        {GalleryItems.map((GalleryItem) => (
+          <div className="card" key={GalleryItem.Id}>
             <img
-              src={selectedListing.Image}
-              alt="Image is not working"
+              src={GalleryItem.Image}
+              alt={GalleryItem.Title}
               className="gallery-image"
             />
-            <div className="listing-text">
-              <p>Posted {selectedListing.StartDate}</p>
-              <h1>{selectedListing.Title}</h1>
-              <p>{selectedListing.Description}</p>
-
-              <p>Starting Bid: {selectedListing.StartBid} Souls</p>
-              <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
-              <p>End Date: {selectedListing.EndDate}</p>
-              {/* Bid field */}
-              <form onSubmit={handleBidSubmit}>
-                <label>
-                  <input type="number" value={bidAmount} onChange={handleBidChange} />
-                  Souls
-                </label>
-                <button type="submit">Place Bid</button>
-              </form>
-              <button onClick={() => setSelectedListing(null)}>Back to Listings</button>
+            <div className="text-container">
+              <div className="gallery-title">{GalleryItem.Title}</div>
+              <div className="gallery-enddate">
+                {CalcEndDate(GalleryItem.EndDate)}
+              </div>
+              <div className="gallery-price">
+                {GetCurrentPrice(GalleryItem.Id, GalleryItem.StartBid)} Souls
+              </div>
             </div>
           </div>
-        </div>
-
-      )}
-
-
-
+        ))}
+      </div>
     </div>
   );
 };
