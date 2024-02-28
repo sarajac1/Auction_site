@@ -9,6 +9,7 @@ export default function NavBar() {
     <div className="header">
       <div className="nav-bar">
         <nav className="nav-container">
+          <img src="https://i.imgur.com/D1399Py.png" alt="ShadowBid Logo" className="logo" />
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
               <Link to="/">Home</Link>
