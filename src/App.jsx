@@ -1,7 +1,16 @@
+import { useState } from 'react'
 import MyRouter from "./components/MyRouter.jsx"
-
 import './App.css'
+import HomePage from "./pages/HomePage";
 
-export default function App() {
-  return <MyRouter />
+
+function App() {
+  return (
+    <>
+      <MyRouter/>
+      <HomePage />
+    </>
+  );
 }
+
+export default App;
