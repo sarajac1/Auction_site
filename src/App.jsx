@@ -4,7 +4,7 @@ import AddListing from './AddListing.jsx';
 const App = () => {
   return (
     <div>
-      <h1>Add New Listing</h1>
+      <h1>Create Listing</h1>
       <AddListing />
     </div>
   );
