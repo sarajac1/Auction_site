@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 const Gallery = () => {
   const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
@@ -139,11 +140,13 @@ const Gallery = () => {
       <div className="gallery-wrapper">
         {GalleryItems.map((GalleryItem) => (
           <div className="card" key={GalleryItem.Id}>
+            <Link to={`/item/${GalleryItem.Id}`}>
             <img
               src={GalleryItem.Image}
               alt={GalleryItem.Title}
               className="gallery-image"
-            />
+              />
+            </Link>
             <div className="text-container">
               <div className="gallery-title">{GalleryItem.Title}</div>
               <div className="gallery-enddate">
