@@ -69,6 +69,14 @@ body {
   }
 }
 
+
+    .user-info {
+      font-size: 20px;
+      font-family: "Titillium Web";
+      color: #e4cab5;
+      text-align: right;
+    }
+
 /* Header */
 .header {
   font-family: "Alegreya Sans";
