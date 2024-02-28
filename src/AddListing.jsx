@@ -14,9 +14,46 @@ const AddListing = () => {
     setListing({ ...listing, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission
+
+    // Create a new listing object with the same keys as your JSON data
+    const newListing = {
+      Title: listing.Title,
+      Description: listing.Description,
+      Image: listing.Image,
+      StartDate: listing.StartDate,
+      StartBid: listing.StartBid
+    };
+
+    try {
+      // Send a POST request to your JSON-server. make sure to have the server running
+      const response = await fetch('http://localhost:3000/Listings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newListing)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add listing');
+      }
+
+      // Reset the form after successful submission
+      setListing({
+        Title: '',
+        Description: '',
+        Image: '',
+        StartDate: '',
+        StartBid: ''
+      });
+      alert('Listing added successfully!');
+    } catch (error) {
+      console.error('Error adding listing:', error);
+      alert('Failed to add listing. Please try again.');
+    }
   };
 
   return (

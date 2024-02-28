@@ -8,7 +8,8 @@
       "Image": "https://imgur.com/PrjZG6z",
       "StartDate": "27-02-2024",
       "EndDate": "03-03-2024",
-      "StartBid": "3000"
+      "StartBid": "3000",
+      "id": "dbe5"
     },
     {
       "Id": "2",
@@ -18,7 +19,8 @@
       "Image": "https://imgur.com/VyIx658",
       "StartDate": "27-02-2024",
       "EndDate": "03-03-2024",
-      "StartBid": "4000"
+      "StartBid": "4000",
+      "id": "c35e"
     },
     {
       "Id": "3",
@@ -28,7 +30,8 @@
       "Image": "https://imgur.com/HnPj8vO",
       "StartDate": "27-02-2024",
       "EndDate": "03-03-2024",
-      "StartBid": "4000"
+      "StartBid": "4000",
+      "id": "0363"
     },
     {
       "Id": "4",
@@ -38,7 +41,8 @@
       "Image": "https://imgur.com/iBnyG3v",
       "StartDate": "27-02-2024",
       "EndDate": "03-03-2024",
-      "StartBid": "9000"
+      "StartBid": "9000",
+      "id": "4753"
     },
     {
       "Id": "5",
@@ -48,7 +52,8 @@
       "Image": "https://imgur.com/EtG67zw",
       "StartDate": "27-02-2024",
       "EndDate": "03-03-2024",
-      "StartBid": "9000"
+      "StartBid": "9000",
+      "id": "8324"
     },
     {
       "Id": "6",
@@ -58,7 +63,8 @@
       "Image": "https://imgur.com/xEC9HZL",
       "StartDate": "27-02-2024",
       "EndDate": "03-03-2024",
-      "StartBid": "200"
+      "StartBid": "200",
+      "id": "81db"
     },
     {
       "Id": "7",
@@ -68,7 +74,16 @@
       "Image": "https://imgur.com/a/4WgoLhh",
       "StartDate": "27-02-2024",
       "EndDate": "03-03-2024",
-      "StartBid": "200"
+      "StartBid": "200",
+      "id": "d546"
+    },
+    {
+      "id": "ea0b",
+      "Title": "test",
+      "Description": "test",
+      "Image": "https://imgur.com/t/pic/c4e43n9",
+      "StartDate": "29-02-2024",
+      "StartBid": "1"
     }
   ]
 }
