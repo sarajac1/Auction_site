@@ -18,6 +18,37 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #fff2e7;
 }
+/* Search bar */
+.searchbar-and-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchBar,
+.filterBar {
+  margin: 0; /* Remove default margin */
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px; /* Adjust the value to change the roundness of corners */
+  background-color: #e4cab5;
+  color: black;
+}
+
+.searchBar {
+  flex-grow: 1; /* Allow it to grow and take available space */
+
+  max-width: 200px;
+}
+
+/* site container */
+.container {
+  background-color: #2a2829;
+  padding-left: 2%;
+  padding-top: 1%;
+  padding-right: 2%;
+}
 
 /* gallery view */
 .gallery-wrapper {
