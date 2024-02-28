@@ -1,6 +1,7 @@
+
 import { useState } from 'react'
 import MyRouter from "./components/MyRouter.jsx"
-import './App.css'
+
 import HomePage from "./pages/HomePage";
 
 
