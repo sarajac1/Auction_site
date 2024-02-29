@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddListing = () => {
+function AddListing (){
   // Function to format today's date as DD-MM-YYYY
     const formatDate = (date) => {
     const dd = String(date.getDate()).padStart(2, '0');

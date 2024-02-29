@@ -8,7 +8,8 @@
       "Image": "https://i.imgur.com/PrjZG6z.png",
       "StartDate": "27-02-2024",
       "EndDate": "29 Feb 2024 07:45:00",
-      "StartBid": "300"
+      "StartBid": "300",
+      "id": "89dd"
     },
     {
       "Id": "2",
@@ -18,7 +19,8 @@
       "Image": "https://i.imgur.com/VyIx658.png",
       "StartDate": "27-02-2024",
       "EndDate": "30 Feb 2024 10:45:00",
-      "StartBid": "4000"
+      "StartBid": "4000",
+      "id": "53fb"
     },
     {
       "Id": "3",
@@ -28,7 +30,8 @@
       "Image": "https://i.imgur.com/HnPj8vO.png",
       "StartDate": "27-02-2024",
       "EndDate": "31 Feb 2024 07:45:00",
-      "StartBid": "4000"
+      "StartBid": "4000",
+      "id": "3085"
     },
     {
       "Id": "4",
@@ -38,7 +41,8 @@
       "Image": "https://i.imgur.com/iBnyG3v.png",
       "StartDate": "27-02-2024",
       "EndDate": "28 Feb 2024 03:45:00",
-      "StartBid": "9000"
+      "StartBid": "9000",
+      "id": "8008"
     },
     {
       "Id": "5",
@@ -48,7 +52,8 @@
       "Image": "https://i.imgur.com/EtG67zw.jpg",
       "StartDate": "27-02-2024",
       "EndDate": "29 Feb 2024 02:45:00",
-      "StartBid": "9000"
+      "StartBid": "9000",
+      "id": "8357"
     },
     {
       "Id": "6",
@@ -58,7 +63,8 @@
       "Image": "https://i.imgur.com/xEC9HZL.png",
       "StartDate": "27-02-2024",
       "EndDate": "03 Mar 2024 07:45:00",
-      "StartBid": "200"
+      "StartBid": "200",
+      "id": "6cfe"
     },
     {
       "Id": "7",
@@ -68,7 +74,8 @@
       "Image": "https://i.imgur.com/kt1JY7c.jpg",
       "StartDate": "27-02-2024",
       "EndDate": "29 Feb 2024 09:45:00",
-      "StartBid": "200"
+      "StartBid": "200",
+      "id": "30b3"
     },
     {
       "Id": "8",
@@ -78,7 +85,8 @@
       "Image": "https://i.imgur.com/cwUJash.png",
       "StartDate": "27-02-2024",
       "EndDate": "1 Mar 2024 09:45:00",
-      "StartBid": "2000"
+      "StartBid": "2000",
+      "id": "0a9e"
     },
     {
       "Id": "9",
@@ -88,7 +96,16 @@
       "Image": "https://i.imgur.com/azIun9z.png",
       "StartDate": "27-02-2024",
       "EndDate": "1 Mar 2024 09:45:00",
-      "StartBid": "2000"
+      "StartBid": "2000",
+      "id": "ed70"
+    },
+    {
+      "id": "6ab3",
+      "Title": "test5",
+      "Description": "test5",
+      "Image": "https://imgur.com/gallery/8nBgtk5",
+      "StartDate": "2024-02-29",
+      "StartBid": "5"
     }
   ]
 }
