@@ -19,6 +19,16 @@
     {
       "id": "1a8a",
       "bidAmount": "500"
+    },
+    {
+      "id": "9354",
+      "bidamount": "600",
+      "listingId": 1
+    },
+    {
+      "id": "f411",
+      "bidamount": "200",
+      "listingId": 3
     }
   ]
 }

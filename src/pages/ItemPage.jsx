@@ -46,7 +46,7 @@ function ItemPage() {
           <p>Starting Bid: {selectedListing.startbid} Souls</p>
           <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
           {/* Bid field */}
-          <div><BiddingForm /></div>
+          <div><BiddingForm selectedListing={selectedListing} /></div>
           <button onClick={() => setSelectedListing(null)}>
             Back to Listings
           </button>

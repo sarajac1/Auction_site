@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function BiddingForm() {
+function BiddingForm({selectedListing}) {
   const [bid, setBid] = useState('');
   const [message, setMessage] = useState('');
 
@@ -14,6 +14,7 @@ function BiddingForm() {
         },
         body: JSON.stringify({
           bidamount: bid, 
+          listingId: selectedListing.id,
         }),
       });
 
