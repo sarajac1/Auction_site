@@ -18,6 +18,7 @@ function BiddingForm({selectedListing}) {
           itemid: selectedListing.id,
           bidamount: bid, 
           datetime: submissionTime.toISOString(),
+          isactive: true,
           
         }),
       });
