@@ -14,6 +14,7 @@ export default function NavBar() {
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
               <Link to="/">Home</Link>
+              <Link to="/AddListing">Add Listing</Link>
               <Link to="/About us">About us</Link>
               <Link to="/Jobs">Jobs</Link>
               <Balance />
