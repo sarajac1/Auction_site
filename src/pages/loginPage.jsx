@@ -35,8 +35,7 @@ function LoginPage() {
 
     if (existingUser != null) {
       localStorage.setItem("token", credentials.username);
-      localStorage.setItem("sb_id", credentials.id);
-
+      localStorage.setItem("token_id", existingUser.id);
       setIsLoggedIn(true);
     } else {
       alert("User not found");
@@ -46,6 +45,7 @@ function LoginPage() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    sessionStorage.removeItem("token_id");
     setIsLoggedIn(false);
   };
 
