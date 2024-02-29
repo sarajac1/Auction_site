@@ -1,7 +1,7 @@
 {
   "bids": [
     {
-      "id": 1,
+      "id": "1",
       "itemid": 1,
       "bidderid": 1,
       "bidamount": 358,
@@ -9,12 +9,16 @@
       "isactive": true
     },
     {
-      "id": 2,
+      "id": "2",
       "itemid": 4,
       "bidderid": 6,
       "bidamount": 9100,
       "datetime": "28-02-2024",
       "isactive": true
+    },
+    {
+      "id": "1a8a",
+      "bidAmount": "500"
     }
   ]
 }

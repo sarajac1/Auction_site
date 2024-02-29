@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import BiddingForm from '../components/BiddingForm';
 
 function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
@@ -45,17 +46,7 @@ function ItemPage() {
           <p>Starting Bid: {selectedListing.startbid} Souls</p>
           <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
           {/* Bid field */}
-          <form onSubmit={handleBidSubmit}>
-            <label>
-              <input
-                type="number"
-                value={bidAmount}
-                onChange={handleBidChange}
-              />
-              Souls
-            </label>
-            <button type="submit">Place Bid</button>
-          </form>
+          <div><BiddingForm /></div>
           <button onClick={() => setSelectedListing(null)}>
             Back to Listings
           </button>
