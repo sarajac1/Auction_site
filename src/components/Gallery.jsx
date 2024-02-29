@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Gallery = () => {
   const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
@@ -93,7 +94,7 @@ const Gallery = () => {
     const bid = BidPrice.find((bid) => bid.ItemId === itemId);
 
     if (bid) {
-      return bid.bidamount; // Remove "Souls" from here
+      return bid.bidamount;
     } else {
       return startBid;
     }
@@ -138,22 +139,28 @@ const Gallery = () => {
       </div>
       <div className="gallery-wrapper">
         {GalleryItems.map((GalleryItem) => (
-          <div className="card" key={GalleryItem.id}>
-            <img
-              src={GalleryItem.image}
-              alt={GalleryItem.title}
-              className="gallery-image"
-            />
-            <div className="text-container">
-              <div className="gallery-title">{GalleryItem.title}</div>
-              <div className="gallery-enddate">
-                {CalcEndDate(GalleryItem.enddate)}
-              </div>
-              <div className="gallery-price">
-                {GetCurrentPrice(GalleryItem.id, GalleryItem.startbid)} Souls
+          <Link
+            to={`/item/${GalleryItem.id}`}
+            key={GalleryItem.id}
+            className="card"
+          >
+            <div>
+              <img
+                src={GalleryItem.image}
+                alt={GalleryItem.title}
+                className="gallery-image"
+              />
+              <div className="text-container">
+                <div className="gallery-title">{GalleryItem.title}</div>
+                <div className="gallery-enddate">
+                  {CalcEndDate(GalleryItem.enddate)}
+                </div>
+                <div className="gallery-price">
+                  {GetCurrentPrice(GalleryItem.id, GalleryItem.startbid)} Souls
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
