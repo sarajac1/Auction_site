@@ -10,10 +10,10 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Listings.json");
+        const response = await fetch("Listings.json");
         const data = await response.json();
-        setOriginalGalleryItems(data.Listings);
-        setGalleryItems(data.Listings);
+        setOriginalGalleryItems(data.listings);
+        setGalleryItems(data.listings);
       } catch (error) {
         console.error("Error fetching data:", error);
         setOriginalGalleryItems([]);
@@ -27,9 +27,9 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Bids.json");
+        const response = await fetch("Bids.json");
         const price = await response.json();
-        setBidPrice(price.Bids);
+        setBidPrice(price.bids);
       } catch (error) {
         console.error("Error fetching data:", error);
         setBidPrice([]);
@@ -43,14 +43,14 @@ const Gallery = () => {
     const searchWord = event.target.value;
     const regex = new RegExp(`\\b${searchWord}\\b|${searchWord}`, "i");
     const filteredItems = originalGalleryItems.filter((item) =>
-      regex.test(item.Title)
+      regex.test(item.title)
     );
     setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   };
 
   useEffect(() => {
     const filteredItems = originalGalleryItems.filter((item) =>
-      item.Title.includes(searchWord)
+      item.title.includes(searchWord)
     );
     setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   }, [searchWord, originalGalleryItems]);
@@ -62,26 +62,26 @@ const Gallery = () => {
 
     if (filter === "LowestPrice") {
       sortedItems.sort((a, b) => {
-        const priceA = GetCurrentPrice(a.Id, a.StartBid);
-        const priceB = GetCurrentPrice(b.Id, b.StartBid);
+        const priceA = GetCurrentPrice(a.id, a.startbid);
+        const priceB = GetCurrentPrice(b.id, b.startbid);
         return priceA - priceB;
       });
     } else if (filter === "HighestPrice") {
       sortedItems.sort((a, b) => {
-        const priceA = GetCurrentPrice(a.Id, a.StartBid);
-        const priceB = GetCurrentPrice(b.Id, b.StartBid);
+        const priceA = GetCurrentPrice(a.id, a.startbid);
+        const priceB = GetCurrentPrice(b.id, b.startbid);
         return priceB - priceA;
       });
     } else if (filter === "EndsSoon") {
       sortedItems.sort((a, b) => {
-        const endDateA = new Date(a.EndDate);
-        const endDateB = new Date(b.EndDate);
+        const endDateA = new Date(a.enddate);
+        const endDateB = new Date(b.enddate);
         return endDateA - endDateB;
       });
     } else if (filter === "Newest") {
       sortedItems.sort((a, b) => {
-        const dateA = new Date(a.StartDate);
-        const dateB = new Date(b.StartDate);
+        const dateA = new Date(a.startdate);
+        const dateB = new Date(b.startdate);
         return dateB - dateA;
       });
     }
@@ -93,7 +93,7 @@ const Gallery = () => {
     const bid = BidPrice.find((bid) => bid.ItemId === itemId);
 
     if (bid) {
-      return bid.BidAmount; // Remove "Souls" from here
+      return bid.bidamount; // Remove "Souls" from here
     } else {
       return startBid;
     }
@@ -138,19 +138,19 @@ const Gallery = () => {
       </div>
       <div className="gallery-wrapper">
         {GalleryItems.map((GalleryItem) => (
-          <div className="card" key={GalleryItem.Id}>
+          <div className="card" key={GalleryItem.id}>
             <img
-              src={GalleryItem.Image}
-              alt={GalleryItem.Title}
+              src={GalleryItem.image}
+              alt={GalleryItem.title}
               className="gallery-image"
             />
             <div className="text-container">
-              <div className="gallery-title">{GalleryItem.Title}</div>
+              <div className="gallery-title">{GalleryItem.title}</div>
               <div className="gallery-enddate">
-                {CalcEndDate(GalleryItem.EndDate)}
+                {CalcEndDate(GalleryItem.enddate)}
               </div>
               <div className="gallery-price">
-                {GetCurrentPrice(GalleryItem.Id, GalleryItem.StartBid)} Souls
+                {GetCurrentPrice(GalleryItem.id, GalleryItem.startbid)} Souls
               </div>
             </div>
           </div>

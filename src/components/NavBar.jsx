@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import Balance from "../pages/BalancePage.jsx";
 export default function NavBar() {
   return (
     <div className="header">
@@ -15,6 +15,7 @@ export default function NavBar() {
               <Link to="/">Home</Link>
               <Link to="/About us">About us</Link>
               <Link to="/Jobs">Jobs</Link>
+              <Balance />
             </div>
           </div>
           <div className="nav-bar-login">
