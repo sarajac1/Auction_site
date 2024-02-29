@@ -1,11 +1,12 @@
 import { useState } from "react";
 import MyRouter from "./components/MyRouter.jsx";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage.jsx";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <>
-      <MyRouter />
+      <MyRouter isLoggedIn={isLoggedIn} setIsLoggedIN={setIsLoggedIn} />
     </>
   );
 }

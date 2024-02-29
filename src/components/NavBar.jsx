@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-export default function NavBar() {
+//Accepts isLoggedIn as a prop 
+function NavBar({ isLoggedIn }) {
   return (
     <div className="header">
       <div className="nav-bar">
@@ -12,7 +13,11 @@ export default function NavBar() {
           />
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
+              {/* Link to home is always shown */}
               <Link to="/">Home</Link>
+
+              {/* Links that are dependent on if user is logged in */}
+              
               <Link to="/About us">About us</Link>
               <Link to="/Jobs">Jobs</Link>
             </div>
@@ -28,3 +33,5 @@ export default function NavBar() {
     </div>
   );
 }
+
+export default NavBar; 

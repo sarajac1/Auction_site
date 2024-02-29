@@ -3,12 +3,13 @@ import NavBar from "../components/NavBar.jsx";
 import LoginPage from "../pages/loginPage.jsx";
 import HomePage from "../pages/HomePage.jsx";
 
-function MyRouter() {
+//Accepts props and passes it to components
+function MyRouter({ isLoggedIn, setIsLoggedIn}) {
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar isLoggedIn={isLoggedIn} />
       <Routes>
-        <Route path="/login-page" element={<LoginPage />} />
+        <Route path="/login-page" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/" element={<HomePage />} />
       </Routes>
     </BrowserRouter>
