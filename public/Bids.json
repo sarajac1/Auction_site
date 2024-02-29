@@ -1,36 +1,20 @@
 {
-  "Bids": [
+  "bids": [
     {
-      "Id": "1",
-      "ItemId": "1",
-      "BidderId": "1",
-      "BidAmount": "358",
-      "DateTime": "28-02-2024",
-      "isActive": "TRUE"
+      "id": 1,
+      "itemid": 1,
+      "bidderid": 1,
+      "bidamount": 358,
+      "datetime": "28-02-2024",
+      "isactive": true
     },
     {
-      "Id": "2",
-      "ItemId": "4",
-      "BidderId": "6",
-      "BidAmount": "9100",
-      "DateTime": "28-02-2024",
-      "isActive": "TRUE"
-    },
-    {
-      "Id": "3",
-      "ItemId": "2",
-      "BidderId": "6",
-      "BidAmount": "4100",
-      "DateTime": "28-02-2024",
-      "isActive": "TRUE"
-    },
-    {
-      "Id": "4",
-      "ItemId": "5",
-      "BidderId": "6",
-      "BidAmount": "9250",
-      "DateTime": "28-02-2024",
-      "isActive": "TRUE"
+      "id": 2,
+      "itemid": 4,
+      "bidderid": 6,
+      "bidamount": 9100,
+      "datetime": "28-02-2024",
+      "isactive": true
     }
   ]
 }
