@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-function AddListing (){
+function AddListing() {
   // Function to format today's date as DD-MM-YYYY
-    const formatDate = (date) => {
+  const formatDate = (date) => {
     const dd = String(date.getDate()).padStart(2, '0');
     const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
     const yyyy = date.getFullYear();
@@ -13,8 +13,8 @@ function AddListing (){
   const formattedToday = formatDate(today); // Format today's date
 
   const calculateEndDate = () => {
-    if (listing.StartDate) {
-      const startDate = new Date(listing.StartDate);
+    if (listing.startdate) {
+      const startDate = new Date(listing.startdate);
       const endDate = new Date(startDate.getTime());
       endDate.setDate(startDate.getDate() + 7); // Add 7 days
       return formatDate(endDate);
@@ -23,18 +23,18 @@ function AddListing (){
   };
 
   const [listing, setListing] = useState({
-    Title: '',
-    Description: '',
-    Image: '',
-    StartDate: formattedToday,
-    StartBid: '',
+    title: '',
+    description: '',
+    image: '',
+    startdate: formattedToday,
+    startbid: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setListing({ ...listing, [name]: value });
   };
- 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,22 +42,24 @@ function AddListing (){
 
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
-      Title: listing.Title,
-      Description: listing.Description,
-      Image: listing.Image,
-      StartDate: formattedToday,
-      StartBid: listing.StartBid
+      title: listing.title,
+      description: listing.description,
+      image: listing.image,
+      startdate: formattedToday,
+      startbid: listing.startbid
     };
 
     try {
       // Send a POST request to your JSON-server. make sure to have the server running
-      const response = await fetch('http://localhost:3000/Listings', {
+      const response = await fetch('http://localhost:3000/listings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(newListing)
       });
+      console.log("1");
+
 
       if (!response.ok) {
         throw new Error('Failed to add listing');
@@ -65,11 +67,11 @@ function AddListing (){
 
       // Reset the form after successful submission
       setListing({
-        Title: '',
-        Description: '',
-        Image: '',
-        StartDate: '',
-        StartBid: ''
+        title: '',
+        description: '',
+        image: '',
+        startdate: '',
+        startbid: ''
       });
       alert('Listing added successfully!');
     } catch (error) {
@@ -82,12 +84,12 @@ function AddListing (){
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="Title" value={listing.Title} onChange={handleChange} placeholder="Title" required />
-      <input type="text" name="Description" value={listing.Description} onChange={handleChange} placeholder="Description" required />
-      <input type="text" name="Image" value={listing.Image} onChange={handleChange} placeholder="Image URL" required />
-      <p>Start Date: {listing.StartDate}</p>
+      <input type="text" name="title" value={listing.title} onChange={handleChange} placeholder="Title" required />
+      <input type="text" name="description" value={listing.description} onChange={handleChange} placeholder="Description" required />
+      <input type="text" name="image" value={listing.image} onChange={handleChange} placeholder="Image URL" required />
+      <p>Start Date: {listing.startdate}</p>
       <p>End Date:{calculateEndDate()}</p>
-      <input type="number" name="StartBid" value={listing.StartBid} onChange={handleChange} placeholder="Asking price" required />
+      <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} placeholder="Asking price" required />
       <button type="submit">Create Listing</button>
     </form>
   );
