@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Gallery = () => {
   const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
@@ -10,7 +11,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Listings.json");
+        const response = await fetch("Listings.json");
         const data = await response.json();
         setOriginalGalleryItems(data.Listings);
         setGalleryItems(data.Listings);
@@ -27,7 +28,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Bids.json");
+        const response = await fetch("Bids.json");
         const price = await response.json();
         setBidPrice(price.Bids);
       } catch (error) {
@@ -138,7 +139,8 @@ const Gallery = () => {
       </div>
       <div className="gallery-wrapper">
         {GalleryItems.map((GalleryItem) => (
-          <div className="card" key={GalleryItem.Id}>
+          <Link to={`/item/${GalleryItem.Id}`} key={GalleryItem.Id} className="card">
+          <div>
             <img
               src={GalleryItem.Image}
               alt={GalleryItem.Title}
@@ -154,6 +156,7 @@ const Gallery = () => {
               </div>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </div>
