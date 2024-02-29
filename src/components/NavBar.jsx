@@ -15,6 +15,7 @@ function NavBar({ isLoggedIn }) {
             <div className="middle-nav-bar">
               {/* Link to home is always shown */}
               <Link to="/">Home</Link>
+              <Link to="/AddListing">Add Listing</Link>
 
               {/* Links that are dependent on if user is logged in */}
               {isLoggedIn ? (
