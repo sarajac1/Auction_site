@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   return (
-
-
-
     <div className="header">
       <div className="nav-bar">
         <nav className="nav-container">
-          <img src="https://i.imgur.com/D1399Py.png" alt="ShadowBid Logo" className="logo" />
+          <img
+            src="https://i.imgur.com/D1399Py.png"
+            alt="ShadowBid Logo"
+            className="logo"
+          />
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
               <Link to="/">Home</Link>
@@ -18,7 +18,7 @@ export default function NavBar() {
             </div>
           </div>
           <div className="nav-bar-login">
-            <Link to="/Login">Login</Link>
+            <Link to="/login-page">Login Page</Link>
           </div>
         </nav>
         <div className="slogan">
@@ -26,5 +26,5 @@ export default function NavBar() {
         </div>
       </div>
     </div>
-  )
+  );
 }

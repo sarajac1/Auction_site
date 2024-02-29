@@ -100,13 +100,12 @@ body {
   }
 }
 
-
-    .user-info {
-      font-size: 20px;
-      font-family: "Titillium Web";
-      color: #e4cab5;
-      text-align: right;
-    }
+.user-info {
+  font-size: 20px;
+  font-family: "Titillium Web";
+  color: #e4cab5;
+  text-align: right;
+}
 
 /* Header */
 .header {
@@ -118,6 +117,7 @@ body {
   color: #fff2e7;
   background-color: #090706;
   font-size: 20px;
+  font-family: "Alegreya Sans";
 
   .nav-container {
     display: flex;
