@@ -29,6 +29,11 @@
       "id": "f411",
       "bidamount": "200",
       "listingId": 3
+    },
+    {
+      "id": "5132",
+      "bidamount": "100",
+      "itemid": 3
     }
   ]
 }

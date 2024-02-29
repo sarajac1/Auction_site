@@ -13,8 +13,9 @@ function BiddingForm({selectedListing}) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          itemid: selectedListing.id,
           bidamount: bid, 
-          listingId: selectedListing.id,
+          
         }),
       });
 
