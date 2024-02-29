@@ -5,13 +5,14 @@ import HomePage from "../pages/HomePage.jsx";
 import ItemPage from "../pages/ItemPage.jsx";
 import AddListing from "../pages/AddListing.jsx"
 
+
 //Accepts props and passes it to components
 function MyRouter({ isLoggedIn, setIsLoggedIn}) {
   return (
     <BrowserRouter>
-      <NavBar isLoggedIn={isLoggedIn} />
+      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
-        <Route path="/login-page" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login-page" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/item/:id" element={<ItemPage />} />
         <Route path="/AddListing" element={<AddListing/>}/>

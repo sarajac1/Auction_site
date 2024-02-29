@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function LoginPage() {
+function LoginPage({isLoggedIn, setIsLoggedIn}) {
   useEffect(() => {
     async function load() {
       const response = await fetch('Users.json');
@@ -16,7 +16,6 @@ function LoginPage() {
     username: '',
     password: ''
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,7 +30,7 @@ function LoginPage() {
 
     const existingUser = UsersList.find((obj) => obj.UserName === credentials.username);
 
-    if (existingUser != null) {      
+    if (existingUser != null && existingUser.Password === credentials.password) {      
       localStorage.setItem('token', credentials.username);
       setIsLoggedIn(true);
     } else {
