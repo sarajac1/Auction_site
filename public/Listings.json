@@ -5,101 +5,90 @@
       "SellerId": "1",
       "Title": "Cat Butler (Litterbox included)",
       "Description": "Cat Butler (Litterbox included)",
-      "Image": "https://imgur.com/PrjZG6z",
+      "Image": "https://i.imgur.com/PrjZG6z.png",
       "StartDate": "27-02-2024",
-      "EndDate": "03-03-2024",
-      "StartBid": "3000",
-      "id": "dbe5"
+      "EndDate": "29 Feb 2024 07:45:00",
+      "StartBid": "300"
     },
     {
       "Id": "2",
       "SellerId": "1",
       "Title": "Magic Mirror",
       "Description": "The Magic mirror from feature film Occulus!",
-      "Image": "https://imgur.com/VyIx658",
+      "Image": "https://i.imgur.com/VyIx658.png",
       "StartDate": "27-02-2024",
-      "EndDate": "03-03-2024",
-      "StartBid": "4000",
-      "id": "c35e"
+      "EndDate": "30 Feb 2024 10:45:00",
+      "StartBid": "4000"
     },
     {
       "Id": "3",
       "SellerId": "4",
       "Title": "Real Fairy",
       "Description": "A fairy I found in my garden. Might need feeding",
-      "Image": "https://imgur.com/HnPj8vO",
+      "Image": "https://i.imgur.com/HnPj8vO.png",
       "StartDate": "27-02-2024",
-      "EndDate": "03-03-2024",
-      "StartBid": "4000",
-      "id": "0363"
+      "EndDate": "31 Feb 2024 07:45:00",
+      "StartBid": "4000"
     },
     {
       "Id": "4",
       "SellerId": "4",
       "Title": "Anabelle the Doll",
       "Description": "Fairly active doll. Moves without batteries. Might strangle you in your sleep.",
-      "Image": "https://imgur.com/iBnyG3v",
+      "Image": "https://i.imgur.com/iBnyG3v.png",
       "StartDate": "27-02-2024",
-      "EndDate": "03-03-2024",
-      "StartBid": "9000",
-      "id": "4753"
+      "EndDate": "28 Feb 2024 03:45:00",
+      "StartBid": "9000"
     },
     {
       "Id": "5",
       "SellerId": "4",
       "Title": "Necronomicon",
       "Description": "Bound in human skin. Need regular moisterization not to crack. Read on your own risk.",
-      "Image": "https://imgur.com/EtG67zw",
+      "Image": "https://i.imgur.com/EtG67zw.jpg",
       "StartDate": "27-02-2024",
-      "EndDate": "03-03-2024",
-      "StartBid": "9000",
-      "id": "8324"
+      "EndDate": "29 Feb 2024 02:45:00",
+      "StartBid": "9000"
     },
     {
       "Id": "6",
       "SellerId": "4",
       "Title": "Ghost in a bottle",
       "Description": "Ghost inside a bottle. Spooking and fun decoration for the whole family.",
-      "Image": "https://imgur.com/xEC9HZL",
+      "Image": "https://i.imgur.com/xEC9HZL.png",
       "StartDate": "27-02-2024",
-      "EndDate": "03-03-2024",
-      "StartBid": "200",
-      "id": "81db"
+      "EndDate": "03 Mar 2024 07:45:00",
+      "StartBid": "200"
     },
     {
       "Id": "7",
       "SellerId": "4",
       "Title": "Cthulhu Statue",
       "Description": "Worship the Greatest of the Great Old Ones with this original marble fetish from New Orleans. Has a distinct wet smell at night.\n Never submerge completely in any liquid!\n Size: 25 cm\n Weight: 12 kg \n Great gift for birthdays, baby showers, winter holidays, solstice or as graduation gift.",
-      "Image": "https://imgur.com/a/4WgoLhh",
+      "Image": "https://i.imgur.com/kt1JY7c.jpg",
       "StartDate": "27-02-2024",
-      "EndDate": "03-03-2024",
-      "StartBid": "200",
-      "id": "d546"
+      "EndDate": "29 Feb 2024 09:45:00",
+      "StartBid": "200"
     },
     {
-      "id": "ea0b",
-      "Title": "test",
-      "Description": "test",
-      "Image": "https://imgur.com/t/pic/c4e43n9",
-      "StartDate": "29-02-2024",
-      "StartBid": "1"
+      "Id": "8",
+      "SellerId": "2",
+      "Title": "Lament Configuration",
+      "Description": "Lament configuration, apparently used as a key? \n I have never used it, I don't even know if it works\n ",
+      "Image": "https://i.imgur.com/cwUJash.png",
+      "StartDate": "27-02-2024",
+      "EndDate": "1 Mar 2024 09:45:00",
+      "StartBid": "2000"
     },
     {
-      "id": "36ab",
-      "Title": "test2",
-      "Description": "test2",
-      "Image": "https://imgur.com/t/pic/c4e43n9",
-      "StartDate": "28-02-2024",
-      "StartBid": "2"
-    },
-    {
-      "id": "ba49",
-      "Title": "test3",
-      "Description": "test3",
-      "Image": "https://imgur.com/t/pic/c4e43n9",
-      "StartDate": "2024-02-28",
-      "StartBid": "3"
+      "Id": "9",
+      "SellerId": "2",
+      "Title": "Inconspicuous VHS tape",
+      "Description": "Send this to any friend in dire need of some female company. VHS player not included\n May smell damp.",
+      "Image": "https://i.imgur.com/azIun9z.png",
+      "StartDate": "27-02-2024",
+      "EndDate": "1 Mar 2024 09:45:00",
+      "StartBid": "2000"
     }
   ]
 }

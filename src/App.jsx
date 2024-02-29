@@ -1,13 +1,13 @@
-import React from 'react';
-import AddListing from './AddListing.jsx';
+import { useState } from "react";
+import MyRouter from "./components/MyRouter.jsx";
+import HomePage from "./pages/HomePage";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <h1>Create Listing</h1>
-      <AddListing />
-    </div>
+    <>
+      <MyRouter />
+    </>
   );
-};
+}
 
 export default App;
