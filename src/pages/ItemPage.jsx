@@ -5,6 +5,8 @@ function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
   const [selectedListing, setSelectedListing] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
+  const [BidPrice, setBidPrice] = useState([]);
+  const [highestBidder, sethighestBidder] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -23,6 +25,21 @@ function ItemPage() {
     fetchData();
   }, [itemId]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/Bids.json");
+        const price = await response.json();
+        setBidPrice(price.bids);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setBidPrice([]);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleBidChange = (event) => {
     setBidAmount(parseInt(event.target.value, 10));
   };
@@ -33,8 +50,20 @@ function ItemPage() {
     console.log(`Placing bid of ${bidAmount} Souls`);
   };
 
-  /* CALCULATING DATES */
+  /* Find highest bid */
+  function GetCurrentPrice(itemId, startBid) {
+    const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
 
+    if (bidsForItem.length > 0) {
+      // Get the highest bid amount for the item
+      const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
+      return highestBid;
+    } else {
+      return startBid;
+    }
+  }
+
+  /* CALCULATING DATES */
   function dateDiffInDaysAndHours(a, b) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     const _MS_PER_HOUR = 1000 * 60 * 60;
@@ -57,7 +86,6 @@ function ItemPage() {
         </div>
       );
     }
-
     return (
       <div className="darkText">
         Ends in: {days} days, {hours} hours
@@ -83,10 +111,11 @@ function ItemPage() {
               Starting Bid: {selectedListing.startbid} Souls
             </div>
 
-            <div className="darkText">
-              Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE
+            <div className="darkText">Highest bid by: </div>
+            <div className="priceText">
+              {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
+              Souls
             </div>
-            <div className="priceText">PRICE HERE</div>
             <div>{CalcEndDate(selectedListing.enddate)}</div>
             {/* Bid field */}
             <form onSubmit={handleBidSubmit}>
