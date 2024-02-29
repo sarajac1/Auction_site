@@ -6,6 +6,8 @@ function BiddingForm({selectedListing}) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const submissionTime = new Date(); 
+
     try {
       const bidResponse = await fetch('http://localhost:3000/bids', {
         method: 'POST',
@@ -15,6 +17,7 @@ function BiddingForm({selectedListing}) {
         body: JSON.stringify({
           itemid: selectedListing.id,
           bidamount: bid, 
+          datetime: submissionTime.toISOString(),
           
         }),
       });
