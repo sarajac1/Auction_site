@@ -15,6 +15,22 @@
       "BidAmount": "9100",
       "DateTime": "28-02-2024",
       "isActive": "TRUE"
+    },
+    {
+      "Id": "3",
+      "ItemId": "2",
+      "BidderId": "6",
+      "BidAmount": "4100",
+      "DateTime": "28-02-2024",
+      "isActive": "TRUE"
+    },
+    {
+      "Id": "4",
+      "ItemId": "5",
+      "BidderId": "6",
+      "BidAmount": "9250",
+      "DateTime": "28-02-2024",
+      "isActive": "TRUE"
     }
   ]
 }

@@ -162,3 +162,53 @@ body {
     margin-top: 10px;
   }
 }
+
+.listings_page {
+  height: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.listing_table {
+  width: 70%;
+}
+
+.listings_heading {
+  color: white;
+}
+
+.listings_info {
+  color: white;
+  text-align: center;
+}
+
+thead tr {
+  margin-bottom: 5px;
+  border-bottom: #E4CAB5 1px solid;
+}
+
+
+.bids_page {
+  height: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bids_table {
+  width: 70%;
+}
+
+.bids_heading {
+  color: white;
+}
+
+.bids_info {
+  color: white;
+  text-align: center;
+}
