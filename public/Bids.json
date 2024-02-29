@@ -15,6 +15,38 @@
       "bidamount": 9100,
       "datetime": "28-02-2024",
       "isactive": true
+    },
+    {
+      "id": "ea33",
+      "itemid": 1,
+      "userId": "testUser",
+      "bidamount": "100",
+      "datetime": "2024-02-29T23:29:14.438Z",
+      "isactive": true
+    },
+    {
+      "id": "54cf",
+      "itemid": 1,
+      "userId": "testUser",
+      "bidamount": "200",
+      "datetime": "2024-02-29T23:29:25.742Z",
+      "isactive": true
+    },
+    {
+      "id": "ac61",
+      "itemid": 1,
+      "userId": "testUser",
+      "bidamount": "800",
+      "datetime": "2024-02-29T23:32:08.559Z",
+      "isactive": true
+    },
+    {
+      "id": "5025",
+      "itemid": 1,
+      "userId": "testUser",
+      "bidamount": "200",
+      "datetime": "2024-02-29T23:32:14.314Z",
+      "isactive": true
     }
   ]
 }
