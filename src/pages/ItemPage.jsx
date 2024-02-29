@@ -6,7 +6,6 @@ function ItemPage() {
   const [selectedListing, setSelectedListing] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
   const [BidPrice, setBidPrice] = useState([]);
-  const [highestBidder, sethighestBidder] = useState("");
 
   useEffect(() => {
     async function fetchData() {
