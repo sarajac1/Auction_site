@@ -17,13 +17,29 @@ function NavBar({ isLoggedIn }) {
               <Link to="/">Home</Link>
 
               {/* Links that are dependent on if user is logged in */}
+              {isLoggedIn ? (
+                <>
+                  <Link to="/your-listings">Your Listings</Link>
+                  <Link to="/profile">Profile</Link>
+                  <Link to="/balance">Balance: </Link>
+                  <Link to="/your-bids">Your Bids</Link>
+                </>
+              ) : (
+                <>
+                  {/* Links that are shown for guests */}
               
-              <Link to="/About us">About us</Link>
-              <Link to="/Jobs">Jobs</Link>
+                  <Link to="/about us">About us</Link>
+                  <Link to="/jobs">Jobs</Link>
+                </>
+              )}
             </div>
           </div>
           <div className="nav-bar-login">
-            <Link to="/login-page">Login Page</Link>
+            {isLoggedIn ? (
+              <Link to="/logout">Logout</Link>
+            ) : (
+              <Link to="/login-page">Login Page</Link>
+            )}
           </div>
         </nav>
         <div className="slogan">
