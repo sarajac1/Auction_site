@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Balance from "../pages/BalancePage";
 
 //Accepts isLoggedIn as a prop 
 function NavBar({ isLoggedIn }) {
