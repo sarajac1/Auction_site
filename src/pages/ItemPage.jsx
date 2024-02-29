@@ -33,32 +33,82 @@ function ItemPage() {
     console.log(`Placing bid of ${bidAmount} Souls`);
   };
 
+  /* CALCULATING DATES */
+
+  function dateDiffInDaysAndHours(a, b) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const _MS_PER_HOUR = 1000 * 60 * 60;
+    const timeDiff = b - a;
+    const days = Math.floor(timeDiff / _MS_PER_DAY);
+    const remainingMilliseconds = timeDiff % _MS_PER_DAY;
+    const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
+    return { days, hours };
+  }
+
+  function CalcEndDate(endDateString) {
+    const currentDate = new Date();
+    const endDate = new Date(endDateString);
+    const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
+
+    if (days <= 1) {
+      return (
+        <div className="redText">
+          Ends in: {days} days, {hours} hours
+        </div>
+      );
+    }
+
+    return (
+      <div className="darkText">
+        Ends in: {days} days, {hours} hours
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="container">
       {/* If a listing is selected, display its details */}
       {selectedListing && (
-        <div>
-          <h1>{selectedListing.title}</h1>
-          <p>{selectedListing.description}</p>
-          <img src={selectedListing.image} alt={selectedListing.title} />
-          <p>End Date: {selectedListing.enddate}</p>
-          <p>Starting Bid: {selectedListing.startbid} Souls</p>
-          <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
-          {/* Bid field */}
-          <form onSubmit={handleBidSubmit}>
-            <label>
-              <input
-                type="number"
-                value={bidAmount}
-                onChange={handleBidChange}
-              />
-              Souls
-            </label>
-            <button type="submit">Place Bid</button>
-          </form>
-          <button onClick={() => setSelectedListing(null)}>
-            Back to Listings
-          </button>
+        <div className="item-wrapper">
+          <div className="col1">
+            <img src={selectedListing.image} alt={selectedListing.title} />
+          </div>
+          <div className="col2">
+            <div className="darkText">{selectedListing.startdate}</div>
+            <h1>{selectedListing.title}</h1>
+            <div className="item-blurb">
+              {selectedListing.description}
+              <br />
+              <br />
+              Starting Bid: {selectedListing.startbid} Souls
+            </div>
+
+            <div className="darkText">
+              Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE
+            </div>
+            <div className="priceText">PRICE HERE</div>
+            <div>{CalcEndDate(selectedListing.enddate)}</div>
+            {/* Bid field */}
+            <form onSubmit={handleBidSubmit}>
+              <label>
+                <input
+                  id="bid-input"
+                  type="number"
+                  value={bidAmount}
+                  onChange={handleBidChange}
+                />
+              </label>
+              <button className="rounded-button" type="submit">
+                Place Bid
+              </button>
+            </form>
+            <button
+              className="discreet-button"
+              onClick={() => setSelectedListing(null)}
+            >
+              Back to Listings
+            </button>
+          </div>
         </div>
       )}
     </div>
