@@ -3,18 +3,19 @@ import React, { useState } from 'react';
 function BiddingForm({selectedListing}) {
   const [bid, setBid] = useState('');
   const [message, setMessage] = useState('');
-  //test user balance:REPLACE THE DETAILS WITH NULL
-  const [user, setUser] = useState({ id: 'testUser', balance: 1000 });
-  //
+  //test user balance/REPLACE THE DETAILS WITH NULL when the real user is avaible :)
+  const [user, setUser] = useState({ id: "2", balance: 1000 });
+
+  
   async function handleSubmit(event) {
     event.preventDefault();
     const submissionTime = new Date(); 
-
     const bidAmount = Number(bid);
+
 
     if (bidAmount > user.balance) {
       setMessage('You dont have enough Souls');
-      return; // 
+      return; 
     }
 
     try {
