@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
 
-function LoginPage({isLoggedIn, setIsLoggedIn}) {
+function LoginPage() {
   useEffect(() => {
     async function load() {
       const response = await fetch("Users.json");

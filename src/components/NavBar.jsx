@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import Balance from "../pages/BalancePage";
 
 //Accepts isLoggedIn as a prop 
-function NavBar({ isLoggedIn }) {
+function NavBar() {
+  const isLoggedIn = Boolean(localStorage.getItem("token"));
+  
   return (
     <div className="header">
       <div className="nav-bar">
@@ -14,9 +16,10 @@ function NavBar({ isLoggedIn }) {
           />
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
+
               {/* Link to home is always shown */}
               <Link to="/">Home</Link>
-              <Link to="/AddListing">Add Listing</Link>
+             
 
               {/* Links that are dependent on if user is logged in */}
               {isLoggedIn ? (
@@ -28,12 +31,12 @@ function NavBar({ isLoggedIn }) {
                 </>
               ) : (
                 <>
-                  {/* Links that are shown for guests */}
+                    {/* Links that are shown for guests */}
               
                   <Link to="/about us">About us</Link>
                   <Link to="/jobs">Jobs</Link>
                 </>
-              )}
+                    )}
             </div>
           </div>
           <div className="nav-bar-login">

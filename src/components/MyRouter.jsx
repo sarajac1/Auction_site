@@ -11,12 +11,12 @@ import BidsPage from "../pages/UserBidsPage";
 
 
 //Accepts props and passes it to components
-function MyRouter({ isLoggedIn, setIsLoggedIn}) {
+function MyRouter() {
   return (
     <BrowserRouter>
-      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <NavBar  />
       <Routes>
-        <Route path="/login-page" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login-page" element={<LoginPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/item/:id" element={<ItemPage />} />
         <Route path="/AddListing" element={<AddListing/>}/>
