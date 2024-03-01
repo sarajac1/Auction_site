@@ -91,10 +91,12 @@ const Gallery = () => {
   };
 
   function GetCurrentPrice(itemId, startBid) {
-    const bid = BidPrice.find((bid) => bid.ItemId === itemId);
+    const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
 
-    if (bid) {
-      return bid.bidamount; // Remove "Souls" from here
+    if (bidsForItem.length > 0) {
+      // Get the highest bid amount for the item
+      const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
+      return highestBid;
     } else {
       return startBid;
     }
