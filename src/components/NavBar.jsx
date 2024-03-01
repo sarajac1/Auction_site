@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Balance from "../pages/BalancePage";
+import Balance from "/pages/BalancePage";
 
 export default function NavBar() {
   return (
