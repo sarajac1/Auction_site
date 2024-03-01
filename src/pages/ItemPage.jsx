@@ -6,6 +6,7 @@ function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
   const [selectedListing, setSelectedListing] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
+  const [BidPrice, setBidPrice] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,6 +25,21 @@ function ItemPage() {
     fetchData();
   }, [itemId]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/Bids.json");
+        const price = await response.json();
+        setBidPrice(price.bids);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setBidPrice([]);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleBidChange = (event) => {
     setBidAmount(parseInt(event.target.value, 10));
   };
@@ -34,22 +50,94 @@ function ItemPage() {
     console.log(`Placing bid of ${bidAmount} Souls`);
   };
 
+  /* Find highest bid */
+  function GetCurrentPrice(itemId, startBid) {
+    const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
+
+    if (bidsForItem.length > 0) {
+      // Get the highest bid amount for the item
+      const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
+      return highestBid;
+    } else {
+      return startBid;
+    }
+  }
+
+  /* CALCULATING DATES */
+  function dateDiffInDaysAndHours(a, b) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const _MS_PER_HOUR = 1000 * 60 * 60;
+    const timeDiff = b - a;
+    const days = Math.floor(timeDiff / _MS_PER_DAY);
+    const remainingMilliseconds = timeDiff % _MS_PER_DAY;
+    const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
+    return { days, hours };
+  }
+
+  function CalcEndDate(endDateString) {
+    const currentDate = new Date();
+    const endDate = new Date(endDateString);
+    const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
+
+    if (days <= 1) {
+      return (
+        <div className="redText">
+          Ends in: {days} days, {hours} hours
+        </div>
+      );
+    }
+    return (
+      <div className="darkText">
+        Ends in: {days} days, {hours} hours
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="container">
       {/* If a listing is selected, display its details */}
       {selectedListing && (
-        <div>
-          <h1>{selectedListing.title}</h1>
-          <p>{selectedListing.description}</p>
-          <img src={selectedListing.image} alt={selectedListing.title} />
-          <p>End Date: {selectedListing.enddate}</p>
-          <p>Starting Bid: {selectedListing.startbid} Souls</p>
-          <p>Highest bid by: BIDDING DB SHOULD BE CONNECTED HERE</p>
-          {/* Bid field */}
-          <div><BiddingForm selectedListing={selectedListing} /></div>
-          <button onClick={() => setSelectedListing(null)}>
-            Back to Listings
-          </button>
+        <div className="item-wrapper">
+          <div className="col1">
+            <img src={selectedListing.image} alt={selectedListing.title} />
+          </div>
+          <div className="col2">
+            <div className="darkText">{selectedListing.startdate}</div>
+            <h1>{selectedListing.title}</h1>
+            <div className="item-blurb">
+              {selectedListing.description}
+              <br />
+              <br />
+              Starting Bid: {selectedListing.startbid} Souls
+            </div>
+
+            <div className="darkText">Highest bid by: </div>
+            <div className="priceText">
+              {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
+              Souls
+            </div>
+            <div>{CalcEndDate(selectedListing.enddate)}</div>
+            {/* Bid field */}
+            <form onSubmit={handleBidSubmit}>
+              <label>
+                <input
+                  id="bid-input"
+                  type="number"
+                  value={bidAmount}
+                  onChange={handleBidChange}
+                />
+              </label>
+              <button className="rounded-button" type="submit">
+                Place Bid
+              </button>
+            </form>
+            <button
+              className="discreet-button"
+              onClick={() => setSelectedListing(null)}
+            >
+              Back to Listings
+            </button>
+          </div>
         </div>
       )}
     </div>
