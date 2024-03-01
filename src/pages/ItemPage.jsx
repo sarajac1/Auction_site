@@ -118,19 +118,8 @@ function ItemPage() {
             </div>
             <div>{CalcEndDate(selectedListing.enddate)}</div>
             {/* Bid field */}
-            <form onSubmit={handleBidSubmit}>
-              <label>
-                <input
-                  id="bid-input"
-                  type="number"
-                  value={bidAmount}
-                  onChange={handleBidChange}
-                />
-              </label>
-              <button className="rounded-button" type="submit">
-                Place Bid
-              </button>
-            </form>
+           <div><BiddingForm selectedListing={selectedListing} /></div>
+
             <button
               className="discreet-button"
               onClick={() => setSelectedListing(null)}

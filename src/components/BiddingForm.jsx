@@ -57,9 +57,9 @@ function BiddingForm({selectedListing}) {
       <form onSubmit={handleSubmit}>
         <label>
           Bid Amount:
-          <input type="number" value={bid} onChange={e => setBid(e.target.value)} />
+          <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
         </label>
-        <button type="submit">Place Bid</button>
+        <button className="rounded-button" type="submit">Place Bid</button>
       </form>
       {message && <p>{message}</p>}
       <p>Current Balance: {user.balance} Souls</p> {/**THIS SHOULD BE REPLACED WHEN THE BALANCE ON THE TOP OF THE PAGE IS DISPLAYED! */}
