@@ -4,6 +4,10 @@ import LoginPage from "../pages/loginPage.jsx";
 import HomePage from "../pages/HomePage.jsx";
 import ItemPage from "../pages/ItemPage.jsx";
 import AddListing from "../pages/AddListing.jsx"
+import ListingsPage from "../pages/ListingsPage";
+import BidsPage from "../pages/UserBidsPage";
+
+
 
 function MyRouter() {
   return (
@@ -14,6 +18,8 @@ function MyRouter() {
         <Route path="/" element={<HomePage />} />
         <Route path="/item/:id" element={<ItemPage />} />
         <Route path="/AddListing" element={<AddListing/>}/>
+        <Route path="/listings" element={<ListingsPage />} />
+        <Route path="/bids" element={<BidsPage />} />
       </Routes>
     </BrowserRouter>
   );
