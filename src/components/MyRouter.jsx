@@ -9,10 +9,12 @@ import BidsPage from "../pages/UserBidsPage";
 
 
 
+
+//Accepts props and passes it to components
 function MyRouter() {
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar  />
       <Routes>
         <Route path="/login-page" element={<LoginPage />} />
         <Route path="/" element={<HomePage />} />
