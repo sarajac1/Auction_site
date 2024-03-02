@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import BiddingForm from '../components/BiddingForm';
+import { Link, useParams } from "react-router-dom";
+
 
 function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
@@ -118,13 +118,26 @@ function ItemPage() {
             </div>
             <div>{CalcEndDate(selectedListing.enddate)}</div>
             {/* Bid field */}
-           <div><BiddingForm selectedListing={selectedListing} /></div>
-
+            <form onSubmit={handleBidSubmit}>
+              <label>
+                <input
+                  id="bid-input"
+                  type="number"
+                  value={bidAmount}
+                  onChange={handleBidChange}
+                />
+              </label>
+              <button className="rounded-button" type="submit">
+                Place Bid
+              </button>
+            </form>
             <button
               className="discreet-button"
               onClick={() => setSelectedListing(null)}
             >
-              Back to Listings
+              <Link to="/" className="discreet-button">
+                Back to Listings
+              </Link>
             </button>
           </div>
         </div>
