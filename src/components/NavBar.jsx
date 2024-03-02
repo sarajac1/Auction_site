@@ -26,7 +26,7 @@ function NavBar() {
                 <>
                   <Link to="/listings">Your Listings</Link>
                   <Link to="/profile">Profile</Link>
-                  <Link to="/balance">Balance: </Link>
+                  <Balance />
                   <Link to="/bids">Your Bids</Link>
                 </>
               ) : (
