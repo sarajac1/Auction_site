@@ -6,7 +6,7 @@ const UserBids = ({ userId }) => {
   useEffect(() => {
     const fetchBids = async () => {
       try {
-        const response = await fetch("/Bids.json");
+        const response = await fetch("Bids.json");
         const data = await response.json();
         const userBids = data.Bids.filter(bid => bid.BidderId === userId);
         setBids(userBids);
