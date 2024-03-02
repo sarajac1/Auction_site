@@ -1,9 +1,18 @@
-
+import React, { useState, useEffect } from "react";
 import UserListings from "../components/UserListings";
+
 function ListingsPage() {
+  const [currentUserId, setCurrentUserId] = useState(null);
+
+  useEffect(() => {
+    // Предполагаем, что идентификатор пользователя сохранен в localStorage
+    const userID = localStorage.getItem("token_id");
+    setCurrentUserId(userID);
+  }, []);
+
   return (
     <>
-      <UserListings userId="4" />
+      {currentUserId ? <UserListings sellerid={currentUserId} /> : <div>Loading...</div>}
     </>
   );
 }

@@ -17,6 +17,8 @@ export default function NavBar() {
               <Link to="/AddListing">Add Listing</Link>
               <Link to="/About us">About us</Link>
               <Link to="/Jobs">Jobs</Link>
+              <Link to="/listings">Your listings</Link>
+              <Link to="/bids">Bids</Link>
               <Balance />
             </div>
           </div>
