@@ -6,7 +6,7 @@ import ItemPage from "../pages/ItemPage.jsx";
 import AddListing from "../pages/AddListing.jsx"
 import ListingsPage from "../pages/ListingsPage";
 import BidsPage from "../pages/UserBidsPage";
-import UserListings from "../UserListings";
+//import UserListings from "../UserListings";
 
 
 
