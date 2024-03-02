@@ -4,7 +4,7 @@ import Balance from "../pages/BalancePage";
 //Accepts isLoggedIn as a prop 
 function NavBar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
-
+  
   return (
     <div className="header">
       <div className="nav-bar">
@@ -19,7 +19,7 @@ function NavBar() {
 
               {/* Link to home is always shown */}
               <Link to="/">Home</Link>
-
+             
 
               {/* Links that are dependent on if user is logged in */}
               {isLoggedIn ? (
@@ -27,16 +27,16 @@ function NavBar() {
                   <Link to="/your-listings">Your Listings</Link>
                   <Link to="/profile">Profile</Link>
                   <Link to="/balance">Balance: </Link>
-                  <Link to="/bids">Your Bids</Link>
+                  <Link to="/your-bids">Your Bids</Link>
                 </>
               ) : (
                 <>
-                  {/* Links that are shown for guests */}
-
+                    {/* Links that are shown for guests */}
+              
                   <Link to="/about us">About us</Link>
                   <Link to="/jobs">Jobs</Link>
                 </>
-              )}
+                    )}
             </div>
           </div>
           <div className="nav-bar-login">
