@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import Balance from "../pages/BalancePage";
 
-export default function NavBar() {
+//Accepts isLoggedIn as a prop 
+function NavBar() {
+  const isLoggedIn = Boolean(localStorage.getItem("token"));
+  
   return (
     <div className="header">
       <div className="nav-bar">
@@ -13,17 +16,35 @@ export default function NavBar() {
           />
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
+
+              {/* Link to home is always shown */}
               <Link to="/">Home</Link>
-              <Link to="/AddListing">Add Listing</Link>
-              <Link to="/About us">About us</Link>
-              <Link to="/Jobs">Jobs</Link>
-              <Link to="/listings">Your listings</Link>
-              <Link to="/bids">Bids</Link>
-              <Balance />
+             
+
+              {/* Links that are dependent on if user is logged in */}
+              {isLoggedIn ? (
+                <>
+                  <Link to="/your-listings">Your Listings</Link>
+                  <Link to="/profile">Profile</Link>
+                  <Link to="/balance">Balance: </Link>
+                  <Link to="/your-bids">Your Bids</Link>
+                </>
+              ) : (
+                <>
+                    {/* Links that are shown for guests */}
+              
+                  <Link to="/about us">About us</Link>
+                  <Link to="/jobs">Jobs</Link>
+                </>
+                    )}
             </div>
           </div>
           <div className="nav-bar-login">
-            <Link to="/login-page">Login Page</Link>
+            {isLoggedIn ? (
+              <Link to="/logout">Logout</Link>
+            ) : (
+              <Link to="/login-page">Login Page</Link>
+            )}
           </div>
         </nav>
         <div className="slogan">
@@ -33,3 +54,5 @@ export default function NavBar() {
     </div>
   );
 }
+
+export default NavBar; 
