@@ -4,6 +4,7 @@ import Balance from "../pages/BalancePage";
 //Accepts isLoggedIn as a prop 
 function NavBar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
+  const isAdmin = localStorage.getItem("isAdmin") === 'true'; 
   
   return (
     <div className="header">
@@ -16,30 +17,36 @@ function NavBar() {
           />
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
-
               {/* Link to home is always shown */}
               <Link to="/">Home</Link>
-             
 
-              {/* Links that are dependent on if user is logged in */}
+              {/* Links shown when user is logged in */}
               {isLoggedIn ? (
                 <>
                   <Link to="/your-listings">Your Listings</Link>
                   <Link to="/profile">Profile</Link>
-                  <Link to="/balance">Balance: </Link>
+                  <Link to="/balance">Balance</Link>
                   <Link to="/your-bids">Your Bids</Link>
+
+                  {/* Admin-specific links */}
+                  {isAdmin && (
+                    <>
+                      <Link to="/listings">Listings</Link>
+                      <Link to="/users">Users</Link>
+                    </>
+                  )}
                 </>
               ) : (
+                // Links shown for guests
                 <>
-                    {/* Links that are shown for guests */}
-              
                   <Link to="/about us">About us</Link>
                   <Link to="/jobs">Jobs</Link>
                 </>
-                    )}
+              )}
             </div>
           </div>
           <div className="nav-bar-login">
+            {/* Visibility of login/logout buttons based on login status */}
             {isLoggedIn ? (
               <Link to="/logout">Logout</Link>
             ) : (
@@ -55,4 +62,4 @@ function NavBar() {
   );
 }
 
-export default NavBar; 
+export default NavBar;
