@@ -23,7 +23,7 @@ function NavBar() {
               {/* Links shown when user is logged in */}
               {isLoggedIn ? (
                 <>
-                  <Link to="/your-listings">Your Listings</Link>
+                  <Link to="/listings">Your Listings</Link>
                   <Link to="/profile">Profile</Link>
                   <Link to="/balance">Balance</Link>
                   <Link to="/your-bids">Your Bids</Link>
@@ -61,5 +61,6 @@ function NavBar() {
     </div>
   );
 }
+
 
 export default NavBar;

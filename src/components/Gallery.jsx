@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+
 const Gallery = () => {
   const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
   const [GalleryItems, setGalleryItems] = useState([]);
@@ -11,7 +12,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("Listings.json");
+        const response = await fetch("/Listings.json");
         const data = await response.json();
         setOriginalGalleryItems(data.listings);
         setGalleryItems(data.listings);
@@ -28,7 +29,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("Bids.json");
+        const response = await fetch("/Bids.json");
         const price = await response.json();
         setBidPrice(price.bids);
       } catch (error) {

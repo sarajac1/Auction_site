@@ -4,7 +4,7 @@ import ReactModal from 'react-modal';
 function LoginPage() {
   useEffect(() => {
     async function load() {
-      const response = await fetch("Users.json");
+      const response = await fetch("/Users.json");
       let AllUsers = await response.json();
       const UsersList = AllUsers.users;
       setUsersList(UsersList);

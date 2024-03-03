@@ -6,6 +6,7 @@ import ItemPage from "../pages/ItemPage.jsx";
 import AddListing from "../pages/AddListing.jsx"
 import ListingsPage from "../pages/ListingsPage";
 import BidsPage from "../pages/UserBidsPage";
+//import UserListings from "../UserListings";
 
 
 
@@ -22,6 +23,7 @@ function MyRouter() {
         <Route path="/AddListing" element={<AddListing/>}/>
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/bids" element={<BidsPage />} />
+        {/*<Route path="/your-listings" element={<UserListings />}/>  --> users listings page will have to be activated when the userlistings page is solved*/}
       </Routes>
     </BrowserRouter>
   );
