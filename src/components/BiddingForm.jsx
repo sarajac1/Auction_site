@@ -40,6 +40,18 @@ function BiddingForm({ selectedListing }) {
     }
     
     try {
+      // Fetch existing bids for the selected item
+      const existingBidsResponse = await fetch(`http://localhost:3000/bids?itemid=${selectedListing.id}`);
+      const existingBids = await existingBidsResponse.json();
+
+      // Determine the highest existing bid amount for the item
+      const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max ? bid.bidamount : max, 0);
+
+      // Compare the submitted bid with the highest existing bid
+      if (bidAmount <= highestExistingBidAmount) {
+        setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
+        return;
+      }
       const bidResponse = await fetch('http://localhost:3000/bids', {
         method: 'POST',
         headers: {

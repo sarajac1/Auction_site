@@ -71,49 +71,6 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
-    },
-    {
-      "id": "6de2",
-      "itemid": 1,
-      "bidamount": "400",
-      "datetime": "2024-03-04T19:20:35.733Z",
-      "isactive": true
-    },
-    {
-      "id": "c42d",
-      "itemid": 1,
-      "bidamount": "401",
-      "datetime": "2024-03-04T19:23:30.878Z",
-      "isactive": true
-    },
-    {
-      "id": "a2f1",
-      "itemid": 1,
-      "bidamount": "402",
-      "datetime": "2024-03-04T19:30:46.007Z",
-      "isactive": true
-    },
-    {
-      "id": "df42",
-      "itemid": 1,
-      "bidamount": "403",
-      "datetime": "2024-03-04T19:34:02.238Z",
-      "isactive": true
-    },
-    {
-      "id": "07d6",
-      "itemid": 1,
-      "bidamount": "404",
-      "datetime": "2024-03-04T19:45:28.775Z",
-      "isactive": true
-    },
-    {
-      "id": "b17b",
-      "itemid": 1,
-      "bidderid": 1,
-      "bidamount": 405,
-      "datetime": "2024-03-04T20:51:45.256Z",
-      "isactive": true
     }
   ]
 }
