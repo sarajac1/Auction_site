@@ -1,6 +1,12 @@
 body {
   background-color: #090706;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  font-weight: bold;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -166,6 +172,22 @@ input[type="number"] {
   background: black;
 }
 
+.rounded-button-small {
+  background-color: #2a2829;
+  color: #fff2e7;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  border: 2px solid #fff2e7;
+  cursor: pointer;
+}
+.rounded-button-small:hover {
+  background: black;
+}
+
 .discreet-button {
   background-color: #2a2829;
   color: #a4826d;
@@ -283,9 +305,8 @@ input[type="number"] {
 
 thead tr {
   margin-bottom: 5px;
-  border-bottom: #E4CAB5 1px solid;
+  border-bottom: #e4cab5 1px solid;
 }
-
 
 .bids_page {
   height: 600px;
@@ -307,4 +328,33 @@ thead tr {
 .bids_info {
   color: white;
   text-align: center;
+}
+
+.login-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+
+  h1 {
+    font-size: 22px;
+    color: #fff2e7;
+    text-align: center;
+  }
+  .user-info {
+    background-color: #2a2829; /* Grey background color */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border color */
+  }
+}
+
+input {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px; /* Rounded corners for input fields */
+  background-color: #e4cab5;
+  color: black;
 }
