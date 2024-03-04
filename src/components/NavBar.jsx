@@ -20,24 +20,26 @@ function NavBar() {
               {/* Link to home is always shown */}
               <Link to="/">Home</Link>
 
-              {/* Links shown when user is logged in */}
-              {isLoggedIn ? (
+              {/* Links shown when user is logged in (not admin) */}
+              {isLoggedIn && !isAdmin && (
                 <>
                   <Link to="/listings">Your Listings</Link>
                   <Link to="/profile">Profile</Link>
                   <Link to="/balance">Balance</Link>
                   <Link to="/your-bids">Your Bids</Link>
+                  </>
+              )}
 
                   {/* Admin-specific links */}
-                  {isAdmin && (
+                  {isLoggedIn && isAdmin && (
                     <>
                       <Link to="/listings">Listings</Link>
                       <Link to="/users">Users</Link>
                     </>
                   )}
-                </>
-              ) : (
-                // Links shown for guests
+
+              { /* Links shown for guests */}
+              {!isLoggedIn && (
                 <>
                   <Link to="/about us">About us</Link>
                   <Link to="/jobs">Jobs</Link>
