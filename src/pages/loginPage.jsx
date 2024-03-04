@@ -58,7 +58,7 @@ function LoginPage() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    sessionStorage.removeItem("token_id");
+    localStorage.removeItem("token_id");
     setIsLoggedIn(false);
   };
 
