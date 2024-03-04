@@ -29,6 +29,7 @@ function NavBar() {
                   <Link to="/your-bids">Your Bids</Link>
                   </>
               )}
+            
 
                   {/* Admin-specific links */}
                   {isLoggedIn && isAdmin && (
@@ -38,8 +39,8 @@ function NavBar() {
                     </>
                   )}
 
-              { /* Links shown for guests */}
-              {!isLoggedIn && (
+                {/* Links shown for guests */}
+                  {!isLoggedIn && (
                 <>
                   <Link to="/about us">About us</Link>
                   <Link to="/jobs">Jobs</Link>
@@ -63,6 +64,7 @@ function NavBar() {
     </div>
   );
 }
+
 
 
 export default NavBar;
