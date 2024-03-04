@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Balance from "../pages/BalancePage";
 
-//Accepts isLoggedIn as a prop 
+
 function NavBar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   const isAdmin = localStorage.getItem("isAdmin") === 'true'; 
