@@ -71,6 +71,13 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
+    },
+    {
+      "id": "8ace",
+      "itemid": 1,
+      "bidamount": "400",
+      "datetime": "2024-03-04T18:43:41.575Z",
+      "isactive": true
     }
   ]
 }

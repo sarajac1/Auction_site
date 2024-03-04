@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import BalancePage from "../pages/BalancePage.jsx";
 
-function BiddingForm({ selectedListing, userId }) {
+function BiddingForm({ selectedListing }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bid, setBid] = useState('');
   const [message, setMessage] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/users/${id}`);
-        if (!response.ok) {
-          throw new Error('Could not fetch user data');
-        }
+        const response = await fetch("/Users.json");
         const data = await response.json();
-        setUser(data);
+        setUser(data.users);
+        const userID = localStorage.getItem("token_id");
+        setIsLoggedIn(data.users.find((user) => user.id == userID));
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        setMessage('Error fetching user data.');
+        console.error("Error fetching data:", error);
+        setUserData([]);
       }
     };
 
-    if (userId) {
-      fetchUserData();
-    }
-  }, [userId]);
+    fetchData();
+  }, []);
+
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -36,9 +35,6 @@ function BiddingForm({ selectedListing, userId }) {
       return;
     }
 
-
-
-
     try {
       const bidResponse = await fetch('http://localhost:3000/bids', {
         method: 'POST',
@@ -47,9 +43,7 @@ function BiddingForm({ selectedListing, userId }) {
         },
         body: JSON.stringify({
           itemid: selectedListing.id,
-          //CHANGE THE PATH FOR THE USER ID
           userid: user.id,
-
           bidamount: bid,
           datetime: submissionTime.toISOString(),
           isactive: true,
@@ -72,6 +66,7 @@ function BiddingForm({ selectedListing, userId }) {
       setMessage('Failed to place bid. Error: ' + error.message);
     }
   }
+ 
 
   return (
     <div>
@@ -83,7 +78,7 @@ function BiddingForm({ selectedListing, userId }) {
         <button className="rounded-button" type="submit">Place Bid</button>
       </form>
       {message && <p>{message}</p>}
-      <BalancePage /> Souls {/**THIS SHOULD BE REPLACED WHEN THE BALANCE ON THE TOP OF THE PAGE IS DISPLAYED! */}
+      <BalancePage /> Souls 
     </div>
   );
 }
