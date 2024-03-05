@@ -46,6 +46,7 @@ function LoginPage() {
     if (existingUser != null) {
       localStorage.setItem("token", credentials.username);
       localStorage.setItem("token_id", existingUser.id);
+      localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
       setIsLoggedIn(true);
     } else {
       if (confirm("User not found, Do you want to register?")) {

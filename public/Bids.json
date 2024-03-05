@@ -17,7 +17,7 @@
       "isactive": true
     },
     {
-      "id": 3,
+      "id": "3",
       "itemid": 4,
       "bidderid": 5,
       "bidamount": 9200,
@@ -25,7 +25,7 @@
       "isactive": true
     },
     {
-      "id": 4,
+      "id": "4",
       "itemid": 2,
       "bidderid": 2,
       "bidamount": 4100,
@@ -33,7 +33,7 @@
       "isactive": true
     },
     {
-      "id": 5,
+      "id": "5",
       "itemid": 3,
       "bidderid": 6,
       "bidamount": 4200,
@@ -41,7 +41,7 @@
       "isactive": true
     },
     {
-      "id": 6,
+      "id": "6",
       "itemid": 9,
       "bidderid": 2,
       "bidamount": 2200,
@@ -49,7 +49,7 @@
       "isactive": false
     },
     {
-      "id": 7,
+      "id": "7",
       "itemid": 9,
       "bidderid": 6,
       "bidamount": 2100,
@@ -57,7 +57,7 @@
       "isactive": false
     },
     {
-      "id": 8,
+      "id": "8",
       "itemid": 8,
       "bidderid": 1,
       "bidamount": 2100,
@@ -65,7 +65,7 @@
       "isactive": false
     },
     {
-      "id": 9,
+      "id": "9",
       "itemid": 8,
       "bidderid": 6,
       "bidamount": 2200,
