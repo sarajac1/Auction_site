@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import RemoveListing from './RemoveListing';
 
 const UserListings = ({ sellerid }) => {
   const [listings, setListings] = useState([]);
@@ -7,15 +8,19 @@ const UserListings = ({ sellerid }) => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const listingsResponse = await fetch("/Listings.json");
+        const listingsResponse = await fetch("/db.json");
         const listingsData = await listingsResponse.json();
-        // Исправлено: Listings на listings и использование нижнего регистра для свойств
-        setListings(listingsData.listings.filter(listing => listing.sellerid.toString() === sellerid));
+        const { listings, bids } = listingsData;
 
-        const bidsResponse = await fetch("/Bids.json");
-        const bidsData = await bidsResponse.json();
+        // Исправлено: Listings на listings и использование нижнего регистра для свойств
+        const filteredListings = listings.filter(listing => listing.sellerid.toString() === sellerid);
+
+        // Filter listings based on sellerid
+
+        // Update state with filtered listings
+        setListings(filteredListings);
         // Исправлено: Bids на bids
-        setBids(bidsData.bids);
+        setBids(bids);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -75,11 +80,15 @@ const UserListings = ({ sellerid }) => {
                 <td className="listings_info listings_table_details">{listing.startbid} S <div className='line_which_will_work bottom_line'></div></td>
                 <td className="listings_info listings_table_details">{getHighestBid(listing.id)} S <div className='line_which_will_work bottom_line'></div></td>
                 <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)} <div className='line_which_will_work bottom_line'></div></td>
-                <td className="listings_info listings_table_details">Edit <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details"> <div className="actions">
+                  <button className="edit_button">Edit</button>
+                  <RemoveListing listingId={listing.id} />
+                </div>
+                </td>
               </tr>
             ))}
           </tbody>
-        </table> 
+        </table>
         <button className='button_create_listing'><a className='a_create_listing' href="/AddListing">Create listing</a></button>
       </div>
     </div>

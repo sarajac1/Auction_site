@@ -1,49 +1,34 @@
 import React, { useState} from 'react';
 
 
-function RemoveListing() {
-  const [listingId, setListingId] = useState('');
+function RemoveListing({ listingId, onRemove }) {
+  const [message, setMessage] = useState('');
 
-  const handleChange = (e) => {
-    setListingId(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!listingId) {
-      alert('Please enter a listing ID.');
-      return;
-    }
+  async function handleRemove () {
     try {
-      // Send a DELETE request to your JSON-server endpoint for listings, targeting a specific listing by ID
       const response = await fetch(`http://localhost:3000/listings/${listingId}`, {
-        method: 'DELETE',
+        method: 'DELETE'
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to delete listing');
+      if (response.ok) {
+        setMessage('Listing removed successfully.');
+        onRemove(listingId);
+      } else {
+        const data = await response.json();
+        setMessage(`Error: ${data.message}`);
       }
-
-      alert('Listing removed successfully!');
-      setListingId(''); // Reset the listing ID input after successful deletion
     } catch (error) {
-      console.error('Error deleting listing:', error);
-      alert('Failed to delete listing. Please try again.');
+      console.error('Error:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={listingId}
-        onChange={handleChange}
-        placeholder="Listing ID"
-        required
-      />
-      <button type="submit">Remove Listing</button>
-    </form>
+    <div>
+      <button onClick={handleRemove}>Delete</button>
+      {message && <p>{message}</p>}
+    </div>
   );
 };
+
 
 export default RemoveListing;
