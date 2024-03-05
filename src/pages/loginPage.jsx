@@ -63,6 +63,7 @@ function LoginPage() {
     if (existingUser != null) {
       localStorage.setItem("token", credentials.username);
       localStorage.setItem("token_id", existingUser.id);
+      localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
       setIsLoggedIn(true);
     } else {
       if (confirm("User not found, Do you want to register?")) {
@@ -71,12 +72,21 @@ function LoginPage() {
         console.error("User not found!");
       }
     }
+
+    window.location.reload();
+
+  };
+
+  const reloadPage = () => {
+    window.location.reload();
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("token_id");
     setIsLoggedIn(false);
+    window.location.reload();
+
   };
 
   const handleCloseRegistrationForm = () => {
