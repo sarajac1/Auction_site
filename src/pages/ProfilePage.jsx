@@ -10,7 +10,7 @@ function ItemPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Users.json");
+        const response = await fetch("/db.json");
         const data = await response.json();
         setUserData(data.users);
         const userID = localStorage.getItem("token_id");

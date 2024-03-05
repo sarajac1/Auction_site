@@ -11,7 +11,7 @@ function LoginPage() {
     }
 
     async function load() {
-      const response = await fetch("/Users.json");
+      const response = await fetch("/db.json");
       let AllUsers = await response.json();
       const UsersList = AllUsers.users;
       setUsersList(UsersList);
@@ -48,6 +48,8 @@ function LoginPage() {
       localStorage.setItem("token_id", existingUser.id);
       localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
       setIsLoggedIn(true);
+      window.location.reload();
+      window.location.href = '/';
     } else {
       if (confirm("User not found, Do you want to register?")) {
         setRegistrationForm(true);
@@ -57,10 +59,18 @@ function LoginPage() {
     }
   };
 
+  const reloadPage = () => {
+    window.location.reload();
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("token_id");
     setIsLoggedIn(false);
+    window.location.reload();
+    window.location.href = '/';
+
+
   };
 
   const handleCloseRegistrationForm = () => {
