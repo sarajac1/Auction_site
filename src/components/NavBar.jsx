@@ -28,6 +28,7 @@ function NavBar() {
                   <Link to="/profile">Profile</Link>
                   <Balance />
                   <Link to="/bids">Your Bids</Link>
+                  <Link to="/remove-listing">Remove Listing</Link>
                 </>
               ) : (
                 <>

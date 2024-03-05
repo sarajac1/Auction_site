@@ -1,20 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-// Import a context if using Context API to manage user state, or pass userId as a prop to this component
 
-// Mock context for demonstration purposes. Replace with your actual UserContext or pass userId as a prop
-// const UserContext = React.createContext();
 
 function RemoveListing({ userId }) {
   const [listings, setListings] = useState([]);
 
-  // If using context to manage user state, replace userId with useContext(UserContext).userId;
-  // const { userId } = useContext(UserContext);
 
   useEffect(() => {
     const fetchListings = async () => {
       try {
         // Replace `userId` with the appropriate variable that holds the user's ID
-        const response = await fetch(`http://localhost:3000/listings?sellerId=${userId}`);
+        const response = await fetch(`http://localhost:5174/listings?sellerId=${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch listings');
         }
@@ -30,7 +25,7 @@ function RemoveListing({ userId }) {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/listings/${id}`, {
+      const response = await fetch(`http://localhost:5174/listings/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
