@@ -72,7 +72,7 @@ const UserBids = ({ bidderid }) => {
     <div className='bids_page'>
       {/* Active Auctions Table */}
       <div className='bids_page_content'>
-        <h2 className="bids_heading">Ended Auctions</h2>
+        <h2 className="bids_heading">Active Auctions</h2>
         <table className='bids_table'>
           <thead className='table_head'>
             <tr>
@@ -85,10 +85,10 @@ const UserBids = ({ bidderid }) => {
           <tbody>
             {activeBids.map(bid => (
               <tr key={bid.id}>
-                <td className="bids_info bids_table_details">{bid.listingTitle}<div className='line_which_will_work top_line'></div></td>
-                <td className="bids_info bids_table_details">{bid.bidamount} S<div className='line_which_will_work top_line'></div></td>
-                <td className="bids_info bids_table_details">{bid.highestBid} S<div className='line_which_will_work top_line'></div></td>
-                <td className="bids_info bids_table_details">{calculateTimeLeft(bid.endDate)}<div className='line_which_will_work top_line'></div></td>
+                <td className="bids_info bids_table_details">{bid.listingTitle}<div className='line_which_will_work bottom_line'></div></td>
+                <td className="bids_info bids_table_details">{bid.bidamount} S<div className='line_which_will_work bottom_line'></div></td>
+                <td className="bids_info bids_table_details">{bid.highestBid} S<div className='line_which_will_work bottom_line'></div></td>
+                <td className="bids_info bids_table_details">{calculateTimeLeft(bid.endDate)}<div className='line_which_will_work bottom_line'></div></td>
               </tr>
             ))}
           </tbody>
@@ -109,14 +109,14 @@ const UserBids = ({ bidderid }) => {
           <tbody>
             {completedBids.map((bid, index) => (
               <tr key={index}>
-                <td className="bids_info bids_table_details">{bid.listingTitle}<div className='line_which_will_work top_line'></div></td>
-                <td className="bids_info bids_table_details">{bid.highestBid} S<div className='line_which_will_work top_line'></div></td>
-                <td className="bids_info bids_table_details">{bid.status}<div className='line_which_will_work top_line'></div></td>
-                <td className="bids_info bids_table_details">
+                <td className="bids_info bids_table_details">{bid.listingTitle}<div className='line_which_will_work bottom_line'></div></td>
+                <td className="bids_info bids_table_details">{bid.highestBid} S<div className='line_which_will_work bottom_line'></div></td>
+                <td className="bids_info bids_table_details">{bid.status}<div className='line_which_will_work bottom_line'></div></td>
+                <td className="bids_info bids_table_details contact_seller_cell">
                   {bid.status === 'Win' && (
                     <button className='bids_button_contact_seller' onClick={() => handleShowSellerInfo(bid.seller)}>Contact Seller</button>
                   )}
-                  <div className='line_which_will_work top_line line_contact_seller'></div>
+                  <div className='line_which_will_work bottom_line line_contact_seller'></div>
                 </td>
               </tr>
             ))}

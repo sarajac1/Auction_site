@@ -51,7 +51,7 @@ function AddListing() {
 
     try {
       // Send a POST request to your JSON-server. make sure to have the server running
-      const response = await fetch('http://localhost:3000/listings', {
+      const response = await fetch('http://localhost:3000/db', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
