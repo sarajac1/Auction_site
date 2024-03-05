@@ -1,5 +1,6 @@
 body {
   background-color: #090706;
+  font-family: "Titillium Web";
 }
 a {
   text-decoration: none;
@@ -279,7 +280,7 @@ input::-webkit-inner-spin-button {
 }
 
 .listings_page {
-  height: 600px;
+  height: auto;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -294,6 +295,7 @@ input::-webkit-inner-spin-button {
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  padding-bottom: 90px;
 }
 
 .listing_table {
@@ -415,7 +417,6 @@ input::-webkit-inner-spin-button {
 }
 
 .bids_table_details {
-  padding: 0px;
   height: 50px; 
 }  
 
@@ -428,10 +429,15 @@ input::-webkit-inner-spin-button {
   font-size: 14px;
   text-decoration: none;
   display: inline-block;
+  width: 100px;
 }
 
 .line_contact_seller {
-  margin-top: 15px;
+  margin-top: 9px;
+}
+
+.contact_seller_cell {
+  height: 50px;
 }
 
 .modal {
@@ -450,6 +456,10 @@ input::-webkit-inner-spin-button {
 
 .modal_close_button {
   font-size: 18px;
+}
+
+.bids_table tbody tr:last-child td .line_which_will_work {
+  display: block;
 }
 
 
