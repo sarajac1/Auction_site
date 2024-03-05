@@ -3,6 +3,13 @@ import ReactModal from "react-modal";
 
 function LoginPage() {
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+
     async function load() {
       const response = await fetch("/Users.json");
       let AllUsers = await response.json();
@@ -51,7 +58,7 @@ function LoginPage() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    sessionStorage.removeItem("token_id");
+    localStorage.removeItem("token_id");
     setIsLoggedIn(false);
   };
 
