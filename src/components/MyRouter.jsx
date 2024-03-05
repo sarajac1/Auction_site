@@ -7,7 +7,7 @@ import AddListing from "../pages/AddListing.jsx";
 import ListingsPage from "../pages/ListingsPage";
 import BidsPage from "../pages/UserBidsPage";
 import ProfilePage from "../pages/ProfilePage.jsx";
-//import UserListings from "../UserListings";
+import RemoveListing from "../components/RemoveListing.jsx";
 
 //Accepts props and passes it to components
 function MyRouter() {
@@ -19,6 +19,7 @@ function MyRouter() {
         <Route path="/" element={<HomePage />} />
         <Route path="/item/:id" element={<ItemPage />} />
         <Route path="/AddListing" element={<AddListing />} />
+        <Route path="/remove-listing" element={<RemoveListing/>} />
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/bids" element={<BidsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
