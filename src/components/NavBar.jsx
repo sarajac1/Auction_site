@@ -51,7 +51,7 @@ function NavBar() {
           <div className="nav-bar-login">
             {/* Visibility of login/logout buttons based on login status */}
             {isLoggedIn ? (
-              <Link to="/logout">Logout</Link>
+              <Link to="/login-page">Logout</Link>
             ) : (
               <Link to="/login-page">Login Page</Link>
             )}
