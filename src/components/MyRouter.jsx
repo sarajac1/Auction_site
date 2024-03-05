@@ -9,7 +9,7 @@ import BidsPage from "../pages/UserBidsPage";
 import ProfilePage from "../pages/ProfilePage.jsx";
 //import UserListings from "../UserListings";
 
-//Accepts props and passes it to components
+
 function MyRouter() {
   return (
     <BrowserRouter>
