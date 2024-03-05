@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import Balance from "../pages/BalancePage";
 
-//Accepts isLoggedIn as a prop 
+
 function NavBar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
+  const isAdmin = localStorage.getItem("isAdmin") === 'true'; 
   
   return (
     <div className="header">
@@ -16,30 +17,39 @@ function NavBar() {
           />
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
-
               {/* Link to home is always shown */}
               <Link to="/">Home</Link>
-             
 
-              {/* Links that are dependent on if user is logged in */}
-              {isLoggedIn ? (
+              {/* Links shown when user is logged in (not admin) */}
+              {isLoggedIn && !isAdmin && (
                 <>
                   <Link to="/listings">Your Listings</Link>
                   <Link to="/profile">Profile</Link>
-                  <Balance />
-                  <Link to="/bids">Your Bids</Link>
-                </>
-              ) : (
+                  <Link to="/balance">Balance</Link>
+                  <Link to="/your-bids">Your Bids</Link>
+                  </>
+              )}
+            
+
+                  {/* Admin-specific links */}
+                  {isLoggedIn && isAdmin && (
+                    <>
+                      <Link to="/listings">Listings</Link>
+                      <Link to="/users">Users</Link>
+                    </>
+                  )}
+
+                {/* Links shown for guests */}
+                  {!isLoggedIn && (
                 <>
-                    {/* Links that are shown for guests */}
-              
                   <Link to="/about us">About us</Link>
                   <Link to="/jobs">Jobs</Link>
                 </>
-                    )}
+              )}
             </div>
           </div>
           <div className="nav-bar-login">
+            {/* Visibility of login/logout buttons based on login status */}
             {isLoggedIn ? (
               <Link to="/logout">Logout</Link>
             ) : (
@@ -55,4 +65,6 @@ function NavBar() {
   );
 }
 
-export default NavBar; 
+
+
+export default NavBar;
