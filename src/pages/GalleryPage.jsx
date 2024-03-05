@@ -12,7 +12,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Listings.json");
+        const response = await fetch("/db.json");
         const data = await response.json();
         setOriginalGalleryItems(data.listings);
         setGalleryItems(data.listings);
@@ -29,7 +29,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Bids.json");
+        const response = await fetch("/db.json");
         const price = await response.json();
         setBidPrice(price.bids);
       } catch (error) {
@@ -123,6 +123,18 @@ const Gallery = () => {
       </div>
     );
   }
+  const deleteListing = async (id) => {
+    try {
+      // Sending DELETE request to the specific listing's endpoint
+      await fetch(`/listings/${id}`, { method: 'DELETE' });
+      // Filter out the deleted listing from GalleryItems state
+      const updatedGalleryItems = GalleryItems.filter(item => item.id !== id);
+      setGalleryItems(updatedGalleryItems);
+    } catch (error) {
+      console.error("Error deleting listing:", error);
+    }
+  };
+
 
   return (
     <div className="container">
@@ -164,6 +176,7 @@ const Gallery = () => {
               </div>
             </div>
           </Link>
+          
         ))}
       </div>
     </div>

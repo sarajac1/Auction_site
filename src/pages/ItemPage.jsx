@@ -12,7 +12,7 @@ function ItemPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/Listings.json"); // Relative path from the public folder
+        const response = await fetch("/db.json"); // Relative path from the public folder
         const data = await response.json();
         const listing = data.listings.find(
           (listing) => listing.id.toString() === itemId
@@ -29,7 +29,7 @@ function ItemPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Bids.json");
+        const response = await fetch("/db.json");
         const price = await response.json();
         setBidPrice(price.bids);
       } catch (error) {
@@ -41,16 +41,6 @@ function ItemPage() {
     fetchData();
   }, []);
 
-  /* const handleBidChange = (event) => {
-    setBidAmount(parseInt(event.target.value, 10));
-  };
-
-  const handleBidSubmit = (event) => {
-    event.preventDefault();
-    // Handle bid submission logic here
-    console.log(`Placing bid of ${bidAmount} Souls`);
-  };
- */
   /* Find highest bid */
   function GetCurrentPrice(itemId, startBid) {
     const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
