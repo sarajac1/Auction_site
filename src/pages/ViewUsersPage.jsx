@@ -1,10 +1,24 @@
+import React, { useState, useEffect } from "react"; 
 
-function ViewUsersPage() {
+const ViewUsersPage = () => {
+  const [users, setUsers] = useState([]);
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
-  return
-  
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      const response = await fetch("/db.json");
+      const data = await response.json();
+      setUsers(data.users);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setUsers([]);
+    }
+    };
+
+
+  }
+  )
 }
 
 
-export default ViewUsersPage; 
