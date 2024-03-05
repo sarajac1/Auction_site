@@ -25,9 +25,9 @@ function NavBar() {
               {isLoggedIn ? (
                 <>
                   <Link to="/listings">Your Listings</Link>
+                  <Link to="/bids">Your Bids</Link>
                   <Link to="/profile">Profile</Link>
                   <Balance />
-                  <Link to="/bids">Your Bids</Link>
                 </>
               ) : (
                 <>

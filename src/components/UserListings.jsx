@@ -56,31 +56,32 @@ const UserListings = ({ sellerid }) => {
 
   return (
     <div className='listings_page'>
-      <h2 className="listings_heading">Your Listings</h2>
-      <table className='listing_table'>
-        <thead className='table_head'>
-          <tr>
-            <th className="listings_info listings_table_headers">Item name</th>
-            <th className="listings_info listings_table_headers">Start Bid</th>
-            <th className="listings_info listings_table_headers">Highest Bid</th>
-            <th className="listings_info listings_table_headers">End Date</th>
-            <th className="listings_info listings_table_headers">Edit</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          {listings.map(listing => (
-            <tr key={listing.id}>
-              {/* Исправлено: Title на title и другие свойства в нижнем регистре */}
-              <td className="listings_info listings_table_details">{listing.title}</td>
-              <td className="listings_info listings_table_details">{listing.startbid}</td>
-              <td className="listings_info listings_table_details">{getHighestBid(listing.id)}</td>
-              <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)}</td>
-              <td className="listings_info listings_table_details">Edit</td>
+      <div className='listings_page_content'>
+        <h2 className="listings_heading">Your Listings</h2>
+        <table className='listing_table'>
+          <thead className='table_head'>
+            <tr>
+              <th className="listings_info listings_table_headers item_column">Item name<div className='line_which_will_work top_line'></div></th>
+              <th className="listings_info listings_table_headers start_column">Start Bid<div className='line_which_will_work top_line'></div></th>
+              <th className="listings_info listings_table_headers highest_column">Highest Bid<div className='line_which_will_work top_line'></div></th>
+              <th className="listings_info listings_table_headers end_column">End Date<div className='line_which_will_work top_line'></div></th>
+              <th className="listings_info listings_table_headers edit_column">Edit<div className='line_which_will_work top_line'></div></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {listings.map(listing => (
+              <tr key={listing.id}>
+                <td className="listings_info listings_table_details">{listing.title} <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">{listing.startbid} S <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">{getHighestBid(listing.id)} S <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)} <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">Edit <div className='line_which_will_work bottom_line'></div></td>
+              </tr>
+            ))}
+          </tbody>
+        </table> 
+        <button className='button_create_listing'><a className='a_create_listing' href="/AddListing">Create listing</a></button>
+      </div>
     </div>
   );
 };
