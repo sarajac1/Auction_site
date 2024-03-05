@@ -55,12 +55,21 @@ function LoginPage() {
         console.error("User not found!");
       }
     }
+
+    window.location.reload();
+
+  };
+
+  const reloadPage = () => {
+    window.location.reload();
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("token_id");
     setIsLoggedIn(false);
+    window.location.reload();
+
   };
 
   const handleCloseRegistrationForm = () => {
