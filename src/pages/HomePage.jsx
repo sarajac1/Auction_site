@@ -1,4 +1,4 @@
-import Gallery from "../components/Gallery";
+import Gallery from "../pages/GalleryPage";
 function HomePage() {
   return (
     <>

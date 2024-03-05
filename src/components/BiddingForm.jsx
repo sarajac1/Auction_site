@@ -1,45 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import BalancePage from "../pages/BalancePage.jsx";
 
-function BiddingForm({ selectedListing, userId }) {
+function BiddingForm({ selectedListing }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bid, setBid] = useState('');
   const [message, setMessage] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/users/${id}`);
-        if (!response.ok) {
-          throw new Error('Could not fetch user data');
-        }
+        const response = await fetch("/Users.json");
         const data = await response.json();
-        setUser(data);
+        const userID = Number(localStorage.getItem("token_id"));
+        const currentUser = data.users.find((user) => user.id == userID);
+        if (currentUser) {
+          setUser(currentUser);
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        setMessage('Error fetching user data.');
+        console.error("Error fetching data:", error);
       }
     };
 
-    if (userId) {
-      fetchUserData();
-    }
-  }, [userId]);
+    fetchData();
+  }, []);
+
 
   async function handleSubmit(event) {
     event.preventDefault();
     const submissionTime = new Date();
     const bidAmount = Number(bid);
-
-    if (!user || bid > user.balance) {
+    // Doesn't goes over the users balance
+    if (!user || bidAmount > user.balance) {
       setMessage('Insufficient balance for this bid.');
       return;
     }
 
-
-
-
     try {
+      // Fetch existing bids for the selected item
+      const existingBidsResponse = await fetch(`http://localhost:3000/bids?itemid=${selectedListing.id}`);
+      const existingBids = await existingBidsResponse.json();
+
+      // Determine the highest existing bid amount for the item
+      const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max ? bid.bidamount : max, 0);
+
+      // Compare the submitted bid with the highest existing bid
+      if (bidAmount <= highestExistingBidAmount) {
+        setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
+        return;
+      }
       const bidResponse = await fetch('http://localhost:3000/bids', {
         method: 'POST',
         headers: {
@@ -47,10 +59,8 @@ function BiddingForm({ selectedListing, userId }) {
         },
         body: JSON.stringify({
           itemid: selectedListing.id,
-          //CHANGE THE PATH FOR THE USER ID
-          userid: user.id,
-
-          bidamount: bid,
+          bidderid: user.id,
+          bidamount: bidAmount,
           datetime: submissionTime.toISOString(),
           isactive: true,
 
@@ -58,20 +68,37 @@ function BiddingForm({ selectedListing, userId }) {
       });
 
       if (bidResponse.ok) {
-        const responseData = await bidResponse.json();
-        console.log('Success:', responseData);
+        //calculating new balance
+        const newBalance = user.balance - bidAmount;
+        console.log("1");
         setMessage('Bid is placed!');
-        //MAKE SURE TO CONECT THIS TO THE USERS DB
-        setUser((prevUser) => ({ ...prevUser, balance: prevUser.balance - bidAmount }));
-      } else {
-        console.error('Response not OK:', bidResponse.statusText);
-        setMessage('Failed to place bid.');
+        const userUpdateResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            balance: newBalance,
+          }),
+        });
+        if (userUpdateResponse.ok) {
+          // If the user's balance is successfully updated
+          const updatedUser = await userUpdateResponse.json();
+          setUser(updatedUser); // Update local user state with the updated data
+          setMessage('Bid is placed and balance is updated ');
+          console.log("2");
+        } else {
+          // Handle unsuccessful balance update
+          setMessage('Bid is placed, but unable to update balance.');
+        }
+
       }
     } catch (error) {
       console.error('Error:', error);
       setMessage('Failed to place bid. Error: ' + error.message);
     }
   }
+
 
   return (
     <div>
@@ -83,7 +110,6 @@ function BiddingForm({ selectedListing, userId }) {
         <button className="rounded-button" type="submit">Place Bid</button>
       </form>
       {message && <p>{message}</p>}
-      <BalancePage /> Souls {/**THIS SHOULD BE REPLACED WHEN THE BALANCE ON THE TOP OF THE PAGE IS DISPLAYED! */}
     </div>
   );
 }

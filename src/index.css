@@ -1,6 +1,12 @@
 body {
   background-color: #090706;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  font-weight: bold;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -10,9 +16,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
 
 /* Scroll bar*/
 ::-webkit-scrollbar {
@@ -166,6 +169,22 @@ input[type="number"] {
   background: black;
 }
 
+.rounded-button-small {
+  background-color: #2a2829;
+  color: #fff2e7;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  border: 2px solid #fff2e7;
+  cursor: pointer;
+}
+.rounded-button-small:hover {
+  background: black;
+}
+
 .discreet-button {
   background-color: #2a2829;
   color: #a4826d;
@@ -263,17 +282,31 @@ input[type="number"] {
   height: 600px;
   width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.listings_page_content {
+  width: 95%;
+  background-color: #2a2829;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
 .listing_table {
-  width: 70%;
+  width: 100%;
+  font-size: 20px;
+  padding: 60px 30px 20px 30px;
 }
 
 .listings_heading {
   color: white;
+  font-size: 45px;
+  width: 70%;
+  margin: 90px 0px 50px 90px;
 }
 
 .listings_info {
@@ -281,30 +314,171 @@ input[type="number"] {
   text-align: center;
 }
 
-thead tr {
-  margin-bottom: 5px;
-  border-bottom: #E4CAB5 1px solid;
+.item_column {
+  width: 30%;
 }
+
+.listings_table_headers {
+  padding: 0px 0px 20px 0px;
+}
+
+.line_which_will_work {
+  display: none;
+  height: 2px;
+  background-color: #e4cab5;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.top_line {
+  width: calc(100% - 10px);
+  margin-top: 20px;
+  display: block;
+}
+
+.bottom_line {
+  width: calc(100% - 10px);
+  margin-top: 30px;
+}
+
+.listing_table tbody tr:last-child td .line_which_will_work {
+  display: block;
+}
+
+.listings_table_details {
+  padding: 0px;
+  height: 50px;
+}
+
+.button_create_listing {
+  padding: 10px 25px;
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 20px;
+  font-size: 18px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 30px 0px 0px 50px;
+
+}
+
+.a_create_listing {
+  text-decoration: none;
+  color: white;
+}
+
 
 
 .bids_page {
-  height: 600px;
+  height: auto;
   width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.bids_page_content {
+  width: 95%;
+  background-color: #2a2829;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .bids_table {
-  width: 70%;
+  width: 100%;
+  font-size: 20px;
+  padding: 60px 30px 20px 30px;
 }
 
 .bids_heading {
   color: white;
+  font-size: 45px;
+  width: 70%;
+  margin: 90px 0px 30px 90px;
 }
 
 .bids_info {
   color: white;
   text-align: center;
+}
+
+.bids_table_headers {
+  padding: 0px 0px 20px 0px;
+}
+
+.bids_table_details {
+  padding: 0px;
+  height: 50px; 
+}  
+
+.bids_button_contact_seller {
+  padding: 5px 15px;
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.line_contact_seller {
+  margin-top: 15px;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  background-color: black;
+  border-radius: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 19px;
+}
+
+.modal_close_button {
+  font-size: 18px;
+}
+
+
+
+.login-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+
+  h1 {
+    font-size: 22px;
+    color: #fff2e7;
+    text-align: center;
+  }
+  .user-info {
+    background-color: #2a2829; /* Grey background color */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border color */
+  }
+}
+
+input {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px; /* Rounded corners for input fields */
+  background-color: #e4cab5;
+  color: black;
 }
