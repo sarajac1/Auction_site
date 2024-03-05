@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import BiddingForm from "../components/BiddingForm";
 
 
 function ItemPage() {
@@ -40,7 +41,7 @@ function ItemPage() {
     fetchData();
   }, []);
 
-  const handleBidChange = (event) => {
+  /* const handleBidChange = (event) => {
     setBidAmount(parseInt(event.target.value, 10));
   };
 
@@ -49,7 +50,7 @@ function ItemPage() {
     // Handle bid submission logic here
     console.log(`Placing bid of ${bidAmount} Souls`);
   };
-
+ */
   /* Find highest bid */
   function GetCurrentPrice(itemId, startBid) {
     const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
@@ -118,19 +119,7 @@ function ItemPage() {
             </div>
             <div>{CalcEndDate(selectedListing.enddate)}</div>
             {/* Bid field */}
-            <form onSubmit={handleBidSubmit}>
-              <label>
-                <input
-                  id="bid-input"
-                  type="number"
-                  value={bidAmount}
-                  onChange={handleBidChange}
-                />
-              </label>
-              <button className="rounded-button" type="submit">
-                Place Bid
-              </button>
-            </form>
+            <BiddingForm selectedListing={selectedListing} />
             <button
               className="discreet-button"
               onClick={() => setSelectedListing(null)}
@@ -139,6 +128,7 @@ function ItemPage() {
                 Back to Listings
               </Link>
             </button>
+            
           </div>
         </div>
       )}
