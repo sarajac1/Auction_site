@@ -43,6 +43,7 @@ function AddListing() {
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
       title: listing.title,
+
       description: listing.description,
       image: listing.image,
       startdate: formattedToday,
@@ -51,7 +52,7 @@ function AddListing() {
 
     try {
       // Send a POST request to your JSON-server. make sure to have the server running
-      const response = await fetch('http://localhost:3000/db', {
+      const response = await fetch('http://localhost:3000/listings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
