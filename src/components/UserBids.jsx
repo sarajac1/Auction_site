@@ -3,20 +3,18 @@ import React, { useState, useEffect } from 'react';
 const UserBids = ({ bidderid }) => {
   const [activeBids, setActiveBids] = useState([]);
   const [completedBids, setCompletedBids] = useState([]);
-  const [users, setUsers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bidsResponse = await fetch("/Bids.json");
-        const listingsResponse = await fetch("/Listings.json");
-        const usersResponse = await fetch("/Users.json");
-        const bidsData = await bidsResponse.json();
-        const listingsData = await listingsResponse.json();
-        const usersData = await usersResponse.json();
+        const response = await fetch("/db.json");
+        const data = await response.json();
 
-        setUsers(usersData.users);
+        const usersData = data.users;
+        const bidsData = data.bids;
+        const listingsData = data.listings;
+
 
         const highestBidsByItem = bidsData.bids.reduce((acc, bid) => {
           if (!acc[bid.itemid] || bid.bidamount > acc[bid.itemid].bidamount) {
