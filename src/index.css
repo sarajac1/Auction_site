@@ -408,12 +408,12 @@ input::-webkit-inner-spin-button {
 }
 
 .bids_info {
-  color: white;
   text-align: center;
 }
 
 .bids_table_headers {
   padding: 0px 0px 20px 0px;
+  color: white;
 }
 
 .bids_table_details {
@@ -461,6 +461,20 @@ input::-webkit-inner-spin-button {
 .bids_table tbody tr:last-child td .line_which_will_work {
   display: block;
 }
+
+
+
+
+.text-red {
+  color: red !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+
+
 
 
 
