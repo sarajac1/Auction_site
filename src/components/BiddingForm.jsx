@@ -31,10 +31,9 @@ function BiddingForm({ selectedListing }) {
 
     // Retrieve the new balance from localStorage, if it exists
     const storedBalance = localStorage.getItem('newBalance');
+
     if (storedBalance !== null) {
       setNewBalance(Number(storedBalance));
-      // Store the new balance in localStorage
-      localStorage.setItem('newBalance', newBalance.toString());
     }
   }, []);
 

@@ -41,16 +41,6 @@ function ItemPage() {
     fetchData();
   }, []);
 
-  /* const handleBidChange = (event) => {
-    setBidAmount(parseInt(event.target.value, 10));
-  };
-
-  const handleBidSubmit = (event) => {
-    event.preventDefault();
-    // Handle bid submission logic here
-    console.log(`Placing bid of ${bidAmount} Souls`);
-  };
- */
   /* Find highest bid */
   function GetCurrentPrice(itemId, startBid) {
     const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);

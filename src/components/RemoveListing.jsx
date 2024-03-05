@@ -1,39 +1,31 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState} from 'react';
 
 
-function RemoveListing({ userId }) {
-  const [listings, setListings] = useState([]);
+function RemoveListing() {
+  const [listingId, setListingId] = useState('');
 
+  const handleChange = (e) => {
+    setListingId(e.target.value);
+  };
 
-  useEffect(() => {
-    const fetchListings = async () => {
-      try {
-        // Replace `userId` with the appropriate variable that holds the user's ID
-        const response = await fetch(`http://localhost:5174/listings?sellerId=${id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch listings');
-        }
-        const data = await response.json();
-        setListings(data);
-      } catch (error) {
-        console.error('Error fetching listings:', error);
-      }
-    };
-
-    fetchListings();
-  }, [userId]); // Depend on userId to refetch when it changes
-
-  const handleDelete = async (id) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!listingId) {
+      alert('Please enter a listing ID.');
+      return;
+    }
     try {
-      const response = await fetch(`http://localhost:5174/listings/${id}`, {
+      // Send a DELETE request to your JSON-server endpoint for listings, targeting a specific listing by ID
+      const response = await fetch(`http://localhost:3000/listings/${listingId}`, {
         method: 'DELETE',
       });
+
       if (!response.ok) {
         throw new Error('Failed to delete listing');
       }
-      // Remove the deleted listing from the state to update UI
-      setListings(listings.filter(listing => listing.id !== id));
-      alert('Listing deleted successfully!');
+
+      alert('Listing removed successfully!');
+      setListingId(''); // Reset the listing ID input after successful deletion
     } catch (error) {
       console.error('Error deleting listing:', error);
       alert('Failed to delete listing. Please try again.');
@@ -41,18 +33,17 @@ function RemoveListing({ userId }) {
   };
 
   return (
-    <div>
-      <h2>Your Listings</h2>
-      <ul>
-        {listings.map(listing => (
-          <li key={listing.id}>
-            {listing.title} - {listing.description}
-            <button onClick={() => handleDelete(listing.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={listingId}
+        onChange={handleChange}
+        placeholder="Listing ID"
+        required
+      />
+      <button type="submit">Remove Listing</button>
+    </form>
   );
-}
+};
 
 export default RemoveListing;
