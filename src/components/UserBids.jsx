@@ -9,12 +9,12 @@ const UserBids = ({ bidderid }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bidsResponse = await fetch("/Bids.json");
-        const listingsResponse = await fetch("/Listings.json");
-        const usersResponse = await fetch("/Users.json");
-        const bidsData = await bidsResponse.json();
-        const listingsData = await listingsResponse.json();
-        const usersData = await usersResponse.json();
+        const response = await fetch("/db.json");
+        const data = await response.json();
+
+        const usersData = data.users;
+        const bidsData = data.bids;
+        const listingsData = data.listings;
 
         setUsers(usersData.users);
 
