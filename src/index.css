@@ -124,6 +124,7 @@ input::-webkit-inner-spin-button {
   padding-top: 2%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
   .darkText {
     color: #a4826d;
     font-size: 14px;
@@ -145,14 +146,39 @@ input::-webkit-inner-spin-button {
   #bid-input {
     background-color: #e4cab5;
     color: #090706;
-    font-size: 30px;
-    width: 200px;
+    font-size: 13px;
+    width: 120px;
     padding: 10px;
     border: none;
     border-radius: 30px;
     text-align: center;
   }
+    /* Chrome, Safari, Edge, Opera - removes the small arrows*/
+  #bid-input::-webkit-outer-spin-button,
+  #bid-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Firefox */
+  #bid-input {
+    -moz-appearance: textfield;
+  }
+
+  .rounded-button{
+    font-size:13px;
+    width: 85px;
+    margin:5px;
+    padding: 10px;
+  }
+    .col1 img {
+      width: 100%;
+      height: auto;
+    }
 }
+
+
+
 .rounded-button {
   background-color: #2a2829;
   color: #fff2e7;
@@ -192,6 +218,7 @@ input::-webkit-inner-spin-button {
   font-size: 14px;
   text-align: center;
   display: inline-block;
+  margin-left: auto;
   padding: 10px 20px;
   text-decoration: none;
   border: none;
