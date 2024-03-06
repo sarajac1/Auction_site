@@ -4,7 +4,14 @@ import Balance from "../pages/BalancePage";
 
 function NavBar() {
   const isLoggedIn = Boolean(localStorage.getItem("token"));
+  const userName = localStorage.getItem("token")
   const isAdmin = localStorage.getItem("isAdmin") === 'true'; 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("token_id");
+    window.location.reload();
+    window.location.href = '/';
+  };
   
   return (
     <div className="header">
@@ -50,10 +57,15 @@ function NavBar() {
           </div>
           <div className="nav-bar-login">
             {/* Visibility of login/logout buttons based on login status */}
-            {isLoggedIn ? (
-              <Link to="/login-page">Logout</Link>
+            {isLoggedIn ? (              
+              <Link to="/">
+                <span>Welcome {userName} !</span> &nbsp;
+                <button className="rounded-button-small" onClick={handleLogout}>
+                  Logout
+                </button>{" "}
+                </Link>
             ) : (
-              <Link to="/login-page">Login Page</Link>
+              <Link to="/login-page">Login</Link>
             )}
           </div>
         </nav>

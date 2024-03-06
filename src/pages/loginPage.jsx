@@ -81,14 +81,6 @@ function LoginPage() {
     window.location.reload();
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("token_id");
-    setIsLoggedIn(false);
-    window.location.reload();
-    window.location.href = '/';
-  };
-
   const handleCloseRegistrationForm = () => {
     setRegistrationForm(false);
   };
@@ -129,17 +121,7 @@ function LoginPage() {
     <div className="container">
       <div className="login-box">
         <div className="user-info">
-          {isLoggedIn ? (
-            <div>
-              <p>
-                {" "}
-                Welcome {credentials.username}! &nbsp;
-                <button className="rounded-button-small" onClick={handleLogout}>
-                  Logout
-                </button>{" "}
-              </p>
-            </div>
-          ) : (
+          {!isLoggedIn && (
             <>
               <h1>Login</h1>
               <form onSubmit={handleSubmit}>
