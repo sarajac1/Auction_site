@@ -25,7 +25,7 @@ const ViewUsersPage = () => {
       <h1 className="heading-users">Users</h1>
       <table>
         <thead>
-          <tr>
+          <tr className="user-rows">
             <th>ID</th>
             <th>Username</th>
             <th>Joined Date</th>
