@@ -632,6 +632,20 @@ input {
   color: black;
 }
 
+/* Admin view of users */
+
+.heading-users{
+  color: #fff2e7;
+}
+
+.user-rows {
+  color: #fff2e7;
+}
+
+.user-body {
+  color: #A4826D;
+}
+
 /*Create listing page*/
 .addListing-container{
   .item-wrapper {
