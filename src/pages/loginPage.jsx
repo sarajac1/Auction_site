@@ -24,12 +24,13 @@ function LoginPage() {
     username: "",
     password: "",    
   });
+  
 
   const [newUser, setNewUser] = useState({
-    newusername: "",
-    newuserpassword: "",
-    email: "",
-    address: "",
+    newUsername: "",
+    newUserPassword: "",
+    newUserEmail: "",
+    newUserAddress: "",
   });
 
 
@@ -86,27 +87,34 @@ function LoginPage() {
     setIsLoggedIn(false);
     window.location.reload();
     window.location.href = '/';
-
-
   };
 
   const handleCloseRegistrationForm = () => {
     setRegistrationForm(false);
   };
 
-  const handleRegistrationFormSubmit = () => {
+  async function handleRegistrationFormSubmit () {
   const d = new Date();
   let text = d.toISOString().split('T');
     console.log(UsersList)
+    
+    
     let data = {
       "id": UsersList.length+1,
-      "username": newUser.newusername,
-      "password": newUser.newuserpassword,
+      "username": newUser.newUserName,
+      "password": newUser.newUserPassword,
       "joineddate": text[0],
-      "address": newUser.address,
-      "email": newUser.email,
+      "address": newUser.newUserAddress,
+      "email": newUser.newUserEmail,
       "balance": 0 
     } 
+     await fetch("/api/data", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
     UsersList.push(data)
     console.log(UsersList)
     alert('Registered sucessfully!')
@@ -174,46 +182,46 @@ function LoginPage() {
                     Username:{" "}
                     <input
                       type="text"
-                      name="UserName"
-                      placeholder="Username"
-                      value={credentials.username}
-                      onChange={handleChange}
+                      name="newUserName"
+                      placeholder="Enter Username"
+                      value={newUser.newUserName}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
                     Password:{" "}
                     <input
                       type="password"
-                      name="Password"
-                      placeholder="Password"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      name="newUserPassword"
+                      placeholder="Enter Password"
+                      value={newUser.newUserPassword}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
-                    Confirm Password:{" "}
+                    Re-Confirm Password:{" "}
                     <input
-                      type="confirmpassword"
-                      name="Confirmpassword"
-                      placeholder="confirmPassword"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      type="password"
+                      name="newUserPassword"
+                      placeholder="Re-Confirm Password"
+                      value={newUser.newUserPassword}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
                     Email:{" "}
                     <input
                       type="email"
-                      name="Email"
-                      placeholder="email"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      name="newUserEmail"
+                      placeholder="Email"
+                      value={newUser.newUserEmail}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
                     Address:{" "}
                     <input
-                      type="address"
-                      name="Address"
+                      type="text"
+                      name="newUserAddress"
                       placeholder="Address"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      value={newUser.newUserAddress}
+                      onChange={handleNewUserChange}
                     />
                     <br />
                     <button className="rounded-button-small" type="submit">
