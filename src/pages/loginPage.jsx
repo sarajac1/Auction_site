@@ -90,8 +90,7 @@ function LoginPage() {
   let text = d.toISOString().split('T');
     console.log(UsersList)
     
-    
-    let data = {
+  let data = {
       "id": UsersList.length+1,
       "username": newUser.newUserName,
       "password": newUser.newUserPassword,
@@ -100,7 +99,7 @@ function LoginPage() {
       "email": newUser.newUserEmail,
       "balance": 0 
     } 
-     await fetch("/api/data", {
+     await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
