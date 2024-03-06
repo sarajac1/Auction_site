@@ -84,7 +84,7 @@ function AddListing() {
 
 
   return (
-    <div className="container">
+    <div className="addListing-container">
       <div className="item-wrapper">
         <div className="addListing-wrapper">
         <h1>Create Listing</h1>
