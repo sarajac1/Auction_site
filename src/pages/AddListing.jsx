@@ -96,8 +96,11 @@ function AddListing() {
               <input type="text" name="title" value={listing.title} onChange={handleChange} required />
               <p>Asking price</p>
               <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
-              <p>Listing will end: {calculateEndDate()}</p>
-              <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
+                <div className="end-date-container">
+                  <p>Listing will end:</p>
+                  <div className="end-date-box">{calculateEndDate()}</div>
+                </div>
+                <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
               <p>Image URL: </p>
               <input type="text" name="image" value={listing.image} onChange={handleChange} required />
 

@@ -658,10 +658,32 @@ input {
     padding-bottom: 10px;
     margin-bottom: 20px;
   }
-    .addListing-wrapper p {
-      font-size: 18px;
-    }
+  p {
+    font-size: 18px;
+    margin-bottom: 5px;
+   }
 
+  .end-date-container p {
+    margin-bottom: 5px;
+  }
+  .end-date-box {
+    display: inline-block;
+    background-color: #e4cab5;
+    color: #090706;
+    padding: 5px 10px;;
+    border-radius: 15px;
+    font-size: 18px;
+    font-style:bold;
+    text-align: center;
+    margin-top: 5px;
+  }
+  .end-date-listing-info{
+    font-size: 15px;
+    font-style: italic;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  
   .add-listing {
     display: flex;
     justify-content: space-between;
@@ -690,7 +712,7 @@ input {
     height: auto;
     min-height: 27em;
     overflow-y: auto;
-    border-radius: 9%;
+    border-radius: 35px;
   }
 
   .description-field {
@@ -704,10 +726,16 @@ input {
   }
 
   .rounded-button {
-    font-size: 25px;
+    font-size: 20px;
     width: 50%;
 
-  }}
+  }
+    .adllisting-col1 input[type="text"],
+    .adllisting-col1 input[type="number"] {
+      border-radius: 15px;
+    }
+
+}
 
 
 
