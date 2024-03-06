@@ -35,7 +35,7 @@ const ViewUsersPage = () => {
             <th>Admin</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="user-body">
           {users.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
