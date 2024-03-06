@@ -39,6 +39,12 @@ const ViewUsersPage = () => {
           {users.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
+              <td>{user.username}</td>
+              <td>{user.joineddate}</td>
+              <td>{user.address}</td>
+              <td>{user.email}</td>
+              <td>{user.balance}</td>
+              <td>{user.isAdmin ? 'Yes' : 'No'}</td>
             </tr>
           ))}
         </tbody>
