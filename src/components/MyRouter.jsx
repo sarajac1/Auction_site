@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "../components/NavBar.jsx";
-import LoginPage from "../pages/loginPage.jsx";
 import HomePage from "../pages/HomePage.jsx";
 import ItemPage from "../pages/ItemPage.jsx";
 import AddListing from "../pages/AddListing.jsx";
@@ -9,7 +8,9 @@ import BidsPage from "../pages/UserBidsPage";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import ViewUsersPage from "../pages/ViewUsersPage.jsx";
 
-//import UserListings from "../UserListings";
+import RemoveListing from "./RemoveListing.jsx";
+import LoginPage from "../pages/loginPage.jsx";
+
 
 
 function MyRouter() {
@@ -21,6 +22,7 @@ function MyRouter() {
         <Route path="/" element={<HomePage />} />
         <Route path="/item/:id" element={<ItemPage />} />
         <Route path="/AddListing" element={<AddListing />} />
+        <Route path="/remove-listing" element={<RemoveListing />} />
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/bids" element={<BidsPage />} />
         <Route path="/profile" element={<ProfilePage />} />

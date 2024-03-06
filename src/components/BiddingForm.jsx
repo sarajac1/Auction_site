@@ -6,11 +6,13 @@ function BiddingForm({ selectedListing }) {
   const [bid, setBid] = useState('');
   const [message, setMessage] = useState('');
   const [user, setUser] = useState(null);
+  const [newBalance, setNewBalance] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/Users.json");
+        const response = await fetch("/db.json");
         const data = await response.json();
         const userID = Number(localStorage.getItem("token_id"));
         const currentUser = data.users.find((user) => user.id == userID);
@@ -26,6 +28,13 @@ function BiddingForm({ selectedListing }) {
     };
 
     fetchData();
+
+    // Retrieve the new balance from localStorage, if it exists
+    const storedBalance = localStorage.getItem('newBalance');
+
+    if (storedBalance !== null) {
+      setNewBalance(Number(storedBalance));
+    }
   }, []);
 
 
@@ -68,29 +77,12 @@ function BiddingForm({ selectedListing }) {
       });
 
       if (bidResponse.ok) {
-        //calculating new balance
-        const newBalance = user.balance - bidAmount;
         console.log("1");
         setMessage('Bid is placed!');
-        const userUpdateResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            balance: newBalance,
-          }),
-        });
-        if (userUpdateResponse.ok) {
-          // If the user's balance is successfully updated
-          const updatedUser = await userUpdateResponse.json();
-          setUser(updatedUser); // Update local user state with the updated data
-          setMessage('Bid is placed and balance is updated ');
-          console.log("2");
-        } else {
-          // Handle unsuccessful balance update
-          setMessage('Bid is placed, but unable to update balance.');
-        }
+        //calculating new balance
+        setNewBalance(user.balance - bidAmount);
+
+
 
       }
     } catch (error) {
@@ -103,13 +95,18 @@ function BiddingForm({ selectedListing }) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
-          Bid Amount:
-          <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
+        <label className='bid_amount_text'>
+          <p>Bid Amount:</p>
+          <div className='bids_buttons'>
+            <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
+            <button className="rounded-button" type="submit">Place Bid</button>            
+          </div>
+
         </label>
-        <button className="rounded-button" type="submit">Place Bid</button>
       </form>
       {message && <p>{message}</p>}
+      <p className='initial_balance'>Your initial balance: {user && user.balance}</p>
+      <div>{newBalance !== null && <div><p>Your balance after bid: {newBalance}</p></div>}</div>
     </div>
   );
 }

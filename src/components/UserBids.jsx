@@ -9,12 +9,12 @@ const UserBids = ({ bidderid }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bidsResponse = await fetch("/Bids.json");
-        const listingsResponse = await fetch("/Listings.json");
-        const usersResponse = await fetch("/Users.json");
-        const bidsData = await bidsResponse.json();
-        const listingsData = await listingsResponse.json();
-        const usersData = await usersResponse.json();
+        const response = await fetch("/db.json");
+        const data = await response.json();
+
+        const usersData = data.users;
+        const bidsData = data.bids;
+        const listingsData = data.listings;
 
         setUsers(usersData.users);
 
@@ -72,7 +72,7 @@ const UserBids = ({ bidderid }) => {
     <div className='bids_page'>
       {/* Active Auctions Table */}
       <div className='bids_page_content'>
-        <h2 className="bids_heading">Active Auctions</h2>
+        <h2 className="bids_heading">Actions Auctions</h2>
         <table className='bids_table'>
           <thead className='table_head'>
             <tr>
@@ -84,7 +84,7 @@ const UserBids = ({ bidderid }) => {
           </thead>
           <tbody>
             {activeBids.map(bid => (
-              <tr key={bid.id}>
+              <tr key={bid.id} className={bid.highestBid > bid.bidamount ? 'text-red' : 'text-white'}>
                 <td className="bids_info bids_table_details">{bid.listingTitle}<div className='line_which_will_work bottom_line'></div></td>
                 <td className="bids_info bids_table_details">{bid.bidamount} S<div className='line_which_will_work bottom_line'></div></td>
                 <td className="bids_info bids_table_details">{bid.highestBid} S<div className='line_which_will_work bottom_line'></div></td>
@@ -108,7 +108,7 @@ const UserBids = ({ bidderid }) => {
           </thead>
           <tbody>
             {completedBids.map((bid, index) => (
-              <tr key={index}>
+              <tr key={index} className={bid.status === 'Lost' ? 'text-red' : 'text-white'}>
                 <td className="bids_info bids_table_details">{bid.listingTitle}<div className='line_which_will_work bottom_line'></div></td>
                 <td className="bids_info bids_table_details">{bid.highestBid} S<div className='line_which_will_work bottom_line'></div></td>
                 <td className="bids_info bids_table_details">{bid.status}<div className='line_which_will_work bottom_line'></div></td>

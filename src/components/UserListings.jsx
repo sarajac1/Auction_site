@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import RemoveListing from './RemoveListing';
 
 const UserListings = ({ sellerid }) => {
   const [listings, setListings] = useState([]);
@@ -7,15 +8,17 @@ const UserListings = ({ sellerid }) => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const listingsResponse = await fetch("/Listings.json");
+        const listingsResponse = await fetch("/db.json");
         const listingsData = await listingsResponse.json();
-        // Исправлено: Listings на listings и использование нижнего регистра для свойств
-        setListings(listingsData.listings.filter(listing => listing.sellerid.toString() === sellerid));
+        const { listings, bids } = listingsData;
 
-        const bidsResponse = await fetch("/Bids.json");
-        const bidsData = await bidsResponse.json();
-        // Исправлено: Bids на bids
-        setBids(bidsData.bids);
+        const filteredListings = listings.filter(listing => listing.sellerid.toString() === sellerid);
+
+        // Filter listings based on sellerid
+
+        // Update state with filtered listings
+        setListings(filteredListings);
+        setBids(bids);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -25,11 +28,10 @@ const UserListings = ({ sellerid }) => {
   }, [sellerid]);
 
   const getHighestBid = (itemid) => {
-    // Исправление: убедитесь, что isactive проверяется как булево значение, а не строка
-    const filteredBids = bids.filter(bid => bid.itemid.toString() === itemid.toString() && bid.isactive);
+    const filteredBids = bids.filter(bid => bid.itemid.toString() === itemid.toString() && bid.isactive === true); 
     if (filteredBids.length > 0) {
       const highestBid = filteredBids.reduce((max, bid) => parseFloat(bid.bidamount) > parseFloat(max.bidamount) ? bid : max, filteredBids[0]);
-      return highestBid.bidamount;
+      return `${highestBid.bidamount} S`; 
     }
     return 'No bids';
   };
@@ -38,7 +40,7 @@ const UserListings = ({ sellerid }) => {
     const now = new Date();
     const end = new Date(endDate);
 
-    let delta = Math.abs(end - now) / 1000; // Преобразование в секунды
+    let delta = Math.abs(end - now) / 1000; 
 
     const days = Math.floor(delta / 86400);
     delta -= days * 86400;
@@ -71,15 +73,23 @@ const UserListings = ({ sellerid }) => {
           <tbody>
             {listings.map(listing => (
               <tr key={listing.id}>
-                <td className="listings_info listings_table_details">{listing.title} <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">
+                  <div>{listing.title}</div>
+                  <div className='line_which_will_work bottom_line'></div>
+                </td>
                 <td className="listings_info listings_table_details">{listing.startbid} S <div className='line_which_will_work bottom_line'></div></td>
-                <td className="listings_info listings_table_details">{getHighestBid(listing.id)} S <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">{getHighestBid(listing.id)}<div className='line_which_will_work bottom_line'></div></td>
                 <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)} <div className='line_which_will_work bottom_line'></div></td>
-                <td className="listings_info listings_table_details">Edit <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details"> <div className="actions">
+                  <button className="edit_button">Edit</button>
+                  <button className="edit_button"><a className='a_create_listing' href="/remove-listing">Delete</a></button>
+                  <div className='line_which_will_work'></div>
+                </div>
+                </td>
               </tr>
             ))}
           </tbody>
-        </table> 
+        </table>
         <button className='button_create_listing'><a className='a_create_listing' href="/AddListing">Create listing</a></button>
       </div>
     </div>

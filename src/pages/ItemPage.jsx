@@ -41,16 +41,6 @@ function ItemPage() {
     fetchData();
   }, []);
 
-  /* const handleBidChange = (event) => {
-    setBidAmount(parseInt(event.target.value, 10));
-  };
-
-  const handleBidSubmit = (event) => {
-    event.preventDefault();
-    // Handle bid submission logic here
-    console.log(`Placing bid of ${bidAmount} Souls`);
-  };
- */
   /* Find highest bid */
   function GetCurrentPrice(itemId, startBid) {
     const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
@@ -103,7 +93,11 @@ function ItemPage() {
             <img src={selectedListing.image} alt={selectedListing.title} />
           </div>
           <div className="col2">
-            <div className="darkText">{selectedListing.startdate}</div>
+            <div className="date_div">
+              <div className="darkText">{selectedListing.startdate}</div>    
+              <div>{CalcEndDate(selectedListing.enddate)}</div>    
+            </div>
+
             <h1>{selectedListing.title}</h1>
             <div className="item-blurb">
               {selectedListing.description}
@@ -117,7 +111,6 @@ function ItemPage() {
               {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
               Souls
             </div>
-            <div>{CalcEndDate(selectedListing.enddate)}</div>
             {/* Bid field */}
             <BiddingForm selectedListing={selectedListing} />
             <button
