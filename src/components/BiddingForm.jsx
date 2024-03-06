@@ -95,14 +95,17 @@ function BiddingForm({ selectedListing }) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
-          Bid Amount:
-          <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
+        <label className='bid_amount_text'>
+          <p>Bid Amount:</p>
+          <div className='bids_buttons'>
+            <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
+            <button className="rounded-button" type="submit">Place Bid</button>            
+          </div>
+
         </label>
-        <button className="rounded-button" type="submit">Place Bid</button>
       </form>
       {message && <p>{message}</p>}
-      <p>Your initial balance: {user && user.balance}</p>
+      <p className='initial_balance'>Your initial balance: {user && user.balance}</p>
       <div>{newBalance !== null && <div><p>Your balance after bid: {newBalance}</p></div>}</div>
     </div>
   );

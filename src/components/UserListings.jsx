@@ -12,14 +12,12 @@ const UserListings = ({ sellerid }) => {
         const listingsData = await listingsResponse.json();
         const { listings, bids } = listingsData;
 
-        // Исправлено: Listings на listings и использование нижнего регистра для свойств
         const filteredListings = listings.filter(listing => listing.sellerid.toString() === sellerid);
 
         // Filter listings based on sellerid
 
         // Update state with filtered listings
         setListings(filteredListings);
-        // Исправлено: Bids на bids
         setBids(bids);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -30,11 +28,10 @@ const UserListings = ({ sellerid }) => {
   }, [sellerid]);
 
   const getHighestBid = (itemid) => {
-    // Исправление: убедитесь, что isactive проверяется как булево значение, а не строка
-    const filteredBids = bids.filter(bid => bid.itemid.toString() === itemid.toString() && bid.isactive);
+    const filteredBids = bids.filter(bid => bid.itemid.toString() === itemid.toString() && bid.isactive === true); 
     if (filteredBids.length > 0) {
       const highestBid = filteredBids.reduce((max, bid) => parseFloat(bid.bidamount) > parseFloat(max.bidamount) ? bid : max, filteredBids[0]);
-      return highestBid.bidamount;
+      return `${highestBid.bidamount} S`; 
     }
     return 'No bids';
   };
@@ -43,7 +40,7 @@ const UserListings = ({ sellerid }) => {
     const now = new Date();
     const end = new Date(endDate);
 
-    let delta = Math.abs(end - now) / 1000; // Преобразование в секунды
+    let delta = Math.abs(end - now) / 1000; 
 
     const days = Math.floor(delta / 86400);
     delta -= days * 86400;
@@ -76,13 +73,17 @@ const UserListings = ({ sellerid }) => {
           <tbody>
             {listings.map(listing => (
               <tr key={listing.id}>
-                <td className="listings_info listings_table_details">{listing.title} <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">
+                  <div>{listing.title}</div>
+                  <div className='line_which_will_work bottom_line'></div>
+                </td>
                 <td className="listings_info listings_table_details">{listing.startbid} S <div className='line_which_will_work bottom_line'></div></td>
-                <td className="listings_info listings_table_details">{getHighestBid(listing.id)} S <div className='line_which_will_work bottom_line'></div></td>
+                <td className="listings_info listings_table_details">{getHighestBid(listing.id)}<div className='line_which_will_work bottom_line'></div></td>
                 <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)} <div className='line_which_will_work bottom_line'></div></td>
                 <td className="listings_info listings_table_details"> <div className="actions">
                   <button className="edit_button">Edit</button>
-                  <RemoveListing listingId={listing.id} />
+                  <button className="edit_button"><a className='a_create_listing' href="/remove-listing">Delete</a></button>
+                  <div className='line_which_will_work'></div>
                 </div>
                 </td>
               </tr>

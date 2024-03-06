@@ -5,7 +5,6 @@ function ListingsPage() {
   const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
-    // Предполагаем, что идентификатор пользователя сохранен в localStorage
     const userID = localStorage.getItem("token_id");
     setCurrentUserId(userID);
   }, []);

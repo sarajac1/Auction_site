@@ -93,7 +93,11 @@ function ItemPage() {
             <img src={selectedListing.image} alt={selectedListing.title} />
           </div>
           <div className="col2">
-            <div className="darkText">{selectedListing.startdate}</div>
+            <div className="date_div">
+              <div className="darkText">{selectedListing.startdate}</div>    
+              <div>{CalcEndDate(selectedListing.enddate)}</div>    
+            </div>
+
             <h1>{selectedListing.title}</h1>
             <div className="item-blurb">
               {selectedListing.description}
@@ -107,7 +111,6 @@ function ItemPage() {
               {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
               Souls
             </div>
-            <div>{CalcEndDate(selectedListing.enddate)}</div>
             {/* Bid field */}
             <BiddingForm selectedListing={selectedListing} />
             <button

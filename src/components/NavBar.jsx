@@ -17,11 +17,14 @@ function NavBar() {
     <div className="header">
       <div className="nav-bar">
         <nav className="nav-container">
-          <img
+          <a href="/">
+            <img
             src="https://i.imgur.com/D1399Py.png"
             alt="ShadowBid Logo"
             className="logo"
-          />
+            />
+          </a>
+
           <div className="left-and-middle-nav">
             <div className="middle-nav-bar">
               {/* Link to home is always shown */}
