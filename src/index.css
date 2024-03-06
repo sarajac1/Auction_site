@@ -207,7 +207,13 @@ input::-webkit-inner-spin-button {
   text-decoration: none;
   border: 2px solid #fff2e7;
   cursor: pointer;
+  margin: 10px 10px 0px;
 }
+
+.add_to_ballance {
+  margin-left: 0px;
+}
+
 .rounded-button-small:hover {
   background: black;
 }
@@ -519,6 +525,45 @@ input::-webkit-inner-spin-button {
 }
 
 
+.profile_container {
+  height: auto;
+  padding-bottom: 40px;
+}
+
+.profile_text {
+  color: white;
+}
+
+.profile_heading {
+  font-size: 40px;
+}
+
+.profile_user_info {
+  font-size: 20px;
+}
+
+.profile_joined_date {
+  margin-top: 15px;
+}
+
+.profile_heading {
+  margin: 25px 0px;
+}
+
+.profile_line {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.profile_display {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.profile_info_different_collor {
+  color: #e4cab5;
+}
 
 
 

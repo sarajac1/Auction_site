@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "../components/NavBar.jsx";
-import LoginPage from "../pages/loginPage.jsx";
 import HomePage from "../pages/HomePage.jsx";
 import ItemPage from "../pages/ItemPage.jsx";
 import AddListing from "../pages/AddListing.jsx";
@@ -8,6 +7,7 @@ import ListingsPage from "../pages/ListingsPage";
 import BidsPage from "../pages/UserBidsPage";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import RemoveListing from "./RemoveListing.jsx";
+import LoginPage from "../pages/LoginPage.jsx";
 
 
 //Accepts props and passes it to components
