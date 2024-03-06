@@ -21,7 +21,29 @@ const ViewUsersPage = () => {
 
 
   return (
-    <h1 className="heading-users">Users</h1>
+    <div>
+      <h1 className="heading-users">Users</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Joined Date</th>
+            <th>Adress</th>
+            <th>Email</th>
+            <th>Balance</th>
+            <th>Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
 
