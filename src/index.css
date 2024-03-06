@@ -492,3 +492,9 @@ input {
   background-color: #e4cab5;
   color: black;
 }
+
+/* Admin view of users */
+
+.heading-users{
+  color: #fff2e7;
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const ViewUsersPage = () => {
   const [users, setUsers] = useState([]);
-  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,10 +15,16 @@ const ViewUsersPage = () => {
       setUsers([]);
     }
     };
+    
+    fetchData();
+  }, []);
 
 
-  }
+  return (
+    <h1 className="heading-users">Users</h1>
   )
 }
 
+
+export default ViewUsersPage; 
 
