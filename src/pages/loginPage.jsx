@@ -22,8 +22,17 @@ function LoginPage() {
   const [UsersList, setUsersList] = useState([]);
   const [credentials, setCredentials] = useState({
     username: "",
-    password: "",
+    password: "",    
   });
+  
+
+  const [newUser, setNewUser] = useState({
+    newUsername: "",
+    newUserPassword: "",
+    newUserEmail: "",
+    newUserAddress: "",
+  });
+
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegistrationForm, setRegistrationForm] = useState(false);
@@ -35,6 +44,15 @@ function LoginPage() {
       [name]: value,
     }));
   };
+
+  const handleNewUserChange = (event) => {
+    const { name, value } = event.target;
+    setNewUser((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,22 +81,39 @@ function LoginPage() {
     window.location.reload();
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("token_id");
-    setIsLoggedIn(false);
-    window.location.reload();
-    window.location.href = '/';
-
-
-  };
-
   const handleCloseRegistrationForm = () => {
     setRegistrationForm(false);
   };
 
-  const handleRegistrationFormSubmit = () => {
-    /*TO-DO: Add data to Users.json */
+  async function handleRegistrationFormSubmit () {
+  const d = new Date();
+  let text = d.toISOString().split('T');
+    console.log(UsersList)
+    
+    
+    let data = {
+      "id": UsersList.length+1,
+      "username": newUser.newUserName,
+      "password": newUser.newUserPassword,
+      "joineddate": text[0],
+      "address": newUser.newUserAddress,
+      "email": newUser.newUserEmail,
+      "balance": 0 
+    } 
+     await fetch("/api/data", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    UsersList.push(data)
+    console.log(UsersList)
+    alert('Registered sucessfully!')
+    const updatedUsersList = {
+      'users': UsersList
+    }
+    // TODO: need an api to append data to json file or db
     setRegistrationForm(false);
   };
 
@@ -86,17 +121,7 @@ function LoginPage() {
     <div className="container">
       <div className="login-box">
         <div className="user-info">
-          {isLoggedIn ? (
-            <div>
-              <p>
-                {" "}
-                Welcome {credentials.username}! &nbsp;
-                <button className="rounded-button-small" onClick={handleLogout}>
-                  Logout
-                </button>{" "}
-              </p>
-            </div>
-          ) : (
+          {!isLoggedIn && (
             <>
               <h1>Login</h1>
               <form onSubmit={handleSubmit}>
@@ -139,46 +164,46 @@ function LoginPage() {
                     Username:{" "}
                     <input
                       type="text"
-                      name="UserName"
-                      placeholder="Username"
-                      value={credentials.username}
-                      onChange={handleChange}
+                      name="newUserName"
+                      placeholder="Enter Username"
+                      value={newUser.newUserName}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
                     Password:{" "}
                     <input
                       type="password"
-                      name="Password"
-                      placeholder="Password"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      name="newUserPassword"
+                      placeholder="Enter Password"
+                      value={newUser.newUserPassword}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
-                    Confirm Password:{" "}
+                    Re-Confirm Password:{" "}
                     <input
-                      type="confirmpassword"
-                      name="Confirmpassword"
-                      placeholder="confirmPassword"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      type="password"
+                      name="newUserPassword"
+                      placeholder="Re-Confirm Password"
+                      value={newUser.newUserPassword}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
                     Email:{" "}
                     <input
                       type="email"
-                      name="Email"
-                      placeholder="email"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      name="newUserEmail"
+                      placeholder="Email"
+                      value={newUser.newUserEmail}
+                      onChange={handleNewUserChange}
                     />{" "}
                     <br />
                     Address:{" "}
                     <input
-                      type="address"
-                      name="Address"
+                      type="text"
+                      name="newUserAddress"
                       placeholder="Address"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      value={newUser.newUserAddress}
+                      onChange={handleNewUserChange}
                     />
                     <br />
                     <button className="rounded-button-small" type="submit">
