@@ -2,9 +2,11 @@ body {
   background-color: #090706;
   font-family: "Titillium Web";
 }
+
 a {
   text-decoration: none;
 }
+
 a:hover {
   font-weight: bold;
 }
@@ -34,6 +36,7 @@ input::-webkit-inner-spin-button {
 ::-webkit-scrollbar-thumb:hover {
   background: #fff2e7;
 }
+
 /* Search bar */
 .searchbar-and-filter {
   display: flex;
@@ -43,7 +46,8 @@ input::-webkit-inner-spin-button {
 
 .searchBar,
 .filterBar {
-  margin: 0; /* Remove default margin */
+  margin: 0;
+  /* Remove default margin */
   width: 200px;
   padding: 10px;
   border: none;
@@ -53,7 +57,8 @@ input::-webkit-inner-spin-button {
 }
 
 .searchBar {
-  flex-grow: 1; /* Allow it to grow and take available space */
+  flex-grow: 1;
+  /* Allow it to grow and take available space */
 
   max-width: 200px;
 }
@@ -123,10 +128,12 @@ input::-webkit-inner-spin-button {
   padding: 2% 0px 30px 2%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+
   .darkText {
     color: #a4826d;
     font-size: 20px;
   }
+
   .redText {
     color: #ff1e1e;
     font-size: 16px;
@@ -146,6 +153,7 @@ input::-webkit-inner-spin-button {
     max-width: 500px;
     margin-bottom: 20px;
   }
+
   .priceText {
     color: #fff2e7;
     font-size: 40px;
@@ -187,6 +195,7 @@ input::-webkit-inner-spin-button {
     font-size: 20px;
   }
 }
+
 .rounded-button {
   background-color: #2a2829;
   color: #fff2e7;
@@ -200,6 +209,7 @@ input::-webkit-inner-spin-button {
   border: 2px solid #fff2e7;
   cursor: pointer;
 }
+
 .rounded-button:hover {
   background: black;
 }
@@ -237,6 +247,7 @@ input::-webkit-inner-spin-button {
   border: none;
   cursor: pointer;
 }
+
 .discreet-button:hover {
   color: #fff2e7;
 }
@@ -247,10 +258,12 @@ input::-webkit-inner-spin-button {
   object-fit: cover;
   border: 4px solid white;
 }
+
 .item-wrapper h1 {
   color: #fff2e7;
   size: 28px;
 }
+
 .item-wrapper p {
   color: #e4cab5;
   size: 14px;
@@ -484,8 +497,8 @@ input::-webkit-inner-spin-button {
 }
 
 .bids_table_details {
-  height: 50px; 
-}  
+  height: 50px;
+}
 
 .bids_button_contact_seller {
   padding: 5px 15px;
@@ -588,18 +601,23 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Adjust as needed */
+  height: 100vh;
+  /* Adjust as needed */
 
   h1 {
     font-size: 22px;
     color: #fff2e7;
     text-align: center;
   }
+
   .user-info {
-    background-color: #2a2829; /* Grey background color */
+    background-color: #2a2829;
+    /* Grey background color */
     padding: 20px;
-    border-radius: 10px; /* Rounded corners */
-    border: 1px solid #ccc; /* Border color */
+    border-radius: 10px;
+    /* Rounded corners */
+    border: 1px solid #ccc;
+    /* Border color */
   }
 }
 
@@ -608,28 +626,68 @@ input {
   padding: 10px;
   margin-bottom: 10px;
   border: none;
-  border-radius: 5px; /* Rounded corners for input fields */
+  border-radius: 5px;
+  /* Rounded corners for input fields */
   background-color: #e4cab5;
   color: black;
 }
 
-.add-listing {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+/*Create listing page*/
+.addListing-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+
+
+h1 {
+    text-align: left;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+    .add-listing {
+      display: flex;
+      justify-content: space-between;
+    }
+    .adllisting-col1, .description-adlisting-col2 {
+      flex: 1;
+        }
+    .add-listing {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    
+    .adllisting-col1,
+        .description-adlisting-col2 {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .description-input {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      min-height: 5em;        }
+    
+    .description-field {
+      width: 100%;
+    }
+    
+    .item-wraper .add-listing {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  .rounded-button {
+    font-size: 30px;
+    width: auto;
+    
+   }
+
 }
 
-.adllisting-col1,
-.description-adlisting-col2 {
-  display: flex;
-  flex-direction: column;
-}
 
-.description-input {
-  height: 200%;
-  width: 300%;
-}
 
-.description-field {
-  width: fit-content;
-}
+

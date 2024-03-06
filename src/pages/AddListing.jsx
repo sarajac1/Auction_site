@@ -86,8 +86,11 @@ function AddListing() {
   return (
     <div className="container">
       <div className="item-wrapper">
+        <div className="addListing-wrapper">
+        <h1>Create Listing</h1>
         <form onSubmit={handleSubmit}>
           <div className="add-listing">
+
             <div className="adllisting-col1">
               <p>Title</p>
               <input type="text" name="title" value={listing.title} onChange={handleChange} required />
@@ -99,20 +102,21 @@ function AddListing() {
               <input type="text" name="image" value={listing.image} onChange={handleChange} required />
 
 
-              <button type="submit">Create Listing</button>
+              <button className="rounded-button" type="submit">Create Listing</button>
             </div>
             <div className="description-adlisting-col2">
               <div className="description-field" >
                 <p>Description (500 characters): </p>
                 <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
               </div>
-              </div>
             </div>
-            </form>
           </div>
+          </form>
+        </div>
       </div>
-      
-      );
+    </div>
+
+  );
 };
 
-      export default AddListing;
+export default AddListing;
