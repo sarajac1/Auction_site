@@ -397,9 +397,27 @@ input::-webkit-inner-spin-button {
   text-decoration: none;
   color: white;
 }
+/*Add listing page css*/
 
+.item-wrapper .add-listing{
 
+  display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
+  .end-date-listing-info {
+  font-size: 12px;
+  }
+  
+
+  .description-col{
+    display: flex;
+    flex-direction: column;
+  }
+}
+.description-input {
+  height: 100px;
+}
 .bids_page {
   height: auto;
   width: 100%;

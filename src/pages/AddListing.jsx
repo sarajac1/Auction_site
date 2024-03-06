@@ -84,15 +84,29 @@ function AddListing() {
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="title" value={listing.title} onChange={handleChange} placeholder="Title" required />
-      <input type="text" name="description" value={listing.description} onChange={handleChange} placeholder="Description" required />
-      <input type="text" name="image" value={listing.image} onChange={handleChange} placeholder="Image URL" required />
-      <p>Start Date: {listing.startdate}</p>
-      <p>End Date:{calculateEndDate()}</p>
-      <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} placeholder="Asking price" required />
-      <button type="submit">Create Listing</button>
-    </form>
+    <div className="container">
+      <div className="item-wrapper add-listing">
+        <form onSubmit={handleSubmit}>
+          <div className="col2">
+            <p>Title</p>
+            <input type="text" name="title" value={listing.title} onChange={handleChange} required />
+            <p>Asking price</p>
+            <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
+            <p>Listing will end: {calculateEndDate()}</p>
+            <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
+            <p>Image URL: </p>
+            <input type="text" name="image" value={listing.image} onChange={handleChange} required />
+
+
+            <button type="submit">Create Listing</button>
+          </div>
+          <div className="description-col">
+            <p>Description (500 characters): </p>
+            <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange}  required />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
