@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const UserBids = ({ bidderid }) => {
   const [activeBids, setActiveBids] = useState([]);
   const [completedBids, setCompletedBids] = useState([]);
+  const [users, setUsers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState(null);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ const UserBids = ({ bidderid }) => {
         const bidsData = data.bids;
         const listingsData = data.listings;
 
+        setUsers(usersData.users);
 
         const highestBidsByItem = bidsData.bids.reduce((acc, bid) => {
           if (!acc[bid.itemid] || bid.bidamount > acc[bid.itemid].bidamount) {
