@@ -42,8 +42,8 @@ function AddListing() {
 
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
+      id: listing.length + 1,
       title: listing.title,
-
       description: listing.description,
       image: listing.image,
       startdate: formattedToday,

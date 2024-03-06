@@ -101,10 +101,7 @@
       "isAdmin": false
     }
   ],
-
-  "post_users":  [
-    ],
-
+  "post_users": [],
   "listings": [
     {
       "id": "1",
@@ -195,6 +192,14 @@
       "startdate": "27-02-2024",
       "enddate": "04-Mar-2024 18:23:00",
       "startbid": 2000
+    },
+    {
+      "id": null,
+      "title": "test",
+      "description": "test",
+      "image": "test",
+      "startdate": "2024-03-06",
+      "startbid": "2"
     }
   ],
   "bids": [
