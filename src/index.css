@@ -658,6 +658,9 @@ input {
     padding-bottom: 10px;
     margin-bottom: 20px;
   }
+    .addListing-wrapper p {
+      font-size: 18px;
+    }
 
   .add-listing {
     display: flex;
