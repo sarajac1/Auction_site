@@ -5,7 +5,6 @@ function BidsPage() {
   const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
-    // Извлечение идентификатора текущего пользователя из localStorage
     const userID = localStorage.getItem("token_id");
     setCurrentUserId(userID);
   }, []);

@@ -22,7 +22,7 @@ function MyRouter() {
         <Route path="/AddListing" element={<AddListing />} />
         <Route path="/remove-listing" element={<RemoveListing />} />
         <Route path="/listings" element={<ListingsPage />} />
-        <Route path="/users" element={<BidsPage />} />
+        <Route path="/bids" element={<BidsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
 
         {/*<Route path="/your-listings" element={<UserListings />}/>  --> users listings page will have to be activated when the userlistings page is solved*/}
