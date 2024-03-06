@@ -612,3 +612,24 @@ input {
   background-color: #e4cab5;
   color: black;
 }
+
+.add-listing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.adllisting-col1,
+.description-adlisting-col2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.description-input {
+  height: 200%;
+  width: 300%;
+}
+
+.description-field {
+  width: fit-content;
+}
