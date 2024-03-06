@@ -7,7 +7,7 @@ import ListingsPage from "../pages/ListingsPage";
 import BidsPage from "../pages/UserBidsPage";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import RemoveListing from "./RemoveListing.jsx";
-import LoginPage from "../pages/LoginPage.jsx";
+import LoginPage from "../pages/loginPage.jsx";
 
 
 //Accepts props and passes it to components
