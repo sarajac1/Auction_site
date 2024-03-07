@@ -551,3 +551,19 @@ input {
   background-color: #e4cab5;
   color: black;
 }
+
+/* General text */
+.centeredText{
+text-align: center;
+
+}
+
+.centeredText h1 {
+  color: #fff2e7;
+  size: 28px;
+}
+.centeredText p {
+  color: #e4cab5;
+  size: 14px;
+}
+
