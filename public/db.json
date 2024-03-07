@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "admin",
       "password": "admin",
       "joineddate": "27-02-2024",
@@ -11,7 +11,7 @@
       "isAdmin": true
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "usifer",
       "password": "123abc",
       "joineddate": "27-02-2024",
@@ -21,7 +21,7 @@
       "isAdmin": false
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "alicesmith",
       "password": "alice123",
       "joineddate": "27-02-2024",
@@ -31,7 +31,7 @@
       "isAdmin": false
     },
     {
-      "id": 4,
+      "id": "4",
       "username": "johndoe",
       "password": "pass123",
       "joineddate": "27-02-2024",
@@ -41,7 +41,7 @@
       "isAdmin": false
     },
     {
-      "id": 5,
+      "id": "5",
       "username": "bobjohnson",
       "password": "bob456",
       "joineddate": "27-02-2024",
@@ -51,7 +51,7 @@
       "isAdmin": false
     },
     {
-      "id": 6,
+      "id": "6",
       "username": "mikedavis",
       "password": "mike001",
       "joineddate": "27-02-2024",
@@ -61,7 +61,7 @@
       "isAdmin": false
     },
     {
-      "id": 7,
+      "id": "7",
       "username": "sophiemiller",
       "password": "sophie789",
       "joineddate": "27-02-2024",
@@ -71,7 +71,7 @@
       "isAdmin": false
     },
     {
-      "id": 8,
+      "id": "8",
       "username": "alexturner",
       "password": "alex002",
       "joineddate": "27-02-2024",
@@ -81,7 +81,7 @@
       "isAdmin": false
     },
     {
-      "id": 9,
+      "id": "9",
       "username": "emmawhite",
       "password": "emma456",
       "joineddate": "27-02-2024",
@@ -91,33 +91,13 @@
       "isAdmin": false
     },
     {
-      "id": 10,
+      "id": "10",
       "username": "taratarantula",
       "password": "tara",
       "joineddate": "27-02-2024",
       "address": "606 Cedar Grove, Lakeside",
       "email": "tara.taran@email.com",
       "balance": 9500,
-      "isAdmin": false
-    },
-    {
-      "id": 11,
-      "username": "test",
-      "password": "test",
-      "joineddate": "2024-03-06",
-      "address": "test",
-      "email": "test@test",
-      "balance": 0,
-      "isAdmin": false
-    },
-    {
-      "id": 12,
-      "username": "test6",
-      "password": "test6",
-      "joineddate": "2024-03-07",
-      "address": "test6",
-      "email": "test6@test6",
-      "balance": 0,
       "isAdmin": false
     }
   ],
