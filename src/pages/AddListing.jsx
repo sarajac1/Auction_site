@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
 
 
 function AddListing() {
@@ -11,8 +10,6 @@ function AddListing() {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  const navigate = useNavigate();
-  const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
   const today = new Date(); // Get today's date
   const formattedToday = formatDate(today); // Format today's date
 
@@ -81,30 +78,13 @@ function AddListing() {
         startdate: '',
         startbid: ''
       });
-      setShowConfirmationMessage(true);
+      console.log("bid is made")
     } catch (error) {
       console.error('Error adding listing:', error);
       alert('Failed to add listing. Please try again.');
     }
   };
   
-  const handleMessage = (action) => {
-    if (action === 'new') {
-      // Reset the form if the user wants to create a new listing
-      setListing({
-        title: '',
-        description: '',
-        image: '',
-        startdate: formattedToday,
-        startbid: ''
-      });
-    } else {
-      // Navigate to the listings page if the user wants to see their listing
-      // This assumes you're using React Router for navigation
-      navigate('/listings');
-    }
-    setShowConfirmationMessage(false); // Hide the modal
-  };
 
   return (
     <div className="addListing-container">
@@ -137,13 +117,7 @@ function AddListing() {
           </form>
         </div>
       </div>
-      {showConfirmationMessage && (
-        <div className="modal">
-          <p>Listing added successfully!</p>
-          <button onClick={() => handleMessage('new')}>Add Another Listing</button>
-          <button onClick={() => handleMessage('view')}>Go to Listings Page</button>
-        </div>
-      )}
+    
     </div>
 
   );
