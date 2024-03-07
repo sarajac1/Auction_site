@@ -3,9 +3,11 @@ body {
   font-family: "Titillium Web";
 }
 
+
 a {
   text-decoration: none;
 }
+
 
 a:hover {
   font-weight: bold;
@@ -660,66 +662,8 @@ input {
   margin-bottom: 10px;
   border: none;
   border-radius: 5px;
+ 
   /* Rounded corners for input fields */
   background-color: #e4cab5;
   color: black;
-}
-
-
-.alertModal-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 0.5s;
-}
-
-.alertModal {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  text-align: center;
-  animation: slideIn 0.5s;
-  z-index: 10000;
-}
-
-.alertModal p {
-  color: black;
-}
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-20px);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-.forgot_pass_button {
-  text-align: start;
-  width: auto;
-  color: white;
-  background: none;
-  border: none;
-  padding: 0px 0px 20px 0px;
 }

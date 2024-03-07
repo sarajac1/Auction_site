@@ -11,16 +11,22 @@ const UserBids = ({ bidderid }) => {
         const dbResponse = await fetch("/db.json");
         const dbData = await dbResponse.json();
 
-        const highestBidsByItem = dbData.bids.reduce((acc, bid) => {
+        const usersData = data.users;
+        const bidsData = data.bids;
+        const listingsData = data.listings;
+
+        setUsers(usersData);
+
+        const highestBidsByItem = bidsData.reduce((acc, bid) => {
           if (!acc[bid.itemid] || bid.bidamount > acc[bid.itemid].bidamount) {
             acc[bid.itemid] = bid;
           }
           return acc;
         }, {});
 
-        const enrichedBids = dbData.bids.map(bid => {
-          const listing = dbData.listings.find(listing => listing.id === bid.itemid.toString());
-          const seller = dbData.users.find(user => user.id === listing.sellerid.toString());
+        const enrichedBids = bidsData.map(bid => {
+          const listing = listingsData.find(listing => listing.id === bid.itemid);
+          const seller = usersData.find(user => user.id === listing.sellerid);
           const isHighestBid = highestBidsByItem[bid.itemid]?.id === bid.id;
           const status = isHighestBid ? 'Win' : 'Lost';
           return {

@@ -1,26 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 
 function AddListing() {
-  // Function to format today's date as DD-MM-YYYY
-  const formatDate = (date) => {
-    const dd = String(date.getDate()).padStart(2, "0");
-    const mm = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const formatStartDate = (date) => {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
     const yyyy = date.getFullYear();
-    return `${yyyy}-${mm}-${dd}`;
+    return `${dd}-${mm}-${yyyy}`;
   };
 
+  // Function to format date as "DD-MMM-YYYY HH:MM:SS" for enddate
+  const formatEndDate = (date) => {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const mm = monthNames[date.getMonth()];
+    const yyyy = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
+  };
+
+
   const today = new Date(); // Get today's date
-  const formattedToday = formatDate(today); // Format today's date
+  const formattedToday = formatStartDate(today); // Format today's date
 
   const calculateEndDate = () => {
     if (listing.startdate) {
       const startDate = new Date(listing.startdate);
       const endDate = new Date(startDate.getTime());
       endDate.setDate(startDate.getDate() + 7); // Add 7 days
-      return formatDate(endDate);
+      return formatEndDate(endDate);
     }
     return '';
   };
+  
 
   const [listing, setListing] = useState({
     title: '',
@@ -35,19 +49,32 @@ function AddListing() {
     setListing({ ...listing, [name]: value });
   };
 
+   const [currentUserId, setCurrentUserId] = useState(null);
+
+  useEffect(() => {
+    const userID = localStorage.getItem("token_id");
+    setCurrentUserId(Number(userID));
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-
+    const listingsResponse = await fetch('http://localhost:3000/listings');
+    const listings = await listingsResponse.json();
+    const maxId = listings.reduce((max, listing) => Math.max(max, listing.id), 0);
+    const newId = maxId + 1; // Increment the maxId by 1 for the new listing
+    const startDate = new Date(listing.startdate);
+    const endDate = new Date(startDate.getTime());
+    endDate.setDate(startDate.getDate() + 7); 
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
+      id: newId,
+      sellerid: currentUserId,
       title: listing.title,
-
       description: listing.description,
       image: listing.image,
-      startdate: formattedToday,
-      startbid: listing.startbid
+      startdate: listing.startdate,
+      enddate: formatEndDate(endDate),
+      startbid: Number(listing.startbid)
     };
 
     try {
@@ -74,25 +101,48 @@ function AddListing() {
         startdate: '',
         startbid: ''
       });
-      alert('Listing added successfully!');
+      console.log("bid is made")
     } catch (error) {
       console.error('Error adding listing:', error);
       alert('Failed to add listing. Please try again.');
     }
   };
-  // Calculate end date (assuming end date is 7 days after start date)
-
+  
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="title" value={listing.title} onChange={handleChange} placeholder="Title" required />
-      <input type="text" name="description" value={listing.description} onChange={handleChange} placeholder="Description" required />
-      <input type="text" name="image" value={listing.image} onChange={handleChange} placeholder="Image URL" required />
-      <p>Start Date: {listing.startdate}</p>
-      <p>End Date:{calculateEndDate()}</p>
-      <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} placeholder="Asking price" required />
-      <button type="submit">Create Listing</button>
-    </form>
+    <div className="addListing-container">
+      <div className="item-wrapper">
+        <div className="addListing-wrapper">
+        <h1>Create Listing</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="add-listing">
+            <div className="adllisting-col1">
+              <p>Title</p>
+              <input type="text" name="title" value={listing.title} onChange={handleChange} required />
+              <p>Asking price</p>
+              <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
+                <div className="end-date-container">
+                  <p>Listing will end:</p>
+                  <div className="end-date-box">{calculateEndDate()}</div>
+                </div>
+              <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
+              <p>Image URL: </p>
+              <input type="text" name="image" value={listing.image} onChange={handleChange} required />
+              <button className="rounded-button" type="submit">Create Listing</button>
+            </div>
+            <div className="description-adlisting-col2">
+              <div className="description-field" >
+                <p>Description (500 characters): </p>
+                <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
+              </div>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    
+    </div>
+
   );
 };
 

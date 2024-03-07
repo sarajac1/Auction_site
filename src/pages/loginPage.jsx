@@ -93,6 +93,9 @@ function LoginPage() {
     }
   };
 
+  /*const reloadPage = () => {
+    window.location.reload();
+  };*/
 
   const handleCloseRegistrationForm = () => {
     setRegistrationForm(false);
@@ -119,8 +122,10 @@ function LoginPage() {
       "joineddate": text[0],
       "address": newUser.newUserAddress,
       "email": newUser.newUserEmail,
-      "balance": 0
-    };
+      "balance": 0, 
+      "isAdmin": false
+    } 
+
 
     try {
       const response = await fetch("http://localhost:3000/users", {
@@ -129,7 +134,11 @@ function LoginPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      });
+    })
+    UsersList.push(data)
+    console.log(UsersList)
+    alert('Registered sucessfully!')
+    setRegistrationForm(false)
 
       if (response.ok) {
         navigate('/');

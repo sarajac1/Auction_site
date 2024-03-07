@@ -99,29 +99,11 @@
       "email": "tara.taran@email.com",
       "balance": 9500,
       "isAdmin": false
-    },
-    {
-      "id": "11",
-      "username": "test",
-      "password": "test",
-      "joineddate": "2024-03-06",
-      "address": "test",
-      "email": "test@test",
-      "balance": 0
-    },
-    {
-      "id": "12",
-      "username": "123",
-      "password": "123",
-      "joineddate": "2024-03-06",
-      "address": "123",
-      "email": "123@123",
-      "balance": 0
     }
   ],
   "listings": [
     {
-      "id": "1",
+      "id": 1,
       "sellerid": 1,
       "title": "Cat Butler (Litterbox included)",
       "description": "Once upon a whimsical whisker-filled time, in the cozy nooks of Purrington Manor, there lived a distinguished feline named Sir Fluffington, the most refined cat butler in all of Kittyshire.",
@@ -131,7 +113,7 @@
       "startbid": 300
     },
     {
-      "id": "2",
+      "id": 2,
       "sellerid": 1,
       "title": "Magic Mirror",
       "description": "The Magic mirror from feature film Occulus!",
@@ -141,7 +123,7 @@
       "startbid": 4000
     },
     {
-      "id": "3",
+      "id": 3,
       "sellerid": 4,
       "title": "Real Fairy",
       "description": "A fairy I found in my garden. Might need feeding",
@@ -151,7 +133,7 @@
       "startbid": 4000
     },
     {
-      "id": "4",
+      "id": 4,
       "sellerid": 4,
       "title": "Anabelle the Doll",
       "description": "Fairly active doll. Moves without batteries. Might strangle you in your sleep.",
@@ -161,7 +143,7 @@
       "startbid": 9000
     },
     {
-      "id": "5",
+      "id": 5,
       "sellerid": 4,
       "title": "Necronomicon",
       "description": "Bound in human skin. Need regular moisturization not to crack. Read at your own risk.",
@@ -171,7 +153,7 @@
       "startbid": 9000
     },
     {
-      "id": "6",
+      "id": 6,
       "sellerid": 4,
       "title": "Ghost in a bottle",
       "description": "Ghost inside a bottle. Spooking and fun decoration for the whole family.",
@@ -181,7 +163,7 @@
       "startbid": 200
     },
     {
-      "id": "7",
+      "id": 7,
       "sellerid": 4,
       "title": "Cthulhu Statue",
       "description": "Worship the greatest of the Great Old Ones with this original marble fetish from New Orleans. Has a distinct wet smell at night.\n Never submerge completely in any liquid!\n Size: 25 cm\n Weight: 12 kg \n Great gift for birthdays, baby showers, winter holidays, solstice, or as a graduation gift.",
@@ -191,7 +173,7 @@
       "startbid": 200
     },
     {
-      "id": "8",
+      "id": 8,
       "sellerid": 2,
       "title": "Lament Configuration",
       "description": "Lament configuration, apparently used as a key? \n I have never used it, I don't even know if it works\n ",
@@ -201,7 +183,7 @@
       "startbid": 2000
     },
     {
-      "id": "9",
+      "id": 9,
       "sellerid": 2,
       "title": "Inconspicuous VHS tape",
       "description": "Send this to any friend in dire need of some female company. VHS player not included\n May smell damp.",
@@ -213,91 +195,83 @@
   ],
   "bids": [
     {
-      "id": "1",
+      "id": 1,
       "itemid": 1,
       "bidderid": 1,
       "bidamount": 358,
-      "datetime": "28-02-2024",
+      "datetime": "5-Mar-2024 13:50:27",
       "isactive": true
     },
     {
-      "id": "2",
+      "id": 2,
       "itemid": 4,
       "bidderid": 6,
       "bidamount": 9100,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
-      "id": "3",
+      "id": 3,
       "itemid": 4,
       "bidderid": 5,
       "bidamount": 9200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
-      "id": "4",
+      "id": 4,
       "itemid": 2,
       "bidderid": 2,
       "bidamount": 4100,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
-      "id": "5",
+      "id": 5,
       "itemid": 3,
       "bidderid": 6,
       "bidamount": 4200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
-      "id": "6",
+      "id": 6,
       "itemid": 9,
       "bidderid": 2,
       "bidamount": 2200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": false
     },
     {
-      "id": "7",
+      "id": 7,
       "itemid": 9,
       "bidderid": 6,
       "bidamount": 2100,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": false
     },
     {
-      "id": "8",
+      "id": 8,
       "itemid": 8,
       "bidderid": 1,
       "bidamount": 2100,
-      "datetime": "28-02-2024",
+      "datetime": "6-Mar-2024 13:50:27",
       "isactive": false
     },
     {
-      "id": "9",
+      "id": 9,
       "itemid": 8,
       "bidderid": 6,
       "bidamount": 2200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": false
     },
     {
-      "id": "b8d4",
-      "itemid": "1",
-      "bidderid": "1",
+      "id": 3,
+      "itemid": 1,
+      "bidderid": 4,
       "bidamount": 400,
-      "datetime": "2024-03-05T20:55:58.077Z",
-      "isactive": true
-    },
-    {
-      "id": "1154",
-      "itemid": "1",
-      "bidderid": "1",
-      "bidamount": 401,
-      "datetime": "2024-03-05T21:03:37.280Z",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     }
   ]

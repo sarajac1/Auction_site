@@ -6,11 +6,13 @@ import AddListing from "../pages/AddListing.jsx";
 import ListingsPage from "../pages/ListingsPage";
 import BidsPage from "../pages/UserBidsPage";
 import ProfilePage from "../pages/ProfilePage.jsx";
+import ViewUsersPage from "../pages/ViewUsersPage.jsx";
+
 import RemoveListing from "./RemoveListing.jsx";
 import LoginPage from "../pages/loginPage.jsx";
 
 
-//Accepts props and passes it to components
+
 function MyRouter() {
   return (
     <BrowserRouter>
@@ -24,6 +26,7 @@ function MyRouter() {
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/bids" element={<BidsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/users" element={<ViewUsersPage />} />
 
         {/*<Route path="/your-listings" element={<UserListings />}/>  --> users listings page will have to be activated when the userlistings page is solved*/}
       </Routes>
