@@ -283,22 +283,6 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
-    },
-    {
-      "id": "59bd",
-      "itemid": 1,
-      "bidderid": 3,
-      "bidamount": 402,
-      "datetime": "2024-03-07T07:56:46.229Z",
-      "isactive": true
-    },
-    {
-      "id": "2c72",
-      "itemid": 1,
-      "bidderid": 3,
-      "bidamount": 403,
-      "datetime": "2024-03-07T08:00:17.580Z",
-      "isactive": true
     }
   ]
 }
