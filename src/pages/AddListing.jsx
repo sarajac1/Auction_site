@@ -123,7 +123,7 @@ function AddListing() {
 
   const handleGoToListings = () => {
     setShowModal(false);
-    navigate('/bids');
+    navigate('/listings');
   };
 
 
