@@ -649,21 +649,16 @@ input {
 /*Create listing page*/
 .addListing-container{
   .item-wrapper {
-      display: flex;
-      /* Enables flexbox */
-      justify-content: center;
-      /* Centers horizontally */
-      align-items: center;
-      /* Centers vertically */
-      height: 100%;
-      /* You may need to adjust this depending on your layout */
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+   }
   .addListing-wrapper {
     width: 100%;
     max-width: 900px;
     margin: auto;
     padding: 20px;
-
   }
 
   h1 {

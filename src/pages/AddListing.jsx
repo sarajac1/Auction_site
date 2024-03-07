@@ -90,7 +90,6 @@ function AddListing() {
         <h1>Create Listing</h1>
         <form onSubmit={handleSubmit}>
           <div className="add-listing">
-
             <div className="adllisting-col1">
               <p>Title</p>
               <input type="text" name="title" value={listing.title} onChange={handleChange} required />
@@ -100,11 +99,9 @@ function AddListing() {
                   <p>Listing will end:</p>
                   <div className="end-date-box">{calculateEndDate()}</div>
                 </div>
-                <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
+              <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
               <p>Image URL: </p>
               <input type="text" name="image" value={listing.image} onChange={handleChange} required />
-
-
               <button className="rounded-button" type="submit">Create Listing</button>
             </div>
             <div className="description-adlisting-col2">
