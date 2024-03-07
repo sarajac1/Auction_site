@@ -214,11 +214,23 @@
     },
     {
       "id": 10,
-      "title": "fd",
-      "description": "xc",
-      "image": "xc",
-      "startdate": "2024-03-07",
+      "sellerid": 4,
+      "title": "xf",
+      "description": "dfg",
+      "image": "dfg",
+      "startdate": "",
+      "enddate": "NaN-undefined-NaN NaN:NaN:NaN",
       "startbid": 3
+    },
+    {
+      "id": 11,
+      "sellerid": 4,
+      "title": "ds",
+      "description": "fdg",
+      "image": "dfg",
+      "startdate": "07-03-2024",
+      "enddate": "10-Jul-2024 00:00:00",
+      "startbid": 2
     }
   ],
   "bids": [
@@ -293,6 +305,14 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
+    },
+    {
+      "id": 2,
+      "itemid": 1,
+      "bidderid": 4,
+      "bidamount": 359,
+      "datetime": "2024-03-07T11:43:07.773Z",
+      "isactive": true
     }
   ]
 }

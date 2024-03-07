@@ -1,27 +1,40 @@
-// import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 
 function AddListing() {
-  // Function to format today's date as DD-MM-YYYY
-  const formatDate = (date) => {
-    const dd = String(date.getDate()).padStart(2, "0");
-    const mm = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const formatStartDate = (date) => {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
     const yyyy = date.getFullYear();
-    return `${yyyy}-${mm}-${dd}`;
+    return `${dd}-${mm}-${yyyy}`;
   };
 
+  // Function to format date as "DD-MMM-YYYY HH:MM:SS" for enddate
+  const formatEndDate = (date) => {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const mm = monthNames[date.getMonth()];
+    const yyyy = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
+  };
+
+
   const today = new Date(); // Get today's date
-  const formattedToday = formatDate(today); // Format today's date
+  const formattedToday = formatStartDate(today); // Format today's date
 
   const calculateEndDate = () => {
     if (listing.startdate) {
       const startDate = new Date(listing.startdate);
       const endDate = new Date(startDate.getTime());
       endDate.setDate(startDate.getDate() + 7); // Add 7 days
-      return formatDate(endDate);
+      return formatEndDate(endDate);
     }
     return '';
   };
+  
 
   const [listing, setListing] = useState({
     title: '',
@@ -36,12 +49,12 @@ function AddListing() {
     setListing({ ...listing, [name]: value });
   };
 
-/*   const [currentUserId, setCurrentUserId] = useState(null);
+   const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
     const userID = localStorage.getItem("token_id");
-    setCurrentUserId(userID);
-  }, []); */
+    setCurrentUserId(Number(userID));
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,15 +62,18 @@ function AddListing() {
     const listings = await listingsResponse.json();
     const maxId = listings.reduce((max, listing) => Math.max(max, listing.id), 0);
     const newId = maxId + 1; // Increment the maxId by 1 for the new listing
-
+    const startDate = new Date(listing.startdate);
+    const endDate = new Date(startDate.getTime());
+    endDate.setDate(startDate.getDate() + 7); 
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
       id: newId,
-     // userid: currentUserId,
+      sellerid: currentUserId,
       title: listing.title,
       description: listing.description,
       image: listing.image,
-      startdate: formattedToday,
+      startdate: listing.startdate,
+      enddate: formatEndDate(endDate),
       startbid: Number(listing.startbid)
     };
 
