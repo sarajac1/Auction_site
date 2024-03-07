@@ -211,26 +211,6 @@
       "startdate": "07-03-2024",
       "enddate": "15-Mar-2024 18:23:00",
       "startbid": 2000
-    },
-    {
-      "id": 10,
-      "sellerid": 4,
-      "title": "xf",
-      "description": "dfg",
-      "image": "dfg",
-      "startdate": "",
-      "enddate": "NaN-undefined-NaN NaN:NaN:NaN",
-      "startbid": 3
-    },
-    {
-      "id": 11,
-      "sellerid": 4,
-      "title": "ds",
-      "description": "fdg",
-      "image": "dfg",
-      "startdate": "07-03-2024",
-      "enddate": "10-Jul-2024 00:00:00",
-      "startbid": 2
     }
   ],
   "bids": [
