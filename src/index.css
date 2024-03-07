@@ -618,7 +618,8 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
+  padding: 50px;
   /* Adjust as needed */
 
   h1 {
@@ -638,6 +639,21 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.login_and_register_buttons {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+
+.two_buttons_div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 input {
   width: 300px;
   padding: 10px;
@@ -647,4 +663,63 @@ input {
   /* Rounded corners for input fields */
   background-color: #e4cab5;
   color: black;
+}
+
+
+.alertModal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s;
+}
+
+.alertModal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+  animation: slideIn 0.5s;
+  z-index: 10000;
+}
+
+.alertModal p {
+  color: black;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.forgot_pass_button {
+  text-align: start;
+  width: auto;
+  color: white;
+  background: none;
+  border: none;
+  padding: 0px 0px 20px 0px;
 }

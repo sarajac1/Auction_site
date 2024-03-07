@@ -20,7 +20,6 @@ const UserBids = ({ bidderid }) => {
 
         const enrichedBids = dbData.bids.map(bid => {
           const listing = dbData.listings.find(listing => listing.id === bid.itemid.toString());
-          // Преобразование sellerid к строке для совместимости с id пользователя
           const seller = dbData.users.find(user => user.id === listing.sellerid.toString());
           const isHighestBid = highestBidsByItem[bid.itemid]?.id === bid.id;
           const status = isHighestBid ? 'Win' : 'Lost';
@@ -30,7 +29,7 @@ const UserBids = ({ bidderid }) => {
             endDate: listing.enddate,
             highestBid: highestBidsByItem[bid.itemid]?.bidamount,
             status: bid.isactive ? null : status,
-            seller: bid.isactive ? null : seller // Теперь seller должен находиться корректно
+            seller: bid.isactive ? null : seller
           };
         });
 
@@ -60,7 +59,6 @@ const UserBids = ({ bidderid }) => {
 
   return (
     <div className='bids_page'>
-      {/* Активные аукционы Table */}
       <div className='bids_page_content'>
         <h2 className="bids_heading">Active Auctions</h2>
         <table className='bids_table'>
@@ -84,7 +82,6 @@ const UserBids = ({ bidderid }) => {
           </tbody>
         </table>
 
-        {/* Завершенные аукционы Table */}
         <h2 className="bids_heading">Ended Auctions</h2>
         <table className='bids_table'>
           <thead className='table_head'>
