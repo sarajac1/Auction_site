@@ -219,7 +219,7 @@
       "itemid": 1,
       "bidderid": 1,
       "bidamount": 358,
-      "datetime": "28-02-2024",
+      "datetime": "5-Mar-2024 13:50:27",
       "isactive": true
     },
     {
@@ -227,7 +227,7 @@
       "itemid": 4,
       "bidderid": 6,
       "bidamount": 9100,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
@@ -235,7 +235,7 @@
       "itemid": 4,
       "bidderid": 5,
       "bidamount": 9200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
@@ -243,7 +243,7 @@
       "itemid": 2,
       "bidderid": 2,
       "bidamount": 4100,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
@@ -251,7 +251,7 @@
       "itemid": 3,
       "bidderid": 6,
       "bidamount": 4200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     },
     {
@@ -259,7 +259,7 @@
       "itemid": 9,
       "bidderid": 2,
       "bidamount": 2200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": false
     },
     {
@@ -267,7 +267,7 @@
       "itemid": 9,
       "bidderid": 6,
       "bidamount": 2100,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": false
     },
     {
@@ -275,7 +275,7 @@
       "itemid": 8,
       "bidderid": 1,
       "bidamount": 2100,
-      "datetime": "28-02-2024",
+      "datetime": "6-Mar-2024 13:50:27",
       "isactive": false
     },
     {
@@ -283,15 +283,15 @@
       "itemid": 8,
       "bidderid": 6,
       "bidamount": 2200,
-      "datetime": "28-02-2024",
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": false
     },
     {
-      "id": 2,
+      "id": 3,
       "itemid": 1,
       "bidderid": 4,
-      "bidamount": 359,
-      "datetime": "2024-03-07T11:43:07.773Z",
+      "bidamount": 400,
+      "datetime": "7-Mar-2024 13:50:27",
       "isactive": true
     }
   ]
