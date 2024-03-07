@@ -209,6 +209,14 @@
       "startdate": "07-03-2024",
       "enddate": "15-Mar-2024 18:23:00",
       "startbid": 2000
+    },
+    {
+      "id": 10,
+      "title": "test",
+      "description": "gffd",
+      "image": "fgf",
+      "startdate": "2024-03-07",
+      "startbid": 23
     }
   ],
   "bids": [

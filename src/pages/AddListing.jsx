@@ -38,9 +38,14 @@ function AddListing() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const listingsResponse = await fetch('http://localhost:3000/listings');
+    const listings = await listingsResponse.json();
+    const maxId = listings.reduce((max, listing) => Math.max(max, listing.id), 0);
+    const newId = maxId + 1; // Increment the maxId by 1 for the new listing
 
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
+      id: newId, 
       title: listing.title,
       description: listing.description,
       image: listing.image,
