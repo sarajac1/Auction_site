@@ -54,8 +54,8 @@ function BiddingForm({ selectedListing }) {
       const existingBids = await existingBidsResponse.json();
 
       // Determine the highest existing bid amount for the item
-      const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max ? bid.bidamount : max, 0);
-
+      const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max.bidamount ? bid : max, { bidamount: 0, id: 0 });
+      const newBidId = highestExistingBidAmount.id + 1;
       // Compare the submitted bid with the highest existing bid
       if (bidAmount <= highestExistingBidAmount) {
         setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
@@ -67,6 +67,7 @@ function BiddingForm({ selectedListing }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          id: newBidId,
           itemid: selectedListing.id,
           bidderid: user.id,
           bidamount: bidAmount,

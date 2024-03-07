@@ -283,6 +283,14 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
+    },
+    {
+      "id": 2,
+      "itemid": 1,
+      "bidderid": 3,
+      "bidamount": 401,
+      "datetime": "2024-03-07T08:34:51.292Z",
+      "isactive": true
     }
   ]
 }
