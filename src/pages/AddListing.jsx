@@ -84,15 +84,38 @@ function AddListing() {
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="title" value={listing.title} onChange={handleChange} placeholder="Title" required />
-      <input type="text" name="description" value={listing.description} onChange={handleChange} placeholder="Description" required />
-      <input type="text" name="image" value={listing.image} onChange={handleChange} placeholder="Image URL" required />
-      <p>Start Date: {listing.startdate}</p>
-      <p>End Date:{calculateEndDate()}</p>
-      <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} placeholder="Asking price" required />
-      <button type="submit">Create Listing</button>
-    </form>
+    <div className="addListing-container">
+      <div className="item-wrapper">
+        <div className="addListing-wrapper">
+        <h1>Create Listing</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="add-listing">
+            <div className="adllisting-col1">
+              <p>Title</p>
+              <input type="text" name="title" value={listing.title} onChange={handleChange} required />
+              <p>Asking price</p>
+              <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
+                <div className="end-date-container">
+                  <p>Listing will end:</p>
+                  <div className="end-date-box">{calculateEndDate()}</div>
+                </div>
+              <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
+              <p>Image URL: </p>
+              <input type="text" name="image" value={listing.image} onChange={handleChange} required />
+              <button className="rounded-button" type="submit">Create Listing</button>
+            </div>
+            <div className="description-adlisting-col2">
+              <div className="description-field" >
+                <p>Description (500 characters): </p>
+                <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
+              </div>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
   );
 };
 
