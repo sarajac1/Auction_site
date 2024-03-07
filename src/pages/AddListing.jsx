@@ -38,16 +38,14 @@ function AddListing() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
 
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
       title: listing.title,
-
       description: listing.description,
       image: listing.image,
       startdate: formattedToday,
-      startbid: listing.startbid
+      startbid: Number(listing.startbid)
     };
 
     try {
