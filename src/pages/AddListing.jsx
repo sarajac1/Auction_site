@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState, useEffect } from "react";
 
 
 function AddListing() {
@@ -36,6 +36,12 @@ function AddListing() {
     setListing({ ...listing, [name]: value });
   };
 
+/*   const [currentUserId, setCurrentUserId] = useState(null);
+
+  useEffect(() => {
+    const userID = localStorage.getItem("token_id");
+    setCurrentUserId(userID);
+  }, []); */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +53,7 @@ function AddListing() {
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
       id: newId,
+     // userid: currentUserId,
       title: listing.title,
       description: listing.description,
       image: listing.image,
