@@ -648,6 +648,20 @@ input {
 
 /*Create listing page*/
 .addListing-container{
+  .modal {
+    width: 300px;
+    height: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    color: white;
+    text-align:center;
+  }
+  .modal-content button {
+     margin: 0 8px;
+  }
   .item-wrapper {
     display: flex;
     justify-content: center;

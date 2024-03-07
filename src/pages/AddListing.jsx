@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 
 function AddListing() {
@@ -34,7 +36,7 @@ function AddListing() {
     }
     return '';
   };
-  
+
 
   const [listing, setListing] = useState({
     title: '',
@@ -44,17 +46,20 @@ function AddListing() {
     startbid: '',
   });
 
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setListing({ ...listing, [name]: value });
   };
 
-   const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
     const userID = localStorage.getItem("token_id");
     setCurrentUserId(Number(userID));
-  }, []); 
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,7 +69,7 @@ function AddListing() {
     const newId = maxId + 1; // Increment the maxId by 1 for the new listing
     const startDate = new Date(listing.startdate);
     const endDate = new Date(startDate.getTime());
-    endDate.setDate(startDate.getDate() + 7); 
+    endDate.setDate(startDate.getDate() + 7);
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
       id: newId,
@@ -102,45 +107,68 @@ function AddListing() {
         startbid: ''
       });
       console.log("bid is made")
+      setShowModal(true); // Show the modal here
+
     } catch (error) {
       console.error('Error adding listing:', error);
       alert('Failed to add listing. Please try again.');
     }
   };
-  
+
+
+  const handleNewListing = () => {
+    setShowModal(false);
+    window.location.reload();
+  };
+
+  const handleGoToListings = () => {
+    setShowModal(false);
+    navigate('/bids');
+  };
+
 
   return (
     <div className="addListing-container">
       <div className="item-wrapper">
         <div className="addListing-wrapper">
-        <h1>Create Listing</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="add-listing">
-            <div className="adllisting-col1">
-              <p>Title</p>
-              <input type="text" name="title" value={listing.title} onChange={handleChange} required />
-              <p>Asking price</p>
-              <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
+          <h1>Create Listing</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="add-listing">
+              <div className="adllisting-col1">
+                <p>Title</p>
+                <input type="text" name="title" value={listing.title} onChange={handleChange} required />
+                <p>Asking price</p>
+                <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
                 <div className="end-date-container">
                   <p>Listing will end:</p>
                   <div className="end-date-box">{calculateEndDate()}</div>
                 </div>
-              <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
-              <p>Image URL: </p>
-              <input type="text" name="image" value={listing.image} onChange={handleChange} required />
-              <button className="rounded-button" type="submit">Create Listing</button>
-            </div>
-            <div className="description-adlisting-col2">
-              <div className="description-field" >
-                <p>Description (500 characters): </p>
-                <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
+                <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
+                <p>Image URL: </p>
+                <input type="text" name="image" value={listing.image} onChange={handleChange} required />
+                <button className="rounded-button" type="submit">Create Listing</button>
+              </div>
+              <div className="description-adlisting-col2">
+                <div className="description-field" >
+                  <p>Description (500 characters): </p>
+                  <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
+                </div>
               </div>
             </div>
-          </div>
           </form>
         </div>
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close-button" onClick={() => setShowModal(false)}>&times;</span>
+              <p>Your listing is created!</p><p>What would you like to do?</p>
+              <button onClick={handleNewListing}>Create New Listing</button>
+              <button onClick={handleGoToListings}>Go to My Listings</button>
+            </div>
+          </div>
+        )}
       </div>
-    
+
     </div>
 
   );
