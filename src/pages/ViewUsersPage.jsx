@@ -21,18 +21,19 @@ const ViewUsersPage = () => {
 
 
   return (
-    <div>
+    <div className="container">
       <h1 className="heading-users">Users</h1>
       <table>
         <thead>
           <tr className="user-rows">
             <th>ID</th>
             <th>Username</th>
-            <th>Joined Date</th>
+            <th>Member since</th>
             <th>Adress</th>
             <th>Email</th>
             <th>Balance</th>
             <th>Admin</th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody className="user-body">
