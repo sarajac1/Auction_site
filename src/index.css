@@ -720,3 +720,13 @@ input {
 .hide_show_reconfirm_pass_button {
   margin: 0px 0px 0px 20px;
 }
+
+/* Admin view of users*/
+
+.heading-users, .user-rows {
+  color: #FFF2E7; 
+}
+
+.user-body{
+  color: #A4826D; 
+}
