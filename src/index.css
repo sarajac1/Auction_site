@@ -667,3 +667,56 @@ input {
   background-color: #e4cab5;
   color: black;
 }
+
+
+.alertModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alertModal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.alertModal p {
+  color: black;
+  padding: 20px;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.alertModal button {
+  margin-top: 10px;
+}
+
+.forgot_pass_button {
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  font-size: 15px;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.hide_show_pass_button {
+  color: black;
+  margin: 0px 0px 0px 20px !important;
+}
+
+.hide_show_reconfirm_pass_button {
+  margin: 0px 0px 0px 20px;
+}

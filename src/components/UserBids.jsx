@@ -10,37 +10,34 @@ const UserBids = ({ bidderid }) => {
       try {
         const dbResponse = await fetch("/db.json");
         const dbData = await dbResponse.json();
+        const usersData = dbData.users;
+        const bidsData = dbData.bids;
+        const listingsData = dbData.listings;
 
-        const usersData = data.users;
-        const bidsData = data.bids;
-        const listingsData = data.listings;
-
-        setUsers(usersData.users);
-
-        const highestBidsByItem = bidsData.bids.reduce((acc, bid) => {
+        const highestBidsByItem = bidsData.reduce((acc, bid) => {
           if (!acc[bid.itemid] || bid.bidamount > acc[bid.itemid].bidamount) {
             acc[bid.itemid] = bid;
           }
           return acc;
         }, {});
 
-        const enrichedBids = bidsData.bids.map(bid => {
-          const listing = listingsData.listings.find(listing => listing.id === bid.itemid);
-          const seller = usersData.users.find(user => user.id === listing.sellerid);
+        const enrichedBids = bidsData.map(bid => {
+          const listing = listingsData.find(listing => listing.id.toString() === bid.itemid.toString());
+          if (!listing) return null; 
+          const seller = usersData.find(user => user.id.toString() === listing.sellerid.toString());
           const isHighestBid = highestBidsByItem[bid.itemid]?.id === bid.id;
-          const status = isHighestBid ? 'Win' : 'Lost';
           return {
             ...bid,
             listingTitle: listing.title,
             endDate: listing.enddate,
             highestBid: highestBidsByItem[bid.itemid]?.bidamount,
-            status: bid.isactive ? null : status,
-            seller: bid.isactive ? null : seller
+            status: bid.isactive ? "Active" : (isHighestBid ? "Win" : "Lost"),
+            seller: seller || null 
           };
-        });
+        }).filter(bid => bid !== null);
 
-        setActiveBids(enrichedBids.filter(bid => bid.isactive && bid.bidderid === parseInt(bidderid)));
-        setCompletedBids(enrichedBids.filter(bid => !bid.isactive && bid.bidderid === parseInt(bidderid)));
+        setActiveBids(enrichedBids.filter(bid => bid.isactive && bid.bidderid.toString() === bidderid));
+        setCompletedBids(enrichedBids.filter(bid => !bid.isactive && bid.bidderid.toString() === bidderid));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -48,6 +45,7 @@ const UserBids = ({ bidderid }) => {
 
     fetchData();
   }, [bidderid]);
+
 
   const calculateTimeLeft = (endDate) => {
     const now = new Date();
