@@ -70,6 +70,10 @@ function ItemPage() {
     const endDate = new Date(endDateString);
     const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
 
+    if (currentDate > endDate) {
+      return <div className="auction-ended redText" style={{ fontSize: "20px" }}>Auction ended</div>;
+    }
+
     if (days <= 1) {
       return (
         <div className="redText">
@@ -83,6 +87,7 @@ function ItemPage() {
       </div>
     );
   }
+
 
   return (
     <div className="container">

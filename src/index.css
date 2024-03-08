@@ -3,9 +3,11 @@ body {
   font-family: "Titillium Web";
 }
 
+
 a {
   text-decoration: none;
 }
+
 
 a:hover {
   font-weight: bold;
@@ -489,7 +491,10 @@ input::-webkit-inner-spin-button {
 
 .bids_info {
   text-align: center;
+  position: relative;
+  padding: 0;
 }
+
 
 .bids_table_headers {
   padding: 0px 0px 20px 0px;
@@ -520,6 +525,20 @@ input::-webkit-inner-spin-button {
   height: 50px;
 }
 
+.bids_table tbody tr td {
+  height: 70px;
+}
+
+.bids_table tbody tr:last-child td .line_which_will_work {
+  display: block;
+  position: absolute;
+  bottom: 0;
+}
+
+.modal_text {
+  color: white;
+}
+
 .modal {
   display: flex;
   flex-direction: column;
@@ -527,7 +546,7 @@ input::-webkit-inner-spin-button {
   align-items: center;
   width: 300px;
   height: 300px;
-  background-color: black;
+  background-color: #474546;;
   border-radius: 5%;
   margin-left: auto;
   margin-right: auto;
@@ -601,7 +620,8 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
+  padding: 50px;
   /* Adjust as needed */
 
   h1 {
@@ -621,132 +641,82 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.login_and_register_buttons {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+
+.two_buttons_div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 input {
   width: 300px;
   padding: 10px;
   margin-bottom: 10px;
   border: none;
   border-radius: 5px;
+ 
   /* Rounded corners for input fields */
   background-color: #e4cab5;
   color: black;
 }
 
-/* Admin view of users */
 
-.heading-users{
-  color: #fff2e7;
+.alertModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.user-rows {
-  color: #fff2e7;
+.alertModal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.user-body {
-  color: #A4826D;
+.alertModal p {
+  color: black;
+  padding: 20px;
+  white-space: pre-line;
+  text-align: center;
 }
 
-/*Create listing page*/
-.addListing-container{
-  .item-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-   }
-  .addListing-wrapper {
-    width: 100%;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-  }
-
-  h1 {
-    text-align: left;
-    border-bottom: 4px solid #e4cab5;;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  p {
-    font-size: 18px;
-    margin-bottom: 5px;
-   }
-
-  .end-date-container p {
-    margin-bottom: 5px;
-  }
-  .end-date-box {
-    display: inline-block;
-    background-color: #e4cab5;
-    color: #090706;
-    padding: 5px 10px;;
-    border-radius: 15px;
-    font-size: 18px;
-    font-style:bold;
-    text-align: center;
-    margin-top: 5px;
-  }
-  .end-date-listing-info{
-    font-size: 15px;
-    font-style: italic;
-    margin-top: 2px;
-    margin-bottom: 2px;
-  }
-  
-  .add-listing {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .adllisting-col1,
-  .description-adlisting-col2 {
-    flex: 1;
-  }
-
-  .add-listing {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .adllisting-col1,
-  .description-adlisting-col2 {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .description-input {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    min-height: 27em;
-    overflow-y: auto;
-    border-radius: 35px;
-  }
-
-  .description-field {
-    width: 100%;
-  }
-
-  .item-wraper .add-listing {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .rounded-button {
-    font-size: 20px;
-    width: 50%;
-
-  }
-    .adllisting-col1 input[type="text"],
-    .adllisting-col1 input[type="number"] {
-      border-radius: 15px;
-    }
-
+.alertModal button {
+  margin-top: 10px;
 }
 
+.forgot_pass_button {
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  font-size: 15px;
+  background: none;
+  border: none;
+  color: white;
+}
 
+.hide_show_pass_button {
+  color: black;
+  margin: 0px 0px 0px 20px !important;
+}
 
-
-
+.hide_show_reconfirm_pass_button {
+  margin: 0px 0px 0px 20px;
+}
