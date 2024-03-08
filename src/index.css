@@ -1075,3 +1075,13 @@ input {
 .hide_show_reconfirm_pass_button {
   margin: 0px 0px 0px 20px;
 }
+
+.aboutus_page {
+  color: white;
+  background-color: #2a2829;
+  padding: 40px 40px;
+}
+
+.aboutus_heading {
+  margin-top: 0px;
+}

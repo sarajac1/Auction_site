@@ -7,6 +7,8 @@ import ListingsPage from "../pages/ListingsPage";
 import BidsPage from "../pages/UserBidsPage";
 import ProfilePage from "../pages/ProfilePage.jsx";
 import ViewUsersPage from "../pages/ViewUsersPage.jsx";
+import AboutUs from "../pages/AboutUs.jsx";
+
 
 import RemoveListing from "./RemoveListing.jsx";
 import LoginPage from "../pages/loginPage.jsx";
@@ -29,6 +31,8 @@ function MyRouter() {
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/users" element={<ViewUsersPage />} />
         <Route path="/users" element={<ViewUsersPage />} />
+        <Route path="/about-us" element={<AboutUs />} />
+
 
         {/*<Route path="/your-listings" element={<UserListings />}/>  --> users listings page will have to be activated when the userlistings page is solved*/}
       </Routes>
