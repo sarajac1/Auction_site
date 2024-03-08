@@ -77,9 +77,9 @@ function LoginPage() {
     }
   };
 
-  const reloadPage = () => {
+  /*const reloadPage = () => {
     window.location.reload();
-  };
+  };*/
 
   const handleCloseRegistrationForm = () => {
     setRegistrationForm(false);
@@ -90,17 +90,17 @@ function LoginPage() {
   let text = d.toISOString().split('T');
     console.log(UsersList)
     
-    
-    let data = {
+  let data = {
       "id": UsersList.length+1,
       "username": newUser.newUserName,
       "password": newUser.newUserPassword,
       "joineddate": text[0],
       "address": newUser.newUserAddress,
       "email": newUser.newUserEmail,
-      "balance": 0 
+      "balance": 0, 
+      "isAdmin": false
     } 
-     await fetch("/api/data", {
+     await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -110,12 +110,20 @@ function LoginPage() {
     UsersList.push(data)
     console.log(UsersList)
     alert('Registered sucessfully!')
-    const updatedUsersList = {
-      'users': UsersList
-    }
-    // TODO: need an api to append data to json file or db
     setRegistrationForm(false);
-  };
+    setCredentials(newUser.newUserName, newUser.newUserPassword)
+    
+    const existingUser = UsersList.find(
+      (obj) => obj.username === credentials.username
+    );
+    
+    localStorage.setItem("token", credentials.username);
+    localStorage.setItem("token_id", existingUser.id);
+    localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
+    setIsLoggedIn(true);
+    window.location.reload();   
+    window.location.href = '/';
+  }
 
   return (
     <div className="container">
