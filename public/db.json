@@ -99,6 +99,26 @@
       "email": "tara.taran@email.com",
       "balance": 9500,
       "isAdmin": false
+    },
+    {
+      "id": 11,
+      "username": "test",
+      "password": "test",
+      "joineddate": "2024-03-06",
+      "address": "test",
+      "email": "test@test",
+      "balance": 0,
+      "isAdmin": false
+    },
+    {
+      "id": 12,
+      "username": "test6",
+      "password": "test6",
+      "joineddate": "2024-03-07",
+      "address": "test6",
+      "email": "test6@test6",
+      "balance": 0,
+      "isAdmin": false
     }
   ],
   "listings": [

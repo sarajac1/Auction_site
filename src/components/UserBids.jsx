@@ -3,20 +3,16 @@ import React, { useState, useEffect } from 'react';
 const UserBids = ({ bidderid }) => {
   const [activeBids, setActiveBids] = useState([]);
   const [completedBids, setCompletedBids] = useState([]);
-  const [users, setUsers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/db.json");
-        const data = await response.json();
-
-        const usersData = data.users;
-        const bidsData = data.bids;
-        const listingsData = data.listings;
-
-        setUsers(usersData);
+        const dbResponse = await fetch("/db.json");
+        const dbData = await dbResponse.json();
+        const usersData = dbData.users;
+        const bidsData = dbData.bids;
+        const listingsData = dbData.listings;
 
         const highestBidsByItem = bidsData.reduce((acc, bid) => {
           if (!acc[bid.itemid] || bid.bidamount > acc[bid.itemid].bidamount) {
@@ -26,22 +22,22 @@ const UserBids = ({ bidderid }) => {
         }, {});
 
         const enrichedBids = bidsData.map(bid => {
-          const listing = listingsData.find(listing => listing.id === bid.itemid);
-          const seller = usersData.find(user => user.id === listing.sellerid);
+          const listing = listingsData.find(listing => listing.id.toString() === bid.itemid.toString());
+          if (!listing) return null; 
+          const seller = usersData.find(user => user.id.toString() === listing.sellerid.toString());
           const isHighestBid = highestBidsByItem[bid.itemid]?.id === bid.id;
-          const status = isHighestBid ? 'Win' : 'Lost';
           return {
             ...bid,
             listingTitle: listing.title,
             endDate: listing.enddate,
             highestBid: highestBidsByItem[bid.itemid]?.bidamount,
-            status: bid.isactive ? null : status, // Set status only for completed bids
-            seller: bid.isactive ? null : seller // Seller info only for completed bids
+            status: bid.isactive ? "Active" : (isHighestBid ? "Win" : "Lost"),
+            seller: seller || null 
           };
-        });
+        }).filter(bid => bid !== null);
 
-        setActiveBids(enrichedBids.filter(bid => bid.isactive && bid.bidderid === parseInt(bidderid)));
-        setCompletedBids(enrichedBids.filter(bid => !bid.isactive && bid.bidderid === parseInt(bidderid)));
+        setActiveBids(enrichedBids.filter(bid => bid.isactive && bid.bidderid.toString() === bidderid));
+        setCompletedBids(enrichedBids.filter(bid => !bid.isactive && bid.bidderid.toString() === bidderid));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -50,17 +46,14 @@ const UserBids = ({ bidderid }) => {
     fetchData();
   }, [bidderid]);
 
+
   const calculateTimeLeft = (endDate) => {
     const now = new Date();
     const end = new Date(endDate);
-
     let delta = Math.abs(end - now) / 1000;
-
     const days = Math.floor(delta / 86400);
     delta -= days * 86400;
-
     const hours = Math.floor(delta / 3600) % 24;
-
     return `${days} D, ${hours} H`;
   };
 
@@ -70,9 +63,8 @@ const UserBids = ({ bidderid }) => {
 
   return (
     <div className='bids_page'>
-      {/* Active Auctions Table */}
       <div className='bids_page_content'>
-        <h2 className="bids_heading">Actions Auctions</h2>
+        <h2 className="bids_heading">Active Auctions</h2>
         <table className='bids_table'>
           <thead className='table_head'>
             <tr>
@@ -93,9 +85,7 @@ const UserBids = ({ bidderid }) => {
             ))}
           </tbody>
         </table>
-        {/* Same as provided, no changes needed */}
 
-        {/* Ended Auctions Table */}
         <h2 className="bids_heading">Ended Auctions</h2>
         <table className='bids_table'>
           <thead className='table_head'>
@@ -125,14 +115,12 @@ const UserBids = ({ bidderid }) => {
 
         {selectedSeller && (
           <div className="modal">
-            <p className="bids_info bids_table_details">Username: {selectedSeller.username}</p>
-            <p className="bids_info bids_table_details">Email: {selectedSeller.email}</p>
+            <p className="bids_info bids_table_details modal_text">Username: {selectedSeller.username}</p>
+            <p className="bids_info bids_table_details modal_text">Email: {selectedSeller.email}</p>
             <button className='bids_button_contact_seller modal_close_button' onClick={() => setSelectedSeller(null)}>Close</button>
           </div>
         )}
       </div>
-
-
     </div>
   );
 };

@@ -3,9 +3,13 @@ body {
   font-family: "Titillium Web";
 }
 
+
+
 a {
   text-decoration: none;
 }
+
+
 
 a:hover {
   font-weight: bold;
@@ -37,6 +41,7 @@ input::-webkit-inner-spin-button {
   background: #fff2e7;
 }
 
+
 /* Search bar */
 .searchbar-and-filter {
   display: flex;
@@ -47,6 +52,7 @@ input::-webkit-inner-spin-button {
 .searchBar,
 .filterBar {
   margin: 0;
+ 
   /* Remove default margin */
   width: 200px;
   padding: 10px;
@@ -58,6 +64,7 @@ input::-webkit-inner-spin-button {
 
 .searchBar {
   flex-grow: 1;
+ 
   /* Allow it to grow and take available space */
 
   max-width: 200px;
@@ -126,13 +133,17 @@ input::-webkit-inner-spin-button {
   background-color: #2a2829;
   font-family: "Titillium Web";
   padding: 2% 0px 30px 2%;
+  padding: 2% 0px 30px 2%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+
 
   .darkText {
     color: #a4826d;
     font-size: 20px;
+    font-size: 20px;
   }
+
 
   .redText {
     color: #ff1e1e;
@@ -157,6 +168,17 @@ input::-webkit-inner-spin-button {
   .priceText {
     color: #fff2e7;
     font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  .bid_amount_text {
+    color: white;
+    font-size: 20px;
+    margin: 0px;
+  }
+
+  .bid_amount_text p {
+    margin: 0px 0px 10px;
     margin-bottom: 20px;
   }
 
@@ -193,8 +215,23 @@ input::-webkit-inner-spin-button {
   .discreet-button {
     padding: 10px 0px;
     font-size: 20px;
+    margin-right: 20px;
+  }
+
+  .bids_buttons {
+    gap: 30px;
+  }
+
+  .initial_balance {
+    font-size: 20px;
+  }
+
+  .discreet-button {
+    padding: 10px 0px;
+    font-size: 20px;
   }
 }
+
 
 .rounded-button {
   background-color: #2a2829;
@@ -209,6 +246,7 @@ input::-webkit-inner-spin-button {
   border: 2px solid #fff2e7;
   cursor: pointer;
 }
+
 
 .rounded-button:hover {
   background: black;
@@ -259,10 +297,12 @@ input::-webkit-inner-spin-button {
   border: 4px solid white;
 }
 
+
 .item-wrapper h1 {
   color: #fff2e7;
   size: 28px;
 }
+
 
 .item-wrapper p {
   color: #e4cab5;
@@ -401,6 +441,7 @@ input::-webkit-inner-spin-button {
   display: block;
   position: absolute;
   bottom: 0;
+
 }
 
 .listings_table_details {
@@ -424,6 +465,31 @@ input::-webkit-inner-spin-button {
 .a_create_listing {
   text-decoration: none;
   color: white;
+}
+
+.edit_button {
+  padding: 10px 25px;
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 20px;
+  font-size: 18px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0px;
+}
+
+.listing_table tbody tr td {
+  height: 70px;
+}
+
+.listing_table tbody tr td {
+  height: 70px;
+}
+
+
+.edit_button {
+  margin: 0px 10px;
 }
 
 .edit_button {
@@ -489,7 +555,10 @@ input::-webkit-inner-spin-button {
 
 .bids_info {
   text-align: center;
+  position: relative;
+  padding: 0;
 }
+
 
 .bids_table_headers {
   padding: 0px 0px 20px 0px;
@@ -499,6 +568,7 @@ input::-webkit-inner-spin-button {
 .bids_table_details {
   height: 50px;
 }
+
 
 .bids_button_contact_seller {
   padding: 5px 15px;
@@ -520,6 +590,20 @@ input::-webkit-inner-spin-button {
   height: 50px;
 }
 
+.bids_table tbody tr td {
+  height: 70px;
+}
+
+.bids_table tbody tr:last-child td .line_which_will_work {
+  display: block;
+  position: absolute;
+  bottom: 0;
+}
+
+.modal_text {
+  color: white;
+}
+
 .modal {
   display: flex;
   flex-direction: column;
@@ -527,7 +611,7 @@ input::-webkit-inner-spin-button {
   align-items: center;
   width: 300px;
   height: 300px;
-  background-color: black;
+  background-color: #474546;;
   border-radius: 5%;
   margin-left: auto;
   margin-right: auto;
@@ -601,7 +685,8 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
+  padding: 50px;
   /* Adjust as needed */
 
   h1 {
@@ -609,7 +694,6 @@ input::-webkit-inner-spin-button {
     color: #fff2e7;
     text-align: center;
   }
-
   .user-info {
     background-color: #2a2829;
     /* Grey background color */
@@ -619,6 +703,21 @@ input::-webkit-inner-spin-button {
     border: 1px solid #ccc;
     /* Border color */
   }
+}
+
+.login_and_register_buttons {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+
+.two_buttons_div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 input {
@@ -777,3 +876,202 @@ input {
 }
 
 
+
+/* General text */
+.gen-wrapper {
+  background-color: #2a2829;
+  font-family: "Titillium Web";
+  padding: 2% 0px 30px 2%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  img{
+    max-width: 700px;
+    border: 2px solid #090706;
+  }
+
+  .breadText {
+    color: #fff2e7;
+    font-size: 20px;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    color: #fff2e7;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+
+}
+
+
+/* Admin view of users */
+
+.heading-users{
+  color: #fff2e7;
+}
+
+.user-rows {
+  color: #fff2e7;
+}
+
+.user-body {
+  color: #A4826D;
+}
+
+/*Create listing page*/
+.addListing-container{
+  .item-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+   }
+  .addListing-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: left;
+    border-bottom: 4px solid #e4cab5;;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 18px;
+    margin-bottom: 5px;
+   }
+
+  .end-date-container p {
+    margin-bottom: 5px;
+  }
+  .end-date-box {
+    display: inline-block;
+    background-color: #e4cab5;
+    color: #090706;
+    padding: 5px 10px;;
+    border-radius: 15px;
+    font-size: 18px;
+    font-style:bold;
+    text-align: center;
+    margin-top: 5px;
+  }
+  .end-date-listing-info{
+    font-size: 15px;
+    font-style: italic;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  
+  .add-listing {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .adllisting-col1,
+  .description-adlisting-col2 {
+    flex: 1;
+  }
+
+  .add-listing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .adllisting-col1,
+  .description-adlisting-col2 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .description-input {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 27em;
+    overflow-y: auto;
+    border-radius: 35px;
+  }
+
+  .description-field {
+    width: 100%;
+  }
+
+  .item-wraper .add-listing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rounded-button {
+    font-size: 20px;
+    width: 50%;
+
+  }
+    .adllisting-col1 input[type="text"],
+    .adllisting-col1 input[type="number"] {
+      border-radius: 15px;
+    }
+
+}
+
+
+
+
+.alertModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alertModal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.alertModal p {
+  color: black;
+  padding: 20px;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.alertModal button {
+  margin-top: 10px;
+}
+
+.forgot_pass_button {
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  font-size: 15px;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.hide_show_pass_button {
+  color: black;
+  margin: 0px 0px 0px 20px !important;
+}
+
+.hide_show_reconfirm_pass_button {
+  margin: 0px 0px 0px 20px;
+}

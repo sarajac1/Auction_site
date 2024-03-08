@@ -41,6 +41,27 @@ const Gallery = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/db.json");
+        const data = await response.json();
+        const now = new Date();
+
+        const filteredListings = data.listings.filter(listing => new Date(listing.enddate) > now);
+
+        setOriginalGalleryItems(filteredListings);
+        setGalleryItems(filteredListings);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setOriginalGalleryItems([]);
+        setGalleryItems([]);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const SearchGallery = (event) => {
     const searchWord = event.target.value;
     const regex = new RegExp(`\\b${searchWord}\\b|${searchWord}`, "i");
@@ -117,12 +138,25 @@ const Gallery = () => {
     const currentDate = new Date();
     const endDate = new Date(endDateString);
     const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
+
+    if (currentDate > endDate) {
+      return <div className="auction-ended">Auction ended</div>;
+    }
+
+    if (days <= 1) {
+      return (
+        <div className="redText">
+          Ends in: {days} days, {hours} hours
+        </div>
+      );
+    }
     return (
-      <div>
+      <div className="darkText">
         Ends in: {days} days, {hours} hours
       </div>
     );
   }
+
   const deleteListing = async (id) => {
     try {
       // Sending DELETE request to the specific listing's endpoint
@@ -137,7 +171,7 @@ const Gallery = () => {
 
 
   return (
-    <div className="container">
+    <div className="container" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
       <div className="searchbar-and-filter">
         <input
           type="search"
