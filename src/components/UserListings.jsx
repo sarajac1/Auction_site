@@ -83,6 +83,8 @@ const UserListings = ({ sellerid }) => {
                 <td className="listings_info listings_table_details"> <div className="actions">
                   <button className="edit_button">Edit</button>
                   <button className="edit_button"><a className='a_create_listing' href="/remove-listing">Delete</a></button>
+                  <button className="edit_button"><a className='a_create_listing' href={`/item/${listing.id}`}>Product Page</a></button>
+
                   <div className='line_which_will_work'></div>
                 </div>
                 </td>

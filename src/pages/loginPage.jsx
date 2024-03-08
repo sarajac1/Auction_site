@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
+import { useNavigate } from "react-router-dom";
+
+
+function AlertModal({ isOpen, message, onClose }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="alertModal-overlay">
+      <div className="alertModal">
+        <p>{message}</p>
+        <button className="rounded-button-small" onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+}
 
 function LoginPage() {
   useEffect(() => {
@@ -22,20 +37,21 @@ function LoginPage() {
   const [UsersList, setUsersList] = useState([]);
   const [credentials, setCredentials] = useState({
     username: "",
-    password: "",    
+    password: "",
   });
-  
+
 
   const [newUser, setNewUser] = useState({
     newUsername: "",
     newUserPassword: "",
+    newUserConfirmPassword: "",
     newUserEmail: "",
     newUserAddress: "",
   });
 
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showRegistrationForm, setRegistrationForm] = useState(false);
+  const [alertModal, setAlertModal] = useState({ isOpen: false, message: '' });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -57,11 +73,16 @@ function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (!credentials.username || !credentials.password) {
+      setAlertModal({ isOpen: true, message: 'Please fill out all fields. If you are a new user, please register.' });
+      return;
+    }
+
     const existingUser = UsersList.find(
-      (obj) => obj.username === credentials.username
+      (user) => user.username === credentials.username && user.password === credentials.password
     );
 
-    if (existingUser != null) {
+    if (existingUser) {
       localStorage.setItem("token", credentials.username);
       localStorage.setItem("token_id", existingUser.id);
       localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
@@ -69,13 +90,10 @@ function LoginPage() {
       window.location.reload();
       window.location.href = '/';
     } else {
-      if (confirm("User not found, Do you want to register?")) {
-        setRegistrationForm(true);
-      } else {
-        console.error("User not found!");
-      }
+      setAlertModal({ isOpen: true, message: 'Incorrect username or password. Please try again.' });
     }
   };
+
 
   /*const reloadPage = () => {
     window.location.reload();
@@ -85,50 +103,99 @@ function LoginPage() {
     setRegistrationForm(false);
   };
 
-  async function handleRegistrationFormSubmit () {
-  const d = new Date();
-  let text = d.toISOString().split('T');
-    console.log(UsersList)
-    
-  let data = {
-      "id": UsersList.length+1,
-      "username": newUser.newUserName,
+  const navigate = useNavigate();
+
+
+  async function handleRegistrationFormSubmit(event) {
+    event.preventDefault();
+
+    if (!newUser.newUsername || !newUser.newUserPassword || !newUser.newUserEmail || !newUser.newUserAddress) {
+      setAlertModal({ isOpen: true, message: 'All fields must be filled out to register.' });
+      return;
+    }
+
+    if (newUser.newUserPassword !== newUser.newUserConfirmPassword) {
+      setAlertModal({ isOpen: true, message: 'Passwords do not match.' });
+      return; 
+    }
+
+    const d = new Date();
+    const text = d.toISOString().split('T');
+
+    const data = {
+      "id": UsersList.length + 1,
+      "username": newUser.newUsername,
       "password": newUser.newUserPassword,
       "joineddate": text[0],
       "address": newUser.newUserAddress,
       "email": newUser.newUserEmail,
-      "balance": 0, 
+      "balance": 0,
       "isAdmin": false
-    } 
-     await fetch("http://localhost:3000/users", {
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    })
-    UsersList.push(data)
-    console.log(UsersList)
-    alert('Registered sucessfully!')
-    setRegistrationForm(false);
-    setCredentials(newUser.newUserName, newUser.newUserPassword)
-    
-    const existingUser = UsersList.find(
-      (obj) => obj.username === credentials.username
-    );
-    
-    localStorage.setItem("token", credentials.username);
-    localStorage.setItem("token_id", existingUser.id);
-    localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
-    setIsLoggedIn(true);
-    window.location.reload();   
-    window.location.href = '/';
+      });
+      if (response.ok) {
+        localStorage.setItem("token", newUser.newUsername); 
+        localStorage.setItem("token_id", data.id);
+        localStorage.setItem("isAdmin", data.isAdmin.toString());
+        setIsLoggedIn(true); 
+
+        console.log('Registered successfully!');
+        navigate('/'); 
+        window.location.reload();
+      } else {
+        setAlertModal({ isOpen: true, message: 'Registration failed. Please try again.' });
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setAlertModal({ isOpen: true, message: 'An error occurred. Please try again.' });
+    }
   }
+
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+
+
+  const handleForgotPasswordClick = (event) => {
+    event.stopPropagation(); 
+    setAlertModal({ isOpen: true, message: 'Forgot Your Password?\n\nPlease contact support to reset your password.\nSupport@shaddowbid.com' });
+  };
+
+
+  const handleCloseForgotPasswordModal = () => {
+    setShowForgotPasswordModal(false);
+  };
+
+  const handleRegisterClick = (event) => {
+    event.preventDefault();
+    setRegistrationForm(true);
+  };
+
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
+  const togglePasswordVisibility = () => {
+    setPasswordShown(!passwordShown);
+  };
+
+
 
   return (
     <div className="container">
       <div className="login-box">
         <div className="user-info">
+          <AlertModal
+            isOpen={alertModal.isOpen}
+            message={alertModal.message}
+            onClose={() => setAlertModal({ isOpen: false, message: '' })}
+          />
           {!isLoggedIn && (
             <>
               <h1>Login</h1>
@@ -149,9 +216,26 @@ function LoginPage() {
                   onChange={handleChange}
                 />
                 <br />
-                <button className="rounded-button-small" type="submit">
-                  Login
-                </button>
+                <AlertModal
+                  isOpen={alertModal.isOpen}
+                  message={alertModal.message}
+                  onClose={() => setAlertModal({ isOpen: false, message: '' })}
+                />
+
+                <div className="login_and_register_buttons">
+                  <div>
+                    <button className="forgot_pass_button" type="button" onClick={handleForgotPasswordClick}>Forgot Password</button>
+                  </div>
+                  <div className="two_buttons_div">
+                    <button className="rounded-button-small register_button" onClick={handleRegisterClick}>
+                      Register
+                    </button>
+                    <button className="rounded-button-small" type="submit">
+                      Login
+                    </button>
+                  </div>
+
+                </div>
               </form>
             </>
           )}
@@ -159,6 +243,8 @@ function LoginPage() {
           {showRegistrationForm && (
             <ReactModal
               isOpen={showRegistrationForm}
+              appElement={document.getElementById('root')}
+
               contentLabel="Example Modal"
             >
               <div className="RegistrationForm">
@@ -169,44 +255,55 @@ function LoginPage() {
                   <h2>Register User</h2>
 
                   <form onSubmit={handleRegistrationFormSubmit}>
-                    Username:{" "}
+                    Username:  
                     <input
+                      style={{ marginLeft: "20px" }}
                       type="text"
-                      name="newUserName"
+                      name="newUsername"
                       placeholder="Enter Username"
-                      value={newUser.newUserName}
+                      value={newUser.newUsername}
                       onChange={handleNewUserChange}
-                    />{" "}
+                    />
                     <br />
-                    Password:{" "}
+                    Password:
                     <input
-                      type="password"
+                      style={{ marginLeft: "20px" }}
+                      type={passwordShown ? "text" : "password"}
                       name="newUserPassword"
                       placeholder="Enter Password"
                       value={newUser.newUserPassword}
                       onChange={handleNewUserChange}
-                    />{" "}
+                    />
+                    <button className="forgot_pass_button hide_show_pass_button" type="button" onClick={togglePasswordVisibility} style={{ marginLeft: '10px' }}>
+                      {passwordShown ? "Hide" : "Show"} Password
+                    </button>
                     <br />
-                    Re-Confirm Password:{" "}
+                    Re-Confirm Password:
                     <input
-                      type="password"
-                      name="newUserPassword"
+                      style={{ marginLeft: "20px" }}
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="newUserConfirmPassword" 
                       placeholder="Re-Confirm Password"
-                      value={newUser.newUserPassword}
+                      value={newUser.newUserConfirmPassword}
                       onChange={handleNewUserChange}
-                    />{" "}
+                    />
+                    <button className="forgot_pass_button hide_show_pass_button hide_show_reconfirm_pass_button" type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                      {showConfirmPassword ? "Hide" : "Show"} Password
+                    </button>
                     <br />
-                    Email:{" "}
+                    Email:
                     <input
+                      style={{ marginLeft: "20px" }}
                       type="email"
                       name="newUserEmail"
                       placeholder="Email"
                       value={newUser.newUserEmail}
                       onChange={handleNewUserChange}
-                    />{" "}
+                    />
                     <br />
-                    Address:{" "}
+                    Address:
                     <input
+                      style={{ marginLeft: "20px" }}
                       type="text"
                       name="newUserAddress"
                       placeholder="Address"
@@ -220,6 +317,11 @@ function LoginPage() {
                   </form>
                 </div>
               </div>
+              <AlertModal
+                isOpen={alertModal.isOpen}
+                message={alertModal.message}
+                onClose={() => setAlertModal({ isOpen: false, message: '' })}
+              />
             </ReactModal>
           )}
         </div>
