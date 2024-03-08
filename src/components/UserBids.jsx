@@ -16,18 +16,18 @@ const UserBids = ({ bidderid }) => {
         const bidsData = data.bids;
         const listingsData = data.listings;
 
-        setUsers(usersData);
+        setUsers(usersData.users);
 
-        const highestBidsByItem = bidsData.reduce((acc, bid) => {
+        const highestBidsByItem = bidsData.bids.reduce((acc, bid) => {
           if (!acc[bid.itemid] || bid.bidamount > acc[bid.itemid].bidamount) {
             acc[bid.itemid] = bid;
           }
           return acc;
         }, {});
 
-        const enrichedBids = bidsData.map(bid => {
-          const listing = listingsData.find(listing => listing.id === bid.itemid);
-          const seller = usersData.find(user => user.id === listing.sellerid);
+        const enrichedBids = bidsData.bids.map(bid => {
+          const listing = listingsData.listings.find(listing => listing.id === bid.itemid);
+          const seller = usersData.users.find(user => user.id === listing.sellerid);
           const isHighestBid = highestBidsByItem[bid.itemid]?.id === bid.id;
           const status = isHighestBid ? 'Win' : 'Lost';
           return {

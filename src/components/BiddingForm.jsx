@@ -48,9 +48,6 @@ function BiddingForm({ selectedListing }) {
       return;
     }
 
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const formattedSubmissionTime = `${submissionTime.getDate()}-${months[submissionTime.getMonth()]}-${submissionTime.getFullYear()} ${submissionTime.getHours().toString().padStart(2, '0')}:${submissionTime.getMinutes().toString().padStart(2, '0')}:${submissionTime.getSeconds().toString().padStart(2, '0')}`;
-
     try {
       // Fetch existing bids for the selected item
       const existingBidsResponse = await fetch(`http://localhost:3000/bids?itemid=${selectedListing.id}`);
@@ -74,7 +71,7 @@ function BiddingForm({ selectedListing }) {
           itemid: selectedListing.id,
           bidderid: user.id,
           bidamount: bidAmount,
-          datetime: formattedSubmissionTime,
+          datetime: submissionTime.toISOString(),
           isactive: true,
 
         }),
