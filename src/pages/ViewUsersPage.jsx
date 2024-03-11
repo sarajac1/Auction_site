@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"; 
+import { Link } from 'react-router-dom'
 
 const ViewUsersPage = () => {
   const [users, setUsers] = useState([]);
@@ -21,18 +22,20 @@ const ViewUsersPage = () => {
 
 
   return (
-    <div>
+    <div className="container">
       <h1 className="heading-users">Users</h1>
-      <table>
-        <thead>
+      <table className="user-table">
+        <thead className="user-heading">
           <tr className="user-rows">
             <th>ID</th>
             <th>Username</th>
-            <th>Joined Date</th>
+            <th>Joined date:</th>
             <th>Adress</th>
             <th>Email</th>
             <th>Balance</th>
             <th>Admin</th>
+            <th>Edit</th>
+            
           </tr>
         </thead>
         <tbody className="user-body">
@@ -45,6 +48,12 @@ const ViewUsersPage = () => {
               <td>{user.email}</td>
               <td>{user.balance}</td>
               <td>{user.isAdmin ? 'Yes' : 'No'}</td>
+              <td><Link to={`/edit/${user.id}`} className="edit-user-link">[EDIT]</Link></td>
+
+
+
+              
+              
             </tr>
           ))}
         </tbody>
