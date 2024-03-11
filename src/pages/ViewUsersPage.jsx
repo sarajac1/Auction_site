@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 const ViewUsersPage = () => {
   const [users, setUsers] = useState([]);
+  const [searchWord, setSearchWord] = useState("");
+
 
 
   useEffect(() => {
@@ -20,9 +22,33 @@ const ViewUsersPage = () => {
     fetchData();
   }, []);
 
+  const handleSearchChange = (event) => {
+    setSearchWord(event.target.value.toLowerCase());
+  }
+
+  const filteredUsers = users.filter(user =>
+    user.username.toLowerCase().includes(searchWord) ||
+    user.email.toLowerCase().includes(searchWord) ||
+    user.address.toLowerCase().includes(searchWord) 
+  );
+
+
+
 
   return (
     <div className="container">
+      
+      <div className="searchbar-users">
+        <input
+          type="search"
+          className="searchBarUsers"
+          name="searchBarUsers"
+          placeholder="Search users..."
+          onChange={handleSearchChange}
+         
+        />
+        </div>
+      
       <h1 className="heading-users">Users</h1>
       <table className="user-table">
         <thead className="user-heading">
@@ -39,7 +65,7 @@ const ViewUsersPage = () => {
           </tr>
         </thead>
         <tbody className="user-body">
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.username}</td>
@@ -49,9 +75,6 @@ const ViewUsersPage = () => {
               <td>{user.balance}</td>
               <td>{user.isAdmin ? 'Yes' : 'No'}</td>
               <td><Link to={`/edit/${user.id}`} className="edit-user-link">[EDIT]</Link></td>
-
-
-
               
               
             </tr>
