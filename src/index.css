@@ -721,6 +721,119 @@ input {
   margin: 0px 0px 0px 20px;
 }
 
+.aboutus_page {
+  color: white;
+  background-color: #2a2829;
+  padding: 40px 40px;
+}
+
+.aboutus_heading {
+  margin-top: 0px;
+}
+
+/* AddListing */
+/*Create listing page*/
+
+
+  .addListing-container {
+    .item-wrapper {
+      display: flex;
+      /* Enables flexbox */
+      justify-content: center;
+      /* Centers horizontally */
+      align-items: center;
+      /* Centers vertically */
+      height: 100%;
+      /* You may need to adjust this depending on your layout */
+    }
+
+    .addListing-wrapper {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+
+    }
+
+   
+      h1 {
+        text-align: left;
+        border-bottom: 4px solid #e4cab5;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+     
+      .add-listing {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .adllisting-col1,
+      .description-adlisting-col2 {
+        flex: 1;
+      }
+
+      .add-listing {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .adllisting-col1,
+      .description-adlisting-col2 {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .description-input {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 27em;
+        overflow-y: auto;
+        border-radius: 9%;
+      }
+
+      .description-field {
+        width: 100%;
+      }
+
+      .item-wraper .add-listing {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .rounded-button {
+      font-size: 25px;
+      width: 50%;
+    }
+        .modal-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+    
+        .modal {
+          background-color: white;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          z-index: 1050;
+          /* Ensure it's above other content */
+        }
+  }
+
+
+
+
 /* Admin view of users*/
 
 .heading-users{
