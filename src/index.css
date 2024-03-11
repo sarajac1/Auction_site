@@ -865,6 +865,17 @@ table thead tr.user-rows th {
 }
 
 
+.searchBarUsers {
+    margin: 0;
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    flex-grow: 1;
+    max-width: 200px;
+}
+
+
 /* General text */
 .gen-wrapper {
   background-color: #2a2829;
