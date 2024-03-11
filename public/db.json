@@ -101,7 +101,7 @@
       "isAdmin": false
     },
     {
-      "id": 11,
+      "id": "11",
       "username": "test",
       "password": "test",
       "joineddate": "2024-03-06",
@@ -111,12 +111,22 @@
       "isAdmin": false
     },
     {
-      "id": 12,
+      "id": "12",
       "username": "test6",
       "password": "test6",
       "joineddate": "2024-03-07",
       "address": "test6",
       "email": "test6@test6",
+      "balance": 0,
+      "isAdmin": false
+    },
+    {
+      "id": 13,
+      "username": "test2",
+      "password": "test2",
+      "joineddate": "2024-03-08",
+      "address": "test2",
+      "email": "test2@test2",
       "balance": 0,
       "isAdmin": false
     }
