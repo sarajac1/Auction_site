@@ -832,3 +832,65 @@ input {
   }
 
 
+
+
+/* Admin view of users*/
+
+.heading-users{
+  color: #FFF2E7; 
+}
+
+.user-body{
+  color: #A4826D; 
+}
+
+
+table thead tr.user-rows th {
+  color: #FFF2E7;
+  border-bottom: 1px solid #FFF2E7;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-heading{
+  text-align: left; 
+  padding: 8px; ;
+}
+
+.edit-user-link {
+  color: #A4826D;
+}
+
+
+/* General text */
+.gen-wrapper {
+  background-color: #2a2829;
+  font-family: "Titillium Web";
+  padding: 2% 0px 30px 2%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  img{
+    max-width: 700px;
+    border: 2px solid #090706;
+  }
+
+  .breadText {
+    color: #fff2e7;
+    font-size: 20px;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    color: #fff2e7;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+
+}
+
