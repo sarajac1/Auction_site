@@ -723,10 +723,15 @@ input {
 
 /* Admin view of users*/
 
-.heading-users, .user-rows {
+.heading-users{
   color: #FFF2E7; 
 }
 
 .user-body{
   color: #A4826D; 
+}
+
+.user-rows{
+  color: #FFF2E7;
+  border-bottom: 1px solid #FFF2E7;
 }

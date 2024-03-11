@@ -28,7 +28,7 @@ const ViewUsersPage = () => {
           <tr className="user-rows">
             <th>ID</th>
             <th>Username</th>
-            <th>Member since</th>
+            <th>Joined date:</th>
             <th>Adress</th>
             <th>Email</th>
             <th>Balance</th>
