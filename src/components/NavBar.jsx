@@ -52,7 +52,7 @@ function NavBar() {
                 {/* Links shown for guests */}
                   {!isLoggedIn && (
                 <>
-                  <Link to="/about us">About us</Link>
+                  <Link to="/about-us">About us</Link>
                   <Link to="/jobs">Jobs</Link>
                 </>
               )}
@@ -63,7 +63,7 @@ function NavBar() {
             {isLoggedIn ? (              
               <Link to="/">
                 <span>Welcome {userName} !</span> &nbsp;
-                <button className="rounded-button-small" onClick={handleLogout}>
+                <button className="rounded-button-small" style={{marginTop: "0px"}} onClick={handleLogout}>
                   Logout
                 </button>{" "}
                 </Link>

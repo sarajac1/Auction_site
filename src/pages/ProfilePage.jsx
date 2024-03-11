@@ -17,7 +17,7 @@ function ProfilePage() {
       } catch (error) {
         console.error("Error fetching data:", error);
         setUserData([]);
-      }
+      } 
     };
 
     fetchData();
