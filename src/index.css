@@ -844,7 +844,22 @@ input {
   color: #A4826D; 
 }
 
-.user-rows{
+
+table thead tr.user-rows th {
   color: #FFF2E7;
   border-bottom: 1px solid #FFF2E7;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-heading{
+  text-align: left; 
+  padding: 8px; ;
+}
+
+.edit-user-link {
+  color: #A4826D;
 }
