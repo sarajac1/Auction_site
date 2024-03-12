@@ -11,7 +11,6 @@ import AboutUs from "../pages/AboutUs.jsx";
 import Jobs from "../pages/JobsPage.jsx";
 
 
-import RemoveListing from "./RemoveListing.jsx";
 import LoginPage from "../pages/loginPage.jsx";
 
 
@@ -25,7 +24,6 @@ function MyRouter() {
         <Route path="/" element={<HomePage />} />
         <Route path="/item/:id" element={<ItemPage />} />
         <Route path="/AddListing" element={<AddListing />} />
-        <Route path="/remove-listing" element={<RemoveListing />} />
         <Route path="/listings" element={<ListingsPage />} />
         <Route path="/bids" element={<BidsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
