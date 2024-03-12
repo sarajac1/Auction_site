@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function AddListing() {
   // Function to format today's date as DD-MM-YYYY
@@ -34,6 +34,7 @@ function AddListing() {
     startbid: '',
   });
 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setListing({ ...listing, [name]: value });
@@ -42,10 +43,13 @@ function AddListing() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //fetch the sellerid from local storage
+    const sellerId = localStorage.getItem("token_id");
 
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
       title: listing.title,
+      sellerid: sellerId,
       description: listing.description,
       image: listing.image,
       startdate: formattedToday,
@@ -135,7 +139,9 @@ function AddListing() {
           <div className="modal">
             <p>Listing added successfully!</p>
             <button onClick={() => handleMessage('new')}>Add Another Listing</button>
-            <button onClick={() => handleMessage('view')}>Go to Listings Page</button>
+            <Link to="/listings">
+              <button>Go to Listings Page</button>
+            </Link>
           </div>
         </div>
       )}
