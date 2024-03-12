@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import RemoveListing from './RemoveListing';
 
 const UserListings = ({ sellerid }) => {
   const [listings, setListings] = useState([]);
@@ -139,7 +138,7 @@ const UserListings = ({ sellerid }) => {
                   <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)} <div className='line_which_will_work bottom_line'></div></td>
                   <td className="listings_info listings_table_details"> <div className="actions">
                     <button className="edit_button">Edit</button>
-                    <button className="edit_button"><a className='a_create_listing' href="/remove-listing">Delete</a></button>
+                    <button className="edit_button">Delete</button>
                     <div className='line_which_will_work'></div>
                   </div>
                   </td>
