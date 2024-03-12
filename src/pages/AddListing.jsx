@@ -138,10 +138,12 @@ function AddListing() {
         <div className="modal-backdrop">
           <div className="modal">
             <p>Listing added successfully!</p>
-            <button onClick={() => handleMessage('new')}>Add Another Listing</button>
-            <Link to="/listings">
-              <button>Go to Listings Page</button>
-            </Link>
+            <div className="button-container"> 
+              <button className="rounded-button" onClick={() => handleMessage('new')}>Add Another Listing</button>
+              <Link to="/listings" >
+               <button className="rounded-button" >Go to Listings Page</button>
+              </Link>
+            </div>
           </div>
         </div>
       )}
