@@ -36,8 +36,8 @@ function NavBar() {
                   <Link to="/listings">Your Listings</Link>
                   <Link to="/bids">Your Bids</Link>
                   <Link to="/profile">Profile</Link>
-                  <span>Balance: </span>
-                  </>
+                  <span>{Balance(userName.id)} </span>
+                </>
               )}
             
 

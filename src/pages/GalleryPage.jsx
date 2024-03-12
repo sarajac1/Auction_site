@@ -175,6 +175,7 @@ const Gallery = () => {
       <div className="searchbar-and-filter">
         <input
           type="search"
+          placeholder="Search"
           className="searchBar"
           name="searchBar"
           onChange={SearchGallery}
