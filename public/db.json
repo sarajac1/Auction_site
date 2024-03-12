@@ -129,16 +129,6 @@
       "email": "test2@test2",
       "balance": 0,
       "isAdmin": false
-    },
-    {
-      "id": 14,
-      "username": "df",
-      "password": "df",
-      "joineddate": "2024-03-12",
-      "address": "df",
-      "email": "sdfds@sdfd.com",
-      "balance": 0,
-      "isAdmin": false
     }
   ],
   "listings": [
