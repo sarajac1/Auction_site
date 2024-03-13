@@ -185,6 +185,28 @@ function LoginPage() {
     setPasswordShown(!passwordShown);
   };
 
+  // Обработчик нажатия клавиши для формы регистрации
+  const handleRegistrationKeyDown = (event) => {
+    if (event.keyCode === 13 || event.which === 13) {
+      handleRegistrationFormSubmit(event); // Передаем событие, чтобы предотвратить отправку формы
+    }
+  };
+
+
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13 || event.which === 13) {
+      event.preventDefault(); // Всегда предотвращаем стандартное поведение
+
+      // Проверяем, открыта ли форма регистрации
+      if (showRegistrationForm) {
+        handleRegistrationFormSubmit(event); // Для Enter в форме регистрации
+      } else {
+        handleSubmit(event); // Для Enter на странице входа
+      }
+    }
+  };
+
+
 
 
   return (
@@ -206,6 +228,7 @@ function LoginPage() {
                   placeholder="Username"
                   value={credentials.username}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                 />
                 <br />
                 <input
@@ -214,6 +237,7 @@ function LoginPage() {
                   placeholder="Password"
                   value={credentials.password}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                 />
                 <br />
                 <AlertModal
@@ -252,9 +276,9 @@ function LoginPage() {
                   <span className="close" onClick={handleCloseRegistrationForm}>
                     &times;
                   </span>
-                  <h2>Register User</h2>
+                  <h2 className="register_user_text">Register User</h2>
 
-                  <form onSubmit={handleRegistrationFormSubmit}>
+                  <form className="register_user_text" onSubmit={handleRegistrationFormSubmit}>
                     Username:  
                     <input
                       style={{ marginLeft: "20px" }}
@@ -263,6 +287,7 @@ function LoginPage() {
                       placeholder="Enter Username"
                       value={newUser.newUsername}
                       onChange={handleNewUserChange}
+                      onKeyDown={handleRegistrationKeyDown}
                     />
                     <br />
                     Password:
@@ -273,6 +298,7 @@ function LoginPage() {
                       placeholder="Enter Password"
                       value={newUser.newUserPassword}
                       onChange={handleNewUserChange}
+                      onKeyDown={handleRegistrationKeyDown}
                     />
                     <button className="forgot_pass_button hide_show_pass_button" type="button" onClick={togglePasswordVisibility} style={{ marginLeft: '10px' }}>
                       {passwordShown ? "Hide" : "Show"} Password
@@ -286,6 +312,7 @@ function LoginPage() {
                       placeholder="Re-Confirm Password"
                       value={newUser.newUserConfirmPassword}
                       onChange={handleNewUserChange}
+                      onKeyDown={handleRegistrationKeyDown}
                     />
                     <button className="forgot_pass_button hide_show_pass_button hide_show_reconfirm_pass_button" type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                       {showConfirmPassword ? "Hide" : "Show"} Password
@@ -299,6 +326,7 @@ function LoginPage() {
                       placeholder="Email"
                       value={newUser.newUserEmail}
                       onChange={handleNewUserChange}
+                      onKeyDown={handleRegistrationKeyDown}
                     />
                     <br />
                     Address:
@@ -309,6 +337,7 @@ function LoginPage() {
                       placeholder="Address"
                       value={newUser.newUserAddress}
                       onChange={handleNewUserChange}
+                      onKeyDown={handleRegistrationKeyDown}
                     />
                     <br />
                     <button className="rounded-button-small" type="submit">
