@@ -163,7 +163,7 @@ input::-webkit-inner-spin-button {
   }
 
   .bid_amount_text {
-    color: white;
+    color: #FFF2E7;
     font-size: 20px;
     margin: 0px;
   }
@@ -360,14 +360,14 @@ input::-webkit-inner-spin-button {
 }
 
 .listings_heading {
-  color: white;
+  color: #FFF2E7;
   font-size: 45px;
   width: 70%;
   margin: 90px 0px 50px 90px;
 }
 
 .listings_info {
-  color: white;
+  color: #FFF2E7;
   text-align: center;
   position: relative;
 }
@@ -425,12 +425,12 @@ input::-webkit-inner-spin-button {
 
 .a_create_listing {
   text-decoration: none;
-  color: white;
+  color: #FFF2E7;
 }
 
 .edit_button {
   padding: 10px 25px;
-  color: white;
+  color: #FFF2E7;
   background-color: transparent;
   border: 2px solid white;
   border-radius: 20px;
@@ -483,7 +483,7 @@ input::-webkit-inner-spin-button {
 }
 
 .bids_heading {
-  color: white;
+  color: #FFF2E7;
   font-size: 45px;
   width: 70%;
   margin: 90px 0px 30px 90px;
@@ -498,7 +498,7 @@ input::-webkit-inner-spin-button {
 
 .bids_table_headers {
   padding: 0px 0px 20px 0px;
-  color: white;
+  color: #FFF2E7;
 }
 
 .bids_table_details {
@@ -507,7 +507,7 @@ input::-webkit-inner-spin-button {
 
 .bids_button_contact_seller {
   padding: 5px 15px;
-  color: white;
+  color: #FFF2E7;
   background-color: transparent;
   border: 1px solid white;
   border-radius: 20px;
@@ -536,7 +536,7 @@ input::-webkit-inner-spin-button {
 }
 
 .modal_text {
-  color: white;
+  color: #FFF2E7;
 }
 
 .modal {
@@ -557,6 +557,10 @@ input::-webkit-inner-spin-button {
   font-size: 18px;
 }
 
+.close {
+  color: #FFF2E7;
+}
+
 .bids_table tbody tr:last-child td .line_which_will_work {
   display: block;
 }
@@ -569,7 +573,7 @@ input::-webkit-inner-spin-button {
 }
 
 .text-white {
-  color: white !important;
+  color: #FFF2E7 !important;
 }
 
 
@@ -579,7 +583,7 @@ input::-webkit-inner-spin-button {
 }
 
 .profile_text {
-  color: white;
+  color: #FFF2E7;
 }
 
 .profile_heading {
@@ -641,6 +645,18 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.ReactModal__Overlay {
+  background-color:rgba(0, 0, 0, 0.5) !important;
+}
+
+.ReactModal__Content {
+  background-color: #2a282a !important;
+}
+
+.register_user_text {
+  color: #FFF2E7;
+}
+
 .login_and_register_buttons {
   display: flex;
   justify-content: start;
@@ -682,7 +698,7 @@ input {
 }
 
 .alertModal {
-  background-color: #fff;
+  background-color: #2a282a;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -693,7 +709,7 @@ input {
 }
 
 .alertModal p {
-  color: black;
+  color: #FFF2E7;
   padding: 20px;
   white-space: pre-line;
   text-align: center;
@@ -709,11 +725,11 @@ input {
   font-size: 15px;
   background: none;
   border: none;
-  color: white;
+  color: #FFF2E7;
 }
 
 .hide_show_pass_button {
-  color: black;
+  color: #FFF2E7;
   margin: 0px 0px 0px 20px !important;
 }
 
@@ -722,9 +738,23 @@ input {
 }
 
 .aboutus_page {
-  color: white;
+  color: #FFF2E7;
   background-color: #2a2829;
   padding: 40px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.aboutus_content {
+  width: 50%;
+  padding: 20px;
+}
+
+.aboutus_logo {
+  border-radius: 15px;
+  border: 1px solid #FFF2E7;
 }
 
 .aboutus_heading {
@@ -883,6 +913,15 @@ table thead tr.user-rows th {
     font-size: 20px;
     max-width: 500px;
     margin-bottom: 20px;
+  }
+
+  .jobs_photo {
+    margin-top: 30px;
+    width: 90%;
+  }
+
+  .underphoto_text {
+    color: #FFF2E7;
   }
 
   h1 {
