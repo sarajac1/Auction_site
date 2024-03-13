@@ -28,6 +28,8 @@ An auction site for individuals who are interested in purchasing by bidding or s
 
 ## Screenshots
 ![Home Page](images/HomePage.png)
+![About Us page](images/AboutUs.png)
+![Jobs page](images/Jobs.png)
 ![Login form](images/Login.png)
 ![Registration form](images/Register.png)
 ![Admin view of Home Page](images/AdminHomePage.png)
@@ -39,8 +41,6 @@ An auction site for individuals who are interested in purchasing by bidding or s
 ![View of User Profile](images/UsersBids.png)
 ![View of Create Listing form](images/CreateListing.png)
 ![View of Successfully created listing message modal that ask the user about where they want to navigate](images/SuccessfulListingNavigationQuery.png)
-![]()
-
 
 ## Technologies
 We used the following teachnologies React, Vite, Node.js, JSON-Server
