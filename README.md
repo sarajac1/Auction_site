@@ -59,7 +59,7 @@ This project is currently in development.
 In progress: production of REST WEBB API  with .Net C#, Testing, Integration and Deploy
 
 ## Credits
-List of contriubutors:
+List of contributors:
 - [Konrad Natthagel](https://github.com/nighthail)
 - [Sara Jakobsson](https://github.com/sarajac1)
 - [Arsenty Streltsov](https://github.com/ArsentyStreltsov)
