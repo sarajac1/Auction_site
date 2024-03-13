@@ -27,7 +27,19 @@ An auction site for individuals who are interested in purchasing by bidding or s
 - User can update their balance
 
 ## Screenshots
-
+![Home Page](images/HomePage.png)
+![Login form](images/Login.png)
+![Registration form](images/Register.png)
+![Admin view of Home Page](images/AdminHomePage.png)
+![Admin view of all listings](images/AdminListings.png)
+![Admin view of all users](images/AdminUsersList.png)
+![View of User Home Page](images/UserHomePage.png)
+![View of User Listings](images/UserListings.png)
+![View of User Bids](images/UsersBids.png)
+![View of User Profile](images/UsersBids.png)
+![View of Create Listing form](images/CreateListing.png)
+![View of Successfully created listing message modal that ask the user about where they want to navigate](images/SuccessfulListingNavigationQuery.png)
+![]()
 
 
 ## Technologies
