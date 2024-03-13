@@ -43,18 +43,20 @@ An auction site for individuals who are interested in purchasing by bidding or s
 ![View of Successfully created listing message modal that ask the user about where they want to navigate](images/SuccessfulListingNavigationQuery.png)
 
 ## Technologies
-We used the following teachnologies React, Vite, Node.js, JSON-Server
+We used the following teachnologies React, Vite, Node.js, and JSON-Server
 
 ## Setup
 - download or clone the repository
 - run `npm install`
-- run `npm run dev`
+- run `npm run dev` to run server
 - run `npm install json-server` 
 - navigate to the public directory; run `cd public`
 - run `npx json-server db.json` to run mock database server
+- run `npm install react-modal` for the modal to work
 
 ## Status
 This project is currently in development.
+In progress: production of REST WEBB API  with .Net C#, Testing, Integration and Deploy
 
 ## Credits
 List of contriubutors:
