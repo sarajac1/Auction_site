@@ -8,8 +8,8 @@ function JobsPage() {
     <div className="container">
     <div className="gen-wrapper">
         <div>
-    <img src="https://i.imgur.com/PjblnCG.png" alt="This could be you!"/>
-    <p><i>This could be you!</i></p>
+    <img src="https://i.imgur.com/PjblnCG.png" className="jobs_photo" alt="This could be you!"/>
+    <p><i className="underphoto_text">This could be you!</i></p>
     </div>
 
     <div className="breadText">
