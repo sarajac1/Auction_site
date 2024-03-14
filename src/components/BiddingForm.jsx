@@ -39,10 +39,6 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!isLoggedIn) {
-      setMessage('You must be logged in to place a bid.');
-      return; 
-    }
     const submissionTime = new Date();
     const bidAmount = Number(bid);
   
@@ -112,9 +108,13 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
       setMessage('Failed to place bid. Error: ' + error.message);
     }
   }
+  if (!isLoggedIn) {
+    return (<div><p className="not-logged-in-user-message-for-bidding">Please log in to make a bid</p></div>);
+  }
 
   return (
     <div>
+      {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <label className='bid_amount_text'>
           <p>Bid Amount:</p>
