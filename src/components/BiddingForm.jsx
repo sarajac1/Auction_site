@@ -46,7 +46,6 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
       setMessage('You must be logged in to place a bid.');
       return; // Prevent the rest of the function from executing
     }
-    
     const submissionTime = new Date();
     const bidAmount = Number(bid);
     // Doesn't goes over the users balance
@@ -85,10 +84,36 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
       });
 
       if (bidResponse.ok) {
-        console.log("1");
         setMessage('Bid is placed!');
-        //calculating new balance
-        setNewBalance(user.balance - bidAmount);
+        const newBalance = user.balance - bidAmount;
+        setNewBalance(newBalance);
+
+        localStorage.setItem('newBalance', newBalance.toString());
+
+        try {
+          const userUpdateResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              balance: newBalance,
+            }),
+          });
+
+          if (userUpdateResponse.ok) {
+            console.log("User's balance updated successfully");
+            // Optionally, perform actions after successfully updating the user's balance,
+            // such as refreshing user data from the server to reflect the update in your app's UI.
+          } else {
+            console.error('Failed to update user\'s balance');
+            // Handle failure to update the user's balance in the JSON server
+          }
+        } catch (error) {
+          console.error('Error updating user\'s balance:', error);
+        }
+
+
         onBidSuccess();
 
       }
@@ -106,14 +131,11 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
           <p>Bid Amount:</p>
           <div className='bids_buttons'>
             <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
-            <button className="rounded-button" type="submit">Place Bid</button>            
+            <button className="rounded-button" type="submit">Place Bid</button>
           </div>
 
         </label>
       </form>
-      {message && <p>{message}</p>}
-      <p className='initial_balance'>Your initial balance: {user && user.balance}</p>
-      <div>{newBalance !== null && <div><p>Your balance after bid: {newBalance}</p></div>}</div>
     </div>
   );
 }
