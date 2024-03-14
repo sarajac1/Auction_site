@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BalancePage from "../pages/BalancePage.jsx";
 
-function BiddingForm({ selectedListing }) {
+function BiddingForm({ selectedListing, onBidSuccess }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bid, setBid] = useState('');
   const [message, setMessage] = useState('');
@@ -82,8 +82,7 @@ function BiddingForm({ selectedListing }) {
         setMessage('Bid is placed!');
         //calculating new balance
         setNewBalance(user.balance - bidAmount);
-
-
+        onBidSuccess();
 
       }
     } catch (error) {
