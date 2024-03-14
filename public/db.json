@@ -17,7 +17,7 @@
       "joineddate": "27-02-2024",
       "address": "Usifer Baloba, 123, Lund",
       "email": "abc123@abc.com",
-      "balance": 1500,
+      "balance": 999,
       "isAdmin": false
     },
     {
@@ -305,54 +305,6 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
-    },
-    {
-      "id": "11",
-      "itemid": "1",
-      "bidderid": "10",
-      "bidamount": 400,
-      "datetime": "2024-03-14T10:56:54.279Z",
-      "isactive": true
-    },
-    {
-      "id": "111",
-      "itemid": "1",
-      "bidderid": "10",
-      "bidamount": 405,
-      "datetime": "2024-03-14T11:12:38.662Z",
-      "isactive": true
-    },
-    {
-      "id": "1111",
-      "itemid": "1",
-      "bidderid": "10",
-      "bidamount": 406,
-      "datetime": "2024-03-14T11:19:21.973Z",
-      "isactive": true
-    },
-    {
-      "id": "11111",
-      "itemid": "1",
-      "bidderid": "10",
-      "bidamount": 407,
-      "datetime": "2024-03-14T11:29:12.974Z",
-      "isactive": true
-    },
-    {
-      "id": "111111",
-      "itemid": "1",
-      "bidderid": "10",
-      "bidamount": 409,
-      "datetime": "2024-03-14T11:29:38.132Z",
-      "isactive": true
-    },
-    {
-      "id": "1111111",
-      "itemid": "1",
-      "bidderid": "2",
-      "bidamount": 500,
-      "datetime": "2024-03-14T11:31:34.557Z",
-      "isactive": true
     }
   ]
 }
