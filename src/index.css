@@ -121,6 +121,11 @@ input::-webkit-inner-spin-button {
     border: 4px solid white;
     /* White border of 4 pixels */
   }
+
+  .redText {
+    color: #ff1e1e;
+    font-size: 14px;
+  }
 }
 
 /* item page */

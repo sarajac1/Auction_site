@@ -151,7 +151,7 @@ const Gallery = () => {
       );
     }
     return (
-      <div className="darkText">
+      <div className="gallery-enddate">
         Ends in: {days} days, {hours} hours
       </div>
     );
