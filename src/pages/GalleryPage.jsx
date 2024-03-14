@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 
 
 const Gallery = () => {
@@ -172,14 +175,16 @@ const Gallery = () => {
 
   return (
     <div className="container" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
-      <div className="searchbar-and-filter">
+      <div className="searchbar-and-filter" style={{ position: 'relative' }}>
         <input
           type="search"
           placeholder="Search"
           className="searchBar"
           name="searchBar"
           onChange={SearchGallery}
+          style={{ paddingLeft: '15px' }} // Установите отступ слева, чтобы текст не накладывался на иконку
         />
+        <FontAwesomeIcon icon={faMagnifyingGlass} style={{ position: 'absolute', left: '170px', top: '50%', transform: 'translateY(-50%)', color: '#000000', pointerEvents: 'none' }} />
         <select name="filter" className="filterBar" onChange={FilterGallery}>
           <option value="Newest">Newest</option>
           <option value="EndsSoon">Ends Soon</option>
