@@ -4,15 +4,14 @@ import BiddingForm from "../components/BiddingForm";
 
 
 function ItemPage() {
-  const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
+  const { id: itemId } = useParams(); 
   const [selectedListing, setSelectedListing] = useState(null);
-  const [bidAmount, setBidAmount] = useState(0);
   const [BidPrice, setBidPrice] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/db.json"); // Relative path from the public folder
+        const response = await fetch("/db.json");
         const data = await response.json();
         const listing = data.listings.find(
           (listing) => listing.id.toString() === itemId
@@ -41,12 +40,10 @@ function ItemPage() {
     fetchData();
   }, []);
 
-  /* Find highest bid */
   function GetCurrentPrice(itemId, startBid) {
     const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
 
     if (bidsForItem.length > 0) {
-      // Get the highest bid amount for the item
       const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
       return highestBid;
     } else {
@@ -54,7 +51,6 @@ function ItemPage() {
     }
   }
 
-  /* CALCULATING DATES */
   function dateDiffInDaysAndHours(a, b) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     const _MS_PER_HOUR = 1000 * 60 * 60;
@@ -88,10 +84,7 @@ function ItemPage() {
     );
   }
 
-  // Inside ItemPage component
-
   function refreshBids() {
-    // Logic to re-fetch or re-calculate bids
     const fetchData = async () => {
       try {
         const response = await fetch("/db.json");
@@ -106,15 +99,8 @@ function ItemPage() {
     fetchData();
   }
 
-  // Pass this function as a prop to BiddingForm
-  
-
-
-
-
   return (
     <div className="container">
-      {/* If a listing is selected, display its details */}
       {selectedListing && (
         <div className="item-wrapper">
           <div className="col1">
@@ -138,7 +124,6 @@ function ItemPage() {
               {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
               Souls
             </div>
-            {/* Bid field */}
             <BiddingForm selectedListing={selectedListing} onBidSuccess={refreshBids} />
             <button
               className="discreet-button"

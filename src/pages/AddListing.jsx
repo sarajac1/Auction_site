@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function AddListing() {
-  const navigate = useNavigate();
-  
+
   const formatDate = (date) => {
     const dd = String(date.getDate()).padStart(2, "0");
     const mm = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
     const yyyy = date.getFullYear();
     return `${yyyy}-${mm}-${dd}`;
   };
-  
+
   const formatDateWithTime = (date) => {
     const dd = String(date.getDate()).padStart(2, "0");
     const mm = date.toLocaleString('en-us', { month: 'short' });
@@ -21,14 +20,14 @@ function AddListing() {
     return `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
   };
 
-  const today = new Date(); // Get today's date
-  const formattedToday = formatDate(today); // Format today's date
+  const today = new Date();
+  const formattedToday = formatDate(today);
 
   const calculateEndDate = () => {
     if (listing.startdate) {
       const startDate = new Date(listing.startdate);
       const endDate = new Date(startDate.getTime());
-      endDate.setDate(startDate.getDate() + 7); // Add 7 days
+      endDate.setDate(startDate.getDate() + 7);
       return formatDateWithTime(endDate);
     }
     return '';
@@ -42,12 +41,13 @@ function AddListing() {
     startbid: '',
   });
 
-  
+  const [isSubmittedSuccessfully, setIsSubmittedSuccessfully] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setListing({ ...listing, [name]: value });
+    setIsSubmittedSuccessfully(false);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +65,6 @@ function AddListing() {
     };
 
     try {
-      // Send a POST request to your JSON-server. make sure to have the server running
       const response = await fetch('http://localhost:3000/listings', {
         method: 'POST',
         headers: {
@@ -85,42 +84,48 @@ function AddListing() {
         startdate: '',
         startbid: ''
       });
-      navigate('/listings');
+      setIsSubmittedSuccessfully(true); 
     } catch (error) {
       console.error('Error adding listing:', error);
       alert('Failed to add listing. Please try again.');
+      setIsSubmittedSuccessfully(false);
     }
   };
-  
+
   return (
     <div className="addListing-container">
       <div className="item-wrapper">
         <div className="addListing-wrapper">
-        <h1>Create Listing</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="add-listing">
-            <div className="adllisting-col1">
-              <p>Title</p>
-              <input type="text" name="title" value={listing.title} onChange={handleChange} required />
-              <p>Asking price</p>
-              <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
+          <h1>Create Listing</h1>
+          {isSubmittedSuccessfully && <p className="successful-listing-message">Your listing has been added successfully!</p>} 
+          <form onSubmit={handleSubmit} id="listingForm">
+            <div className="add-listing">
+              <div className="adllisting-col1">
+                <p>Title</p>
+                <input type="text" name="title" value={listing.title} onChange={handleChange} required />
+                <p>Asking price</p>
+                <input type="number" name="startbid" value={listing.startbid} onChange={handleChange} required />
                 <div className="end-date-container">
                   <p>Listing will end:</p>
                   <div className="end-date-box">{calculateEndDate()}</div>
                 </div>
-              <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
-              <p>Image URL: </p>
-              <input type="text" name="image" value={listing.image} onChange={handleChange} required />
-              <button className="rounded-button" type="submit">Create Listing</button>
-            </div>
-            <div className="description-adlisting-col2">
-              <div className="description-field" >
-                <p>Description (500 characters): </p>
-                <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
+                <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
+                <p>Image URL: </p>
+                <input type="text" name="image" value={listing.image} onChange={handleChange} required />
+
+              </div>
+              <div className="description-adlisting-col2">
+                <div className="description-field" >
+                  <p>Description (500 characters): </p>
+                  <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
+                </div>
               </div>
             </div>
+          </form>
+          <div className="addListing-button-container">
+            <button className="rounded-button" type="submit" form="listingForm">Create Listing</button>
+            <Link to="/listings" className="rounded-button">Back to Your listings</Link>
           </div>
-        </form>
         </div>
       </div>
     </div>

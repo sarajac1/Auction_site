@@ -17,7 +17,7 @@
       "joineddate": "27-02-2024",
       "address": "Usifer Baloba, 123, Lund",
       "email": "abc123@abc.com",
-      "balance": 10000,
+      "balance": 9601,
       "isAdmin": false
     },
     {
@@ -221,16 +221,6 @@
       "startdate": "07-03-2024",
       "enddate": "15-Mar-2024 18:23:00",
       "startbid": 2000
-    },
-    {
-      "id": "99b9",
-      "sellerid": "2",
-      "title": "d",
-      "description": "d",
-      "image": "d",
-      "startdate": "2024-03-14",
-      "enddate": "21-Mar-2024 01:00:00",
-      "startbid": 2
     }
   ],
   "bids": [
@@ -305,6 +295,14 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
+    },
+    {
+      "id": "11",
+      "itemid": "1",
+      "bidderid": "2",
+      "bidamount": 400,
+      "datetime": "2024-03-14T14:48:34.186Z",
+      "isactive": true
     }
   ]
 }
