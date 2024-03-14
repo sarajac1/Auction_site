@@ -2,12 +2,23 @@ import React, { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 
 function AddListing() {
-  // Function to format today's date as DD-MM-YYYY
+
+  // Function to format the start date as "YYYY-MM-DD"
   const formatDate = (date) => {
     const dd = String(date.getDate()).padStart(2, "0");
     const mm = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
     const yyyy = date.getFullYear();
     return `${yyyy}-${mm}-${dd}`;
+  };
+  // Updated function to format dates as "DD-MMM-YYYY HH:MM:SS"
+  const formatDateWithTime = (date) => {
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = date.toLocaleString('en-us', { month: 'short' });
+    const yyyy = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
   };
 
 
@@ -21,7 +32,7 @@ function AddListing() {
       const startDate = new Date(listing.startdate);
       const endDate = new Date(startDate.getTime());
       endDate.setDate(startDate.getDate() + 7); // Add 7 days
-      return formatDate(endDate);
+      return formatDateWithTime(endDate);
     }
     return '';
   };
@@ -46,13 +57,17 @@ function AddListing() {
     //fetch the sellerid from local storage
     const sellerId = localStorage.getItem("token_id");
 
+    // End date calculation should now use the updated format
+    const enddate = calculateEndDate();
+
     // Create a new listing object with the same keys as your JSON data
     const newListing = {
-      title: listing.title,
       sellerid: sellerId,
+      title: listing.title,
       description: listing.description,
       image: listing.image,
-      startdate: formattedToday,
+      startdate: listing.startdate,
+      enddate: enddate,
       startbid: Number(listing.startbid)
     };
 

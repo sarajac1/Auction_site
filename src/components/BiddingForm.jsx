@@ -57,7 +57,7 @@ function BiddingForm({ selectedListing }) {
       const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max.bidamount ? bid : max, { bidamount: 0, id: 0 });
       const newBidId = highestExistingBidAmount.id + 1;
       // Compare the submitted bid with the highest existing bid
-      if (bidAmount <= highestExistingBidAmount) {
+      if (bidAmount <= highestExistingBidAmount.bidamount) {
         setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
         return;
       }

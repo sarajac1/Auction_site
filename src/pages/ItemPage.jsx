@@ -111,7 +111,7 @@ function ItemPage() {
               Starting Bid: {selectedListing.startbid} Souls
             </div>
 
-            <div className="darkText">Highest bid by: </div>
+            <div className="darkText">Highest bid is: </div>
             <div className="priceText">
               {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
               Souls
