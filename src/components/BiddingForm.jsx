@@ -40,6 +40,13 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    // Check if the user is not logged in before proceeding
+    if (!isLoggedIn) {
+      setMessage('You must be logged in to place a bid.');
+      return; // Prevent the rest of the function from executing
+    }
+    
     const submissionTime = new Date();
     const bidAmount = Number(bid);
     // Doesn't goes over the users balance

@@ -295,62 +295,6 @@
       "bidamount": 2200,
       "datetime": "28-02-2024",
       "isactive": false
-    },
-    {
-      "id": "b8d4",
-      "itemid": "1",
-      "bidderid": "1",
-      "bidamount": 400,
-      "datetime": "2024-03-05T20:55:58.077Z",
-      "isactive": true
-    },
-    {
-      "id": "1154",
-      "itemid": "1",
-      "bidderid": "1",
-      "bidamount": 401,
-      "datetime": "2024-03-05T21:03:37.280Z",
-      "isactive": true
-    },
-    {
-      "id": "11541",
-      "itemid": "1",
-      "bidderid": "2",
-      "bidamount": 402,
-      "datetime": "2024-03-14T08:57:23.562Z",
-      "isactive": true
-    },
-    {
-      "id": "115411",
-      "itemid": "1",
-      "bidderid": "2",
-      "bidamount": 403,
-      "datetime": "2024-03-14T09:04:28.138Z",
-      "isactive": true
-    },
-    {
-      "id": "1154111",
-      "itemid": "1",
-      "bidderid": "2",
-      "bidamount": 404,
-      "datetime": "2024-03-14T09:32:44.099Z",
-      "isactive": true
-    },
-    {
-      "id": "11541111",
-      "itemid": "1",
-      "bidderid": "2",
-      "bidamount": 405,
-      "datetime": "2024-03-14T09:37:18.961Z",
-      "isactive": true
-    },
-    {
-      "id": "115411111",
-      "itemid": "1",
-      "bidderid": "2",
-      "bidamount": 406,
-      "datetime": "2024-03-14T09:41:57.667Z",
-      "isactive": true
     }
   ]
 }
