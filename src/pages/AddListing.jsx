@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function AddListing() {
-  const navigate = useNavigate();
-  
+    
   const formatDate = (date) => {
     const dd = String(date.getDate()).padStart(2, "0");
     const mm = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
@@ -21,14 +20,14 @@ function AddListing() {
     return `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
   };
 
-  const today = new Date(); // Get today's date
-  const formattedToday = formatDate(today); // Format today's date
+  const today = new Date(); 
+  const formattedToday = formatDate(today); 
 
   const calculateEndDate = () => {
     if (listing.startdate) {
       const startDate = new Date(listing.startdate);
       const endDate = new Date(startDate.getTime());
-      endDate.setDate(startDate.getDate() + 7); // Add 7 days
+      endDate.setDate(startDate.getDate() + 7);
       return formatDateWithTime(endDate);
     }
     return '';
@@ -65,7 +64,6 @@ function AddListing() {
     };
 
     try {
-      // Send a POST request to your JSON-server. make sure to have the server running
       const response = await fetch('http://localhost:3000/listings', {
         method: 'POST',
         headers: {
@@ -85,7 +83,6 @@ function AddListing() {
         startdate: '',
         startbid: ''
       });
-      navigate('/listings');
     } catch (error) {
       console.error('Error adding listing:', error);
       alert('Failed to add listing. Please try again.');
@@ -111,16 +108,20 @@ function AddListing() {
               <p className="end-date-listing-info">All listings are active 7 days from creation date. If your item goes unsold, you can relist it.</p>
               <p>Image URL: </p>
               <input type="text" name="image" value={listing.image} onChange={handleChange} required />
-              <button className="rounded-button" type="submit">Create Listing</button>
+              
             </div>
             <div className="description-adlisting-col2">
               <div className="description-field" >
                 <p>Description (500 characters): </p>
                 <input type="text" name="description" className="description-input" value={listing.description} onChange={handleChange} required />
               </div>
-            </div>
+              </div>
           </div>
-        </form>
+          </form>
+          <div className="addListing-button-container">
+            <button className="rounded-button" type="submit" form="listingForm">Create Listing</button>
+            <Link to="/listings" className="rounded-button">Back to Your listings</Link>
+          </div>
         </div>
       </div>
     </div>

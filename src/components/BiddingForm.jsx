@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import BalancePage from "../pages/BalancePage.jsx";
 
 function BiddingForm({ selectedListing, onBidSuccess }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,7 +28,6 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
     fetchData();
 
-    // Retrieve the new balance from localStorage, if it exists
     const storedBalance = localStorage.getItem('newBalance');
 
     if (storedBalance !== null) {
@@ -41,28 +39,24 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    // Check if the user is not logged in before proceeding
     if (!isLoggedIn) {
       setMessage('You must be logged in to place a bid.');
-      return; // Prevent the rest of the function from executing
+      return; 
     }
     const submissionTime = new Date();
     const bidAmount = Number(bid);
-    // Doesn't goes over the users balance
+  
     if (!user || bidAmount > user.balance) {
       setMessage('Insufficient balance for this bid.');
       return;
     }
 
     try {
-      // Fetch existing bids for the selected item
       const existingBidsResponse = await fetch(`http://localhost:3000/bids?itemid=${selectedListing.id}`);
       const existingBids = await existingBidsResponse.json();
-
-      // Determine the highest existing bid amount for the item
       const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max.bidamount ? bid : max, { bidamount: 0, id: 0 });
       const newBidId = highestExistingBidAmount.id + 1;
-      // Compare the submitted bid with the highest existing bid
+     
       if (bidAmount <= highestExistingBidAmount.bidamount) {
         setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
         return;
@@ -103,17 +97,13 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
           if (userUpdateResponse.ok) {
             console.log("User's balance updated successfully");
-            // Optionally, perform actions after successfully updating the user's balance,
-            // such as refreshing user data from the server to reflect the update in your app's UI.
           } else {
             console.error('Failed to update user\'s balance');
-            // Handle failure to update the user's balance in the JSON server
           }
         } catch (error) {
           console.error('Error updating user\'s balance:', error);
         }
-
-
+        
         onBidSuccess();
 
       }
@@ -122,7 +112,6 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
       setMessage('Failed to place bid. Error: ' + error.message);
     }
   }
-
 
   return (
     <div>

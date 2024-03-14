@@ -786,7 +786,6 @@ input {
 
   }
 
-
   h1 {
     text-align: left;
     border-bottom: 4px solid #e4cab5;
@@ -837,43 +836,14 @@ input {
 
   .rounded-button {
     font-size: 25px;
-    width: 50%;
+    width: auto;
+    padding: 10px 15px;
+    margin: 0 5px;
   }
-
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+  .addListing-button-container{
     display: flex;
     justify-content: center;
-    align-items: center;
-
-
-    .modal {
-      background-color: #474546;
-      display: flex;
-      height:fit-content;
-      padding: 30px;
-      border-radius: 50px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      z-index: 1050;
-    }
-      
-    .modal p {
-      font-size: 25px;
-      color: #fff;
-    }
-
-    .rounded-button{
-      font-size: 15px;
-    }
-            
-    .rounded-button:hover {
-      background: black;
-    }
+    margin-top: 20px;
   }
 }
 
