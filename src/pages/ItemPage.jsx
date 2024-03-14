@@ -88,6 +88,29 @@ function ItemPage() {
     );
   }
 
+  // Inside ItemPage component
+
+  function refreshBids() {
+    // Logic to re-fetch or re-calculate bids
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/db.json");
+        const price = await response.json();
+        setBidPrice(price.bids);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setBidPrice([]);
+      }
+    };
+
+    fetchData();
+  }
+
+  // Pass this function as a prop to BiddingForm
+  
+
+
+
 
   return (
     <div className="container">
@@ -110,14 +133,13 @@ function ItemPage() {
               <br />
               Starting Bid: {selectedListing.startbid} Souls
             </div>
-
-            <div className="darkText">Highest bid by: </div>
+            <div className="darkText">Highest bid is: </div>
             <div className="priceText">
               {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
               Souls
             </div>
             {/* Bid field */}
-            <BiddingForm selectedListing={selectedListing} />
+            <BiddingForm selectedListing={selectedListing} onBidSuccess={refreshBids} />
             <button
               className="discreet-button"
               onClick={() => setSelectedListing(null)}

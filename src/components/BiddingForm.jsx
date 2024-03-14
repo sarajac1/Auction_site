@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BalancePage from "../pages/BalancePage.jsx";
 
-function BiddingForm({ selectedListing }) {
+function BiddingForm({ selectedListing, onBidSuccess }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bid, setBid] = useState('');
   const [message, setMessage] = useState('');
@@ -40,6 +40,12 @@ function BiddingForm({ selectedListing }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    // Check if the user is not logged in before proceeding
+    if (!isLoggedIn) {
+      setMessage('You must be logged in to place a bid.');
+      return; // Prevent the rest of the function from executing
+    }
     const submissionTime = new Date();
     const bidAmount = Number(bid);
     // Doesn't goes over the users balance
@@ -57,7 +63,7 @@ function BiddingForm({ selectedListing }) {
       const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max.bidamount ? bid : max, { bidamount: 0, id: 0 });
       const newBidId = highestExistingBidAmount.id + 1;
       // Compare the submitted bid with the highest existing bid
-      if (bidAmount <= highestExistingBidAmount) {
+      if (bidAmount <= highestExistingBidAmount.bidamount) {
         setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
         return;
       }
@@ -78,12 +84,37 @@ function BiddingForm({ selectedListing }) {
       });
 
       if (bidResponse.ok) {
-        console.log("1");
         setMessage('Bid is placed!');
-        //calculating new balance
-        setNewBalance(user.balance - bidAmount);
+        const newBalance = user.balance - bidAmount;
+        setNewBalance(newBalance);
+
+        localStorage.setItem('newBalance', newBalance.toString());
+
+        try {
+          const userUpdateResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              balance: newBalance,
+            }),
+          });
+
+          if (userUpdateResponse.ok) {
+            console.log("User's balance updated successfully");
+            // Optionally, perform actions after successfully updating the user's balance,
+            // such as refreshing user data from the server to reflect the update in your app's UI.
+          } else {
+            console.error('Failed to update user\'s balance');
+            // Handle failure to update the user's balance in the JSON server
+          }
+        } catch (error) {
+          console.error('Error updating user\'s balance:', error);
+        }
 
 
+        onBidSuccess();
 
       }
     } catch (error) {
@@ -100,14 +131,11 @@ function BiddingForm({ selectedListing }) {
           <p>Bid Amount:</p>
           <div className='bids_buttons'>
             <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
-            <button className="rounded-button" type="submit">Place Bid</button>            
+            <button className="rounded-button" type="submit">Place Bid</button>
           </div>
 
         </label>
       </form>
-      {message && <p>{message}</p>}
-      <p className='initial_balance'>Your initial balance: {user && user.balance}</p>
-      <div>{newBalance !== null && <div><p>Your balance after bid: {newBalance}</p></div>}</div>
     </div>
   );
 }
