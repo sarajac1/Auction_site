@@ -221,16 +221,6 @@
       "startdate": "07-03-2024",
       "enddate": "15-Mar-2024 18:23:00",
       "startbid": 2000
-    },
-    {
-      "id": "9d17",
-      "sellerid": "10",
-      "title": "df",
-      "description": "fdg",
-      "image": "dfg",
-      "startdate": "2024-03-14",
-      "enddate": "21-Mar-2024 01:00:00",
-      "startbid": 3
     }
   ],
   "bids": [
