@@ -1,0 +1,937 @@
+body {
+  background-color: #090706;
+  font-family: "Titillium Web";
+}
+
+
+a {
+  text-decoration: none;
+}
+
+
+a:hover {
+  font-weight: bold;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+
+/* Scroll bar*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #474546;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e4cab5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #fff2e7;
+}
+
+/* Search bar */
+.searchbar-and-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchBar,
+.filterBar {
+  margin: 0;
+  /* Remove default margin */
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #e4cab5;
+  color: black;
+}
+
+.searchBar {
+  flex-grow: 1;
+  /* Allow it to grow and take available space */
+
+  max-width: 200px;
+}
+
+/* site container */
+.container {
+  background-color: #2a2829;
+  padding-left: 2%;
+  padding-top: 1%;
+  padding-right: 2%;
+}
+
+/* gallery view */
+.gallery-wrapper {
+  background-color: #2a2829;
+  font-family: "Titillium Web";
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Four columns with equal width */
+  grid-gap: 10px;
+  /* Gap between grid items */
+  padding-left: 2%;
+  padding-top: 2%;
+
+  .card {
+    transition: 0.3s;
+    max-width: 210px;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .text-container {
+    padding: 4px 16px;
+  }
+
+  .gallery-title {
+    font-size: 22px;
+    color: #fff2e7;
+  }
+
+  .gallery-enddate {
+    font-size: 14px;
+    color: #a4826d;
+  }
+
+  .gallery-price {
+    font-size: 20px;
+    color: #e4cab5;
+  }
+
+  .gallery-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    /* Cut the image to fit */
+    border: 4px solid white;
+    /* White border of 4 pixels */
+  }
+
+  .redText {
+    color: #ff1e1e;
+    font-size: 14px;
+  }
+}
+
+/* item page */
+.item-wrapper {
+  background-color: #2a2829;
+  font-family: "Titillium Web";
+  padding: 2% 0px 30px 2%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  .darkText {
+    color: #a4826d;
+    font-size: 20px;
+  }
+
+  .redText {
+    color: #ff1e1e;
+    font-size: 16px;
+  }
+
+  .date_div {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  .item-blurb {
+    color: #fff2e7;
+    font-size: 20px;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+
+  .priceText {
+    color: #fff2e7;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  .bid_amount_text {
+    color: #FFF2E7;
+    font-size: 20px;
+    margin: 0px;
+  }
+
+  .bid_amount_text p {
+    margin: 0px 0px 10px;
+  }
+  .not-logged-in-user-message-for-bidding{
+    font-size: 30px;
+  }
+
+  #bid-input {
+    background-color: #e4cab5;
+    color: #090706;
+    font-size: 30px;
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 30px;
+    text-align: center;
+    margin-right: 20px;
+  }
+
+  .bids_buttons {
+    gap: 30px;
+  }
+
+  .initial_balance {
+    font-size: 20px;
+  }
+
+  .discreet-button {
+    padding: 10px 0px;
+    font-size: 20px;
+  }
+}
+
+.rounded-button {
+  background-color: #2a2829;
+  color: #fff2e7;
+  font-size: 30px;
+  width: 200px;
+  text-align: center;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  border: 2px solid #fff2e7;
+  cursor: pointer;
+}
+
+.rounded-button:hover {
+  background: black;
+}
+
+.rounded-button-small {
+  background-color: #2a2829;
+  color: #fff2e7;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  border: 2px solid #fff2e7;
+  cursor: pointer;
+  margin: 10px 10px 0px;
+}
+
+.add_to_ballance {
+  margin-left: 0px;
+}
+
+.rounded-button-small:hover {
+  background: black;
+}
+
+.discreet-button {
+  background-color: #2a2829;
+  color: #a4826d;
+  font-size: 14px;
+  text-align: center;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.discreet-button:hover {
+  color: #fff2e7;
+}
+
+.item-wrapper img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border: 4px solid white;
+}
+
+.item-wrapper h1 {
+  color: #fff2e7;
+  size: 28px;
+}
+
+.item-wrapper p {
+  color: #e4cab5;
+  size: 14px;
+}
+
+.user-info {
+  font-size: 20px;
+  font-family: "Titillium Web";
+  color: #e4cab5;
+  text-align: right;
+}
+
+/* Header */
+.header {
+  font-family: "Alegreya Sans";
+}
+
+/* NavBar */
+.nav-bar {
+  color: #fff2e7;
+  background-color: #090706;
+  font-size: 20px;
+  font-family: "Alegreya Sans";
+
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .logo {
+    height: 100px;
+    margin-right: 20px;
+  }
+
+  .left-and-middle-nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  a:link,
+  a:visited {
+    color: #fff2e7;
+    text-decoration: none;
+  }
+
+  .middle-nav-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .nav-bar-login {
+    flex-grow: 0;
+    margin-right: 20px;
+  }
+
+  .slogan {
+    color: #a4826d;
+    text-align: center;
+    margin-left: 100px;
+    margin-top: 10px;
+  }
+}
+
+.listings_page {
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.listings_page_content {
+  width: 95%;
+  background-color: #2a2829;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding-bottom: 90px;
+}
+
+.listing_table {
+  width: 100%;
+  font-size: 20px;
+  padding: 30px 30px 20px 30px;
+}
+
+.listings_heading {
+  color: #FFF2E7;
+  font-size: 45px;
+  width: 70%;
+  margin: 90px 0px 50px 90px;
+}
+
+.listings_info {
+  color: #FFF2E7;
+  text-align: center;
+  position: relative;
+}
+
+.item_column {
+  width: 30%;
+}
+
+.listings_table_headers {
+  padding: 0px 0px 20px 0px;
+}
+
+.line_which_will_work {
+  display: none;
+  height: 2px;
+  background-color: #e4cab5;
+  width: 100%;
+  margin-left: 5px;
+}
+
+.top_line {
+  width: calc(100% - 10px);
+  margin-top: 20px;
+  display: block;
+}
+
+.bottom_line {
+  width: calc(100% - 10px);
+  margin-top: 0px;
+}
+
+.listing_table tbody tr:last-child td .line_which_will_work {
+  display: block;
+  position: absolute;
+  bottom: 0;
+}
+
+.listings_table_details {
+  padding: 0px;
+  height: 50px;
+}
+
+.button_create_listing {
+  padding: 10px 25px;
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 20px;
+  font-size: 18px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 30px 0px 0px 50px;
+
+}
+
+.a_create_listing {
+  text-decoration: none;
+  color: #FFF2E7;
+}
+
+.edit_button {
+  padding: 10px 25px;
+  color: #FFF2E7;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 20px;
+  font-size: 18px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0px;
+}
+
+.listing_table tbody tr td {
+  height: 70px;
+}
+
+.listing_table tbody tr td {
+  height: 70px;
+}
+
+
+.edit_button {
+  margin: 0px 10px;
+}
+
+
+
+.bids_page {
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.bids_page_content {
+  width: 95%;
+  background-color: #2a2829;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+}
+
+.bids_table {
+  width: 100%;
+  font-size: 20px;
+  padding: 60px 30px 20px 30px;
+}
+
+.bids_heading {
+  color: #FFF2E7;
+  font-size: 45px;
+  width: 70%;
+  margin: 90px 0px 30px 90px;
+}
+
+.bids_info {
+  text-align: center;
+  position: relative;
+  padding: 0;
+}
+
+
+.bids_table_headers {
+  padding: 0px 0px 20px 0px;
+  color: #FFF2E7;
+}
+
+.bids_table_details {
+  height: 50px;
+}
+
+.bids_button_contact_seller {
+  padding: 5px 15px;
+  color: #FFF2E7;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+  width: 100px;
+}
+
+.line_contact_seller {
+  margin-top: 9px;
+}
+
+.contact_seller_cell {
+  height: 50px;
+}
+
+.bids_table tbody tr td {
+  height: 70px;
+}
+
+.bids_table tbody tr:last-child td .line_which_will_work {
+  display: block;
+  position: absolute;
+  bottom: 0;
+}
+
+.modal_text {
+  color: #FFF2E7;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  background-color: #474546;
+  ;
+  border-radius: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 19px;
+}
+
+.modal_close_button {
+  font-size: 18px;
+}
+
+.close {
+  color: #FFF2E7;
+}
+
+.bids_table tbody tr:last-child td .line_which_will_work {
+  display: block;
+}
+
+
+
+
+.text-red {
+  color: red !important;
+}
+
+.text-white {
+  color: #FFF2E7 !important;
+}
+
+
+.profile_container {
+  height: auto;
+  padding-bottom: 40px;
+}
+
+.profile_text {
+  color: #FFF2E7;
+}
+
+.profile_heading {
+  font-size: 40px;
+}
+
+.profile_user_info {
+  font-size: 20px;
+}
+
+.profile_joined_date {
+  margin-top: 15px;
+}
+
+.profile_heading {
+  margin: 25px 0px;
+}
+
+.profile_line {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.profile_display {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.profile_info_different_collor {
+  color: #e4cab5;
+}
+
+
+
+
+.login-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  padding: 50px;
+  /* Adjust as needed */
+
+  h1 {
+    font-size: 22px;
+    color: #fff2e7;
+    text-align: center;
+  }
+
+  .user-info {
+    background-color: #2a2829;
+    /* Grey background color */
+    padding: 20px;
+    border-radius: 10px;
+    /* Rounded corners */
+    border: 1px solid #ccc;
+    /* Border color */
+  }
+}
+
+.ReactModal__Overlay {
+  background-color:rgba(0, 0, 0, 0.5) !important;
+}
+
+.ReactModal__Content {
+  background-color: #2a282a !important;
+}
+
+.register_user_text {
+  color: #FFF2E7;
+}
+
+.login_and_register_buttons {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+
+.two_buttons_div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+
+  /* Rounded corners for input fields */
+  background-color: #e4cab5;
+  color: black;
+}
+
+
+.alertModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alertModal {
+  background-color: #2a282a;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.alertModal p {
+  color: #FFF2E7;
+  padding: 20px;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.alertModal button {
+  margin-top: 10px;
+}
+
+.forgot_pass_button {
+  margin: 0px 0px 20px 0px;
+  padding: 0px;
+  font-size: 15px;
+  background: none;
+  border: none;
+  color: #FFF2E7;
+}
+
+.hide_show_pass_button {
+  color: #FFF2E7;
+  margin: 0px 0px 0px 20px !important;
+}
+
+.hide_show_reconfirm_pass_button {
+  margin: 0px 0px 0px 20px;
+}
+
+.aboutus_page {
+  color: #FFF2E7;
+  background-color: #2a2829;
+  padding: 40px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.aboutus_content {
+  width: 50%;
+  padding: 20px;
+}
+
+.aboutus_logo {
+  border-radius: 15px;
+  border: 1px solid #FFF2E7;
+}
+
+.aboutus_heading {
+  margin-top: 0px;
+}
+
+/* AddListing */
+/*Create listing page*/
+
+.addListing-container {
+  .item-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .addListing-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+
+  }
+
+  h1 {
+    text-align: left;
+    border-bottom: 4px solid #e4cab5;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .successful-listing-message{
+    font-size: 30px;
+  }
+
+  .add-listing {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .adllisting-col1,
+  .description-adlisting-col2 {
+    flex: 1;
+  }
+
+  .add-listing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .adllisting-col1,
+  .description-adlisting-col2 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .description-input {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 27em;
+    overflow-y: auto;
+    border-radius: 9%;
+  }
+
+  .description-field {
+    width: 100%;
+  }
+
+  .item-wraper .add-listing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rounded-button {
+    font-size: 25px;
+    width: auto;
+    padding: 10px 15px;
+    margin: 0 5px;
+  }
+  .addListing-button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+
+
+
+/* Admin view of users*/
+
+.heading-users {
+  color: #FFF2E7;
+}
+
+.user-body {
+  color: #A4826D;
+}
+
+
+table thead tr.user-rows th {
+  color: #FFF2E7;
+  border-bottom: 1px solid #FFF2E7;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-heading {
+  text-align: left;
+  padding: 8px;
+  ;
+}
+
+.edit-user-link {
+  color: #A4826D;
+}
+
+
+.searchBarUsers {
+  margin: 0;
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  flex-grow: 1;
+  max-width: 200px;
+}
+
+
+/* General text */
+.gen-wrapper {
+  background-color: #2a2829;
+  font-family: "Titillium Web";
+  padding: 2% 0px 30px 2%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  img {
+    max-width: 700px;
+    border: 2px solid #090706;
+  }
+
+  .breadText {
+    color: #fff2e7;
+    font-size: 20px;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+
+  .jobs_photo {
+    margin-top: 30px;
+    width: 90%;
+  }
+
+  .underphoto_text {
+    color: #FFF2E7;
+  }
+
+  h1 {
+    color: #fff2e7;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+
+}
