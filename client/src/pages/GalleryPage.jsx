@@ -12,7 +12,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/listings');
+        const response = await fetch('/api/listings');
         const data = await response.json();
         setOriginalGalleryItems(data);
         setGalleryItems(data);
