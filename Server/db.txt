@@ -1,0 +1,40 @@
+users
+id,username,password,joineddate,address,email,balance,isAdmin
+1,admin,admin,27-02-2024,Admin, 123, Lund,admin@shadowbid.com,8000,true
+2,usifer,123abc,27-02-2024,Usifer Baloba, 123, Lund,abc123@abc.com,10000,false
+3,alicesmith,alice123,27-02-2024,456 Oak Ave, Townsville,alice.smith@email.com,7000,false
+4,johndoe,pass123,27-02-2024,123 Main St, Cityville,john.doe@email.com,5000,false
+5,bobjohnson,bob456,27-02-2024,789 Pine Ln, Villagetown,bob.johnson@email.com,6000,false
+6,mikedavis,mike001,27-02-2024,202 Maple Rd, Countryside,mike.davis@email.com,5500,false
+7,sophiemiller,sophie789,27-02-2024,303 Birch Blvd, Suburbia,sophie.miller@email.com,6500,false
+8,alexturner,alex002,27-02-2024,404 Elm Lane, Outskirts,alex.turner@email.com,7500,false
+9,emmawhite,emma456,27-02-2024,505 Oakwood Dr, Riverside,emma.white@email.com,8500,false
+10,taratarantula,tara,27-02-2024,606 Cedar Grove, Lakeside,tara.taran@email.com,8685,false
+11,test,test,2024-03-06,test,test@test,0,false
+12,test6,test6,2024-03-07,test6,test6@test6,0,false
+13,test2,test2,2024-03-08,test2,test2@test2,0,false
+
+listings
+id,sellerid,title,description,image,startdate,enddate,startbid
+1,1,Cat Butler (Litterbox included),"Once upon a whimsical whisker-filled time, in the cozy nooks of Purrington Manor, there lived a distinguished feline named Sir Fluffington, the most refined cat butler in all of Kittyshire.",https://i.imgur.com/PrjZG6z.png,06-02-2024,18-Mar-2024 15:23:00,300
+2,1,Magic Mirror,"The Magic mirror from feature film Occulus!",https://i.imgur.com/VyIx658.png,05-03-2024,19-Mar-2024 18:23:00,4000
+3,4,Real Fairy,"A fairy I found in my garden. Might need feeding",https://i.imgur.com/HnPj8vO.png,04-03-2024,14-Mar-2024 15:23:00,4000
+4,4,Anabelle the Doll,"Fairly active doll. Moves without batteries. Might strangle you in your sleep.",https://i.imgur.com/iBnyG3v.png,05-03-2024,16-Mar-2024 09:23:00,9000
+5,4,Necronomicon,"Bound in human skin. Need regular moisturization not to crack. Read at your own risk.",https://i.imgur.com/EtG67zw.jpg,02-03-2024,17-Mar-2024 08:23:00,9000
+6,4,Ghost in a bottle,"Ghost inside a bottle. Spooking and fun decoration for the whole family.",https://i.imgur.com/xEC9HZL.png,27-02-2024,05-Mar-2024 15:23:00,200
+7,4,Cthulhu Statue,"Worship the greatest of the Great Old Ones with this original marble fetish from New Orleans. Has a distinct wet smell at night.\n Never submerge completely in any liquid!\n Size: 25 cm\n Weight: 12 kg \n Great gift for birthdays, baby showers, winter holidays, solstice, or as a graduation gift.",https://i.imgur.com/kt1JY7c.jpg,27-02-2024,03-Mar-2024 19:23:00,200
+8,2,Lament Configuration,"Lament configuration, apparently used as a key? \n I have never used it, I don't even know if it works\n ",https://i.imgur.com/cwUJash.png,07-03-2024,14-Mar-2024 18:23:00,2000
+9,2,Inconspicuous VHS tape,"Send this to any friend in dire need of some female company. VHS player not included\n May smell damp.",https://i.imgur.com/azIun9z.png,07-03-2024,15-Mar-2024 18:23:00,2000
+
+bids
+id,itemid,bidderid,bidamount,datetime,isactive
+1,1,1,358,28-02-2024,true
+2,4,6,9100,28-02-2024,true
+3,4,5,9200,28-02-2024,true
+4,2,2,4100,28-02-2024,true
+5,3,6,4200,28-02-2024,true
+6,9,2,2200,28-02-2024,false
+7,9,6,2100,28-02-2024,false
+8,8,1,2100,28-02-2024,false
+9,8,6,2200,28-02-2024,false
+15,test,test,2024-04-23,test,test,300,false
