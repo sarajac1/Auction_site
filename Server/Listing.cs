@@ -1,5 +1,5 @@
 namespace Server;
-
+using MySql.Data.MySqlClient;
 public class Listing
 {
     public int id { get; set; }
@@ -10,6 +10,55 @@ public class Listing
     public DateTime startdate { get; set; }
     public DateTime enddate { get; set; }
     public int startbid { get; set; }
+}
+public static class Listings
+{
+    public static string ConnectionString { get; set; }
+
+    public static List<Listing> GetAllListings()
+    {
+        var listings = new List<Listing>();
+        MySqlConnection conn = new MySqlConnection(ConnectionString);
+        MySqlCommand cmd = null;
+        MySqlDataReader reader = null;
+
+        try
+        {
+            conn.Open();
+            cmd = new MySqlCommand("SELECT * FROM listing", conn);
+            reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var listing = new Listing
+                {
+                    id = reader.GetInt32("id"),
+                    sellerid = reader.GetInt32("sellerid"),
+                    title = reader["title"] as string,
+                    description = reader["description"] as string,
+                    image = reader["image"] as string,
+                    startdate = reader.GetDateTime("startdate"),
+                    enddate = reader.GetDateTime("enddate"),
+                    startbid = reader.GetInt32("startbid")
+                };
+                listings.Add(listing);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            return null; // Consider handling this more robustly depending on your application's needs
+        }
+        finally
+        {
+            if (reader != null) reader.Close();
+            if (cmd != null) cmd.Dispose();
+            conn.Close();
+        }
+
+        return listings;
+    }
+    
 }
 
 

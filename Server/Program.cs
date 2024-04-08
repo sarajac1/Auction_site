@@ -7,9 +7,11 @@ using Server;
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
 
 var builder = WebApplication.CreateBuilder(args);
-
+Listings.ConnectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
 string connStr = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
 var app = builder.Build();
+app.MapGet("/listings", () => Listings.GetAllListings());
+/*
 app.MapGet("/listings",  () =>
 {
   var listings = new List<object>(); // List to store the fetched data, initialized inside the handler.
@@ -49,6 +51,7 @@ app.MapGet("/listings",  () =>
 
   return listings; 
 });
+*/
 
 //code according to:
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
@@ -89,7 +92,7 @@ app.MapPost("/add-listing", (int sellerid, string title, string description, str
 //POST http://localhost:3000/add-listing 
 sellerid 1 
 title Poop Vase
-description Merlin's poop was that holds all his powers
+description Merlin's poop that holds all his powers
 image https://imgur.com/gallery/oUwwY47
 startdate 2024-05-05 
 enddate 2024-05-19 00:00:00
