@@ -96,37 +96,45 @@ enddate 2024-05-19 00:00:00
 startbid 100.0
 */
 
-app.MapDelete("/delete-listing", (int sellerid, string title, string description, string image, string startdate, string enddate, decimal startbid) =>
+app.MapDelete("/delete-listing/{id}", (int id) =>
 {
   
   MySqlConnection conn = new MySqlConnection(connStr);
   MySqlCommand cmd = null;
-  DateTime startDateParsed = DateTime.Parse(startdate);  // Expected to be in "YYYY-MM-DD"
-  DateTime endDateParsed = DateTime.Parse(enddate);  
-
+  
   try
   {
     conn.Open();
-    string sql = "INSERT INTO listing (sellerid, title, description, image, startdate, enddate, startbid) VALUES (@SellerId, @Title, @Description, @Image, @StartDate, @EndDate, @StartBid)";
+    string sql = "DELETE FROM listing WHERE id =@id";
     cmd = new MySqlCommand(sql, conn);
-
-    cmd.Parameters.AddWithValue("@SellerId", sellerid);
-    cmd.Parameters.AddWithValue("@Title", title);
-    cmd.Parameters.AddWithValue("@Description", description);
-    cmd.Parameters.AddWithValue("@Image", image);
-    cmd.Parameters.AddWithValue("@StartDate", startDateParsed.ToString("yyyy-MM-dd")); 
-    cmd.Parameters.AddWithValue("@EndDate", endDateParsed.ToString("yyyy-MM-dd HH:mm:ss"));
-    cmd.Parameters.AddWithValue("@StartBid", startbid);
-
-    cmd.ExecuteNonQuery();
+    cmd.Parameters.AddWithValue("@id", id);
+    
+    var result = cmd.ExecuteNonQuery();
+    if (result > 0)
+    {
+      Console.WriteLine("Listing deleted.");
+      return Results.Ok($"Listing deleted successfully.");
+    }
+    else
+    {
+      return Results.NotFound($"Listing not found.");
+    }
   }
   catch (Exception ex)
   {
     Console.WriteLine(ex.ToString());
+    return Results.Problem("Database error occurred.");
   }
   
-  conn.Close();
-  Console.WriteLine("Listing added.");
+  finally
+  {
+    if (conn != null)
+    {
+      conn.Close();
+      conn.Dispose();
+    }
+    cmd?.Dispose();
+  }
 });
 
 
