@@ -1,7 +1,7 @@
 
 using MySql.Data.MySqlClient;
 using Server;
-
+//code according to:
 // https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
@@ -50,6 +50,7 @@ app.MapGet("/listings",  () =>
   return listings; 
 });
 
+//code according to:
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
 app.MapPost("/add-listing", (int sellerid, string title, string description, string image, string startdate, string enddate, decimal startbid) =>
 {
@@ -83,6 +84,7 @@ app.MapPost("/add-listing", (int sellerid, string title, string description, str
   conn.Close();
   Console.WriteLine("Listing added.");
 });
+
 /*
 //POST http://localhost:3000/add-listing 
 sellerid 1 
