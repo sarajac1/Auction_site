@@ -1,57 +1,15 @@
 
 using MySql.Data.MySqlClient;
 using Server;
-//code according to:
-// https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
-//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
-//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
 
 var builder = WebApplication.CreateBuilder(args);
+
 Listings.ConnectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
 string connStr = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
+
 var app = builder.Build();
+
 app.MapGet("/listings", () => Listings.GetAllListings());
-/*
-app.MapGet("/listings",  () =>
-{
-  var listings = new List<object>(); // List to store the fetched data, initialized inside the handler.
-  MySqlConnection conn = new MySqlConnection(connStr);
-  MySqlCommand cmd = null;
-  MySqlDataReader reader = null;
-
-  try
-  {
-    conn.Open();
-    cmd = new MySqlCommand("SELECT * FROM listing", conn);
-    reader = cmd.ExecuteReader();
-
-    while (reader.Read())
-    {
-      var listing = new 
-      {
-        Id = reader.GetInt32("id"),
-        SellerId = reader.GetInt32("sellerid"),
-        Title = reader["title"] as string,
-        Description = reader["description"] as string,
-        Image = reader["image"] as string,
-        StartDate = reader.GetDateTime("startdate"),
-        EndDate = reader.GetDateTime("enddate"),
-        StartBid = reader.GetInt32("startbid")
-      };
-      listings.Add(listing);
-    }
-  }
-  catch (Exception ex)
-  {
-    Console.WriteLine(ex.ToString());
-  }
-
-  conn.Close();
-  Console.WriteLine("Done.");
-
-  return listings; 
-});
-*/
 
 //code according to:
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
@@ -140,15 +98,58 @@ app.MapDelete("/delete-listing/{id}", (int id) =>
   }
 });
 
+app.Run("http://localhost:3000");
 
 /*
-app.MapGet("/listings", () => Listings.GetAllListings());
 app.MapGet("/listings/{id:int}", (int id) => Listings.GetListingById(id));
+*/
 
-app.MapGroup("/users")
-    .MapGet("/", async () => await Users.GetAllUsers());*/
+/*
+ //code according to:
+   // https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
+   //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
+   //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
+app.MapGet("/listings",  () =>
+{
+  var listings = new List<object>(); // List to store the fetched data, initialized inside the handler.
+  MySqlConnection conn = new MySqlConnection(connStr);
+  MySqlCommand cmd = null;
+  MySqlDataReader reader = null;
 
-app.Run("http://localhost:3000");
+  try
+  {
+    conn.Open();
+    cmd = new MySqlCommand("SELECT * FROM listing", conn);
+    reader = cmd.ExecuteReader();
+
+    while (reader.Read())
+    {
+      var listing = new
+      {
+        Id = reader.GetInt32("id"),
+        SellerId = reader.GetInt32("sellerid"),
+        Title = reader["title"] as string,
+        Description = reader["description"] as string,
+        Image = reader["image"] as string,
+        StartDate = reader.GetDateTime("startdate"),
+        EndDate = reader.GetDateTime("enddate"),
+        StartBid = reader.GetInt32("startbid")
+      };
+      listings.Add(listing);
+    }
+  }
+  catch (Exception ex)
+  {
+    Console.WriteLine(ex.ToString());
+  }
+
+  conn.Close();
+  Console.WriteLine("Done.");
+
+  return listings;
+});
+*/
+
 
 /*
 var builder = WebApplication.CreateBuilder(args);
