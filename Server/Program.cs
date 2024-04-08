@@ -2,6 +2,10 @@
 using MySql.Data.MySqlClient;
 using Server;
 
+// https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
+//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
+//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
+
 var builder = WebApplication.CreateBuilder(args);
 
 string connStr = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
@@ -27,6 +31,7 @@ app.MapGet("/listings",  () =>
         SellerId = reader.GetInt32("sellerid"),
         Title = reader["title"] as string,
         Description = reader["description"] as string,
+        Image = reader["image"] as string,
         StartDate = reader.GetDateTime("startdate"),
         EndDate = reader.GetDateTime("enddate"),
         StartBid = reader.GetInt32("startbid")
@@ -45,9 +50,49 @@ app.MapGet("/listings",  () =>
   return listings; 
 });
 
-// https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
-//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
-https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
+//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
+app.MapPost("/add-listing", (int sellerid, string title, string description, string image, string startdate, string enddate, decimal startbid) =>
+{
+  
+  MySqlConnection conn = new MySqlConnection(connStr);
+  MySqlCommand cmd = null;
+  DateTime startDateParsed = DateTime.Parse(startdate);  // Expected to be in "YYYY-MM-DD"
+  DateTime endDateParsed = DateTime.Parse(enddate);  
+
+  try
+  {
+    conn.Open();
+    string sql = "INSERT INTO listing (sellerid, title, description, image, startdate, enddate, startbid) VALUES (@SellerId, @Title, @Description, @Image, @StartDate, @EndDate, @StartBid)";
+    cmd = new MySqlCommand(sql, conn);
+
+    cmd.Parameters.AddWithValue("@SellerId", sellerid);
+    cmd.Parameters.AddWithValue("@Title", title);
+    cmd.Parameters.AddWithValue("@Description", description);
+    cmd.Parameters.AddWithValue("@Image", image);
+    cmd.Parameters.AddWithValue("@StartDate", startDateParsed.ToString("yyyy-MM-dd")); 
+    cmd.Parameters.AddWithValue("@EndDate", endDateParsed.ToString("yyyy-MM-dd HH:mm:ss"));
+    cmd.Parameters.AddWithValue("@StartBid", startbid);
+
+    cmd.ExecuteNonQuery();
+  }
+  catch (Exception ex)
+  {
+    Console.WriteLine(ex.ToString());
+  }
+  
+  conn.Close();
+  Console.WriteLine("Listing added.");
+});
+/*
+//POST http://localhost:3000/add-listing 
+sellerid 1 
+title Poop Vase
+description Merlin's poop was that holds all his powers
+image https://imgur.com/gallery/oUwwY47
+startdate 2024-05-05 
+enddate 2024-05-19 00:00:00
+startbid 100.0
+*/
 
 /*
 app.MapGet("/listings", () => Listings.GetAllListings());

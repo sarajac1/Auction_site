@@ -6,6 +6,7 @@ public class Listing
     public int sellerid { get; set; }
     public string? title { get; set; }
     public string? description { get; set; }
+    public string? image { get; set; }
     public DateTime startdate { get; set; }
     public DateTime enddate { get; set; }
     public int startbid { get; set; }
