@@ -1,22 +1,40 @@
-using System;
+using MySql.Data.MySqlClient;
 
-public class Users
+namespace Server;
+
+public static class Users
 {
-    public int Id { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public DateTime JoinedDate { get; set; }
-    public string Address { get; set; }
-    public string Email { get; set; }
-    public decimal Balance { get; set; }
-    public bool IsAdmin { get; set; }
+    private static string connectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
 
-    public override string ToString()
+    public static async Task<IEnumerable<object>> GetAllUsers()
     {
-        return $"Id: {Id}, Username: {Username}, JoinedDate: {JoinedDate}, Address: {Address}, Email: {Email}, Balance: {Balance}, IsAdmin: {IsAdmin}";
+        var users = new List<object>();
+        using (var connection = new MySqlConnection(connectionString))
+        {
+            await connection.OpenAsync();
+            var query = "SELECT * FROM user";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        users.Add(new
+                        {
+                            Id = reader["id"],
+                            Username = reader["username"].ToString(),
+                            Password = reader["password"].ToString(),
+                            //look it up how to convert to date?is it neccesary?
+                        });
+                    }
+                }
+            }
+        }
+        return users; 
     }
-}
+    
 
+}
 
 /*
 using System.Text;
@@ -49,7 +67,7 @@ public class Users
         string balance = Console.ReadLine() ?? string.Empty;
         Console.WriteLine("Please enter isAdmin");
         string isAdmin = Console.ReadLine() ?? string.Empty;
-        
+
 
         command.Parameters.AddWithValue("@username", username);
         command.Parameters.AddWithValue("@password", password);
@@ -58,7 +76,7 @@ public class Users
         command.Parameters.AddWithValue("@email", email);
         command.Parameters.AddWithValue("@balance", balance);
         command.Parameters.AddWithValue("@isAdmin", isAdmin);
-        
+
         command.ExecuteNonQuery();
     }
     public static void Single(MySqlConnection db)
@@ -69,7 +87,7 @@ public class Users
         string input = Console.ReadLine() ?? string.Empty;
 
         command.Parameters.AddWithValue("@input", input); //prepared statement
-        
+
         using MySqlDataReader reader = command.ExecuteReader();
         while (reader.Read())
         {
@@ -83,7 +101,7 @@ public class Users
 
         using MySqlDataReader reader = command.ExecuteReader();
         while (reader.Read())
-        { 
+        {
             int id = reader.GetInt32("id");
             string username = reader.GetString("username");
             Console.WriteLine($"{username} has id: {id}");
@@ -95,13 +113,13 @@ public class Users
 
         using MySqlDataReader reader = command.ExecuteReader();
         while (reader.Read())
-        { 
-           
+        {
+
             string username = reader.GetString("username");
             Console.WriteLine($"{username}");
         }
     }
-    
+
     public static string Get(MySqlConnection db)
     {
         StringBuilder usersInfo = new StringBuilder();
@@ -136,7 +154,7 @@ public class Users
 
 
 /*
- // A. using mock data and interface 
+ // A. using mock data and interface
 using System;
 
 namespace Server
@@ -157,14 +175,14 @@ namespace Server
         {
             _id = id;
             _username = username;
-            _password = password; 
+            _password = password;
             _joineddate = joineddate;
             _address = address;
             _email = email;
             _balance = balance;
             _isAdmin = isAdmin;
         }
-        
+
         public string User()
         {
             return _id + " " +_username + " "+ _password + " "+ _joineddate + " "+ _address + " "+ _email + " "+ _balance + " "+ _isAdmin;

@@ -1,5 +1,111 @@
-using System.Text;
 
+using MySql.Data.MySqlClient;
+using Server;
+//code according to:
+// https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
+//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
+//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
+
+var builder = WebApplication.CreateBuilder(args);
+
+string connStr = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
+var app = builder.Build();
+app.MapGet("/listings",  () =>
+{
+  var listings = new List<object>(); // List to store the fetched data, initialized inside the handler.
+  MySqlConnection conn = new MySqlConnection(connStr);
+  MySqlCommand cmd = null;
+  MySqlDataReader reader = null;
+
+  try
+  {
+    conn.Open();
+    cmd = new MySqlCommand("SELECT * FROM listing", conn);
+    reader = cmd.ExecuteReader();
+
+    while (reader.Read())
+    {
+      var listing = new 
+      {
+        Id = reader.GetInt32("id"),
+        SellerId = reader.GetInt32("sellerid"),
+        Title = reader["title"] as string,
+        Description = reader["description"] as string,
+        Image = reader["image"] as string,
+        StartDate = reader.GetDateTime("startdate"),
+        EndDate = reader.GetDateTime("enddate"),
+        StartBid = reader.GetInt32("startbid")
+      };
+      listings.Add(listing);
+    }
+  }
+  catch (Exception ex)
+  {
+    Console.WriteLine(ex.ToString());
+  }
+
+  conn.Close();
+  Console.WriteLine("Done.");
+
+  return listings; 
+});
+
+//code according to:
+//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
+app.MapPost("/add-listing", (int sellerid, string title, string description, string image, string startdate, string enddate, decimal startbid) =>
+{
+  
+  MySqlConnection conn = new MySqlConnection(connStr);
+  MySqlCommand cmd = null;
+  DateTime startDateParsed = DateTime.Parse(startdate);  // Expected to be in "YYYY-MM-DD"
+  DateTime endDateParsed = DateTime.Parse(enddate);  
+
+  try
+  {
+    conn.Open();
+    string sql = "INSERT INTO listing (sellerid, title, description, image, startdate, enddate, startbid) VALUES (@SellerId, @Title, @Description, @Image, @StartDate, @EndDate, @StartBid)";
+    cmd = new MySqlCommand(sql, conn);
+
+    cmd.Parameters.AddWithValue("@SellerId", sellerid);
+    cmd.Parameters.AddWithValue("@Title", title);
+    cmd.Parameters.AddWithValue("@Description", description);
+    cmd.Parameters.AddWithValue("@Image", image);
+    cmd.Parameters.AddWithValue("@StartDate", startDateParsed.ToString("yyyy-MM-dd")); 
+    cmd.Parameters.AddWithValue("@EndDate", endDateParsed.ToString("yyyy-MM-dd HH:mm:ss"));
+    cmd.Parameters.AddWithValue("@StartBid", startbid);
+
+    cmd.ExecuteNonQuery();
+  }
+  catch (Exception ex)
+  {
+    Console.WriteLine(ex.ToString());
+  }
+  
+  conn.Close();
+  Console.WriteLine("Listing added.");
+});
+
+/*
+//POST http://localhost:3000/add-listing 
+sellerid 1 
+title Poop Vase
+description Merlin's poop was that holds all his powers
+image https://imgur.com/gallery/oUwwY47
+startdate 2024-05-05 
+enddate 2024-05-19 00:00:00
+startbid 100.0
+*/
+
+/*
+app.MapGet("/listings", () => Listings.GetAllListings());
+app.MapGet("/listings/{id:int}", (int id) => Listings.GetListingById(id));
+
+app.MapGroup("/users")
+    .MapGet("/", async () => await Users.GetAllUsers());*/
+
+app.Run("http://localhost:3000");
+
+/*
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 app.MapGet("/users", () => @"[
@@ -310,221 +416,10 @@ app.MapGet("/bids", () => @"[
       ""isactive"": true
     }
   ]");
+  
+  app.Run("http://localhost:3000");
 
-app.Run("http://localhost:3000");
-
-/*
-using MySql.Data.MySqlClient;
-using Server;
-
-// .NEt Web server setup Template:
-var builder = WebApplication.CreateBuilder(args);
-
-var app = builder.Build();
-
-//MySqlConnection? db = null;
-
-
-string connectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
-using MySqlConnection db = new MySqlConnection(connectionString);
-/*
-try
-{
-    db = new (connectionString);
-    db.Open();
-    
-    Users.All(db);
-
-    Users.Single(db);
-   
-    Users.Post(db);
-}
-catch (MySqlException e)
-{
-    Console.WriteLine(e);
-}
-finally
-{
-    db?.Close();
-}#1#
-// tells the app which method to call when doing a get request to a certain route
-
-/#1#/ Endpoint to insert a new user
-app.MapPost("/users", async (HttpContext context) =>
-{
-    await context.Response.WriteAsync("Enter user details:\n");
-    Users.Post(db);
-});#1#
-
-/*
-// Endpoint to retrieve a user's email by username
-app.MapGet("/users/{username}", async (HttpContext context) =>
-{
-    string username = context.Request.RouteValues["username"] as string;
-    if (username != null)
-    {
-        await context.Response.WriteAsync($"Email for {username}:\n");
-        Users.Single(db);
-    }
-});
-#1#
-
-/*
-// Endpoint to retrieve all users
-app.MapGet("/users", async (HttpContext context) =>
-{
-    using (MySqlConnection db = new MySqlConnection(connectionString))
-    {
-        try
-        {
-            await db.OpenAsync();
-            await context.Response.WriteAsync("All users:\n");
-            Users.AllUsers(db);
-        }
-        catch (MySqlException ex)
-        {
-            await context.Response.WriteAsync($"An error occurred while retrieving users: {ex.Message}");
-        }
-    }
-});
-#1#
-
-// Endpoint to retrieve all users
-app.MapGet("/users", async (HttpContext context) =>
-{
-    using (MySqlConnection db = new MySqlConnection(connectionString))
-    {
-        try
-        {
-            await db.OpenAsync();
-            
-            // Retrieve user information from the database
-            string usersInformation = Users.Get(db);
-
-            // Write the retrieved user information to the response
-            await context.Response.WriteAsync(usersInformation);
-        }
-        catch (MySqlException ex)
-        {
-            // Handle any database exceptions
-            context.Response.StatusCode = 500; // Internal Server Error
-            await context.Response.WriteAsync($"An error occurred while retrieving users: {ex.Message}");
-        }
-    }
-});
-
-
-app.MapGet("/", ()=> "Hello World!");
-
-// Start the server
-
-app.Run();
-
-
-
-
-
-
-/*
-// C. display db
-using MySql.Data.MySqlClient;
-using Server;
-
-MySqlConnection? db = null;
-
-string connectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
-
-try
-{
-    db = new (connectionString);
-    db.Open();
-    
-   Users.All(db);
-
-   Users.Single(db);
-   
-   Users.Post(db);
-}
-catch (MySqlException e)
-{
-    Console.WriteLine(e);
-}
-finally
-{
-    db?.Close();
-}
-#1#
-
-
-
-
-/*
- // B. Add to mock db
- using Server;
-
-{
-    // Read existing lines from the file
-    List<string> linesList = new List<string>(File.ReadAllLines("./db.txt"));
-
-    /*
-    // Define information for the new user
-    string[] newUser = { "15", "test", "test", "2024-04-23", "test", "test", "300", "false" };
-
-    // Append the new user information to the existing lines
-    linesList.Add(string.Join(",", newUser));
-
-    // Write all lines (including the new user) back to the file
-    File.WriteAllLines("./db.txt", linesList);
-    #2#
-
-    // Iterate over the linesList to process each line
-    foreach (string line in linesList)
-    {
-        if (line.StartsWith("users"))
-            continue; // Skip the header line
-
-        string[] parts = line.Split(',');
-
-        // Check if parts array has enough elements
-        if (parts.Length >= 8)
-        {
-            string id = parts[0];
-            string username = parts[1];
-            string password = parts[2];
-            string joineddate = parts[3];
-            string address = parts[4];
-            string email = parts[5];
-            string balance = parts[6];
-            string isAdmin = parts[7];
-
-            // Assuming IUsers and Users classes are defined elsewhere
-            IUsers user = new Users(id, username, password, joineddate, address, email, balance, isAdmin);
-            Console.WriteLine(user.User());
-        }
-        else
-        {
-            Console.WriteLine("Invalid line format: " + line); // Print a message indicating invalid line format
-        }
-    }
-}#1#
-
-
-/*
- // A. display the mock db
-using Server;
-
-string<IUsers> lines = File.ReadAllLines("./db.txt");
-
-foreach (IUsers line in lines)
-{
-    Console.WriteLine(line.User()); // writes each line from start to finish
-}
-#1#
-
-/*if (lines.Length >= 2)
-{
-    Console.WriteLine(lines[1]); // writes the line at index 1
-}#1#
 */
+
 
 
