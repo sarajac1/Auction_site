@@ -33,6 +33,10 @@ public static class Users
         return users; 
     }
     
+public static async Task<bool> UpdateUser(int userID, UserUpdateModel updateModel)
+{
+    using (var connection = new MySqlConnection(connectionString))
+}
 
 }
 
