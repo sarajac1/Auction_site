@@ -49,6 +49,49 @@ app.MapGet("/listings",  () =>
 
   return listings; 
 });
+app.MapGet("/listings/{id}", (int id) =>
+{
+  object listing = null; // Initialize to null to handle case where no listing is found
+  MySqlConnection conn = new MySqlConnection(connStr);
+  MySqlCommand cmd = null;
+  MySqlDataReader reader = null;
+
+  try
+  {
+    conn.Open();
+    cmd = new MySqlCommand("SELECT * FROM listing WHERE id = @id", conn);
+    cmd.Parameters.AddWithValue("@id", id);  // Use parameterized query to prevent SQL injection
+    reader = cmd.ExecuteReader();
+
+    if (reader.Read())  // Expecting only one record or none
+    {
+      listing = new
+      {
+        Id = reader.GetInt32("id"),
+        SellerId = reader.GetInt32("sellerid"),
+        Title = reader["title"] as string,
+        Description = reader["description"] as string,
+        Image = reader["image"] as string,
+        StartDate = reader.GetDateTime("startdate"),
+        EndDate = reader.GetDateTime("enddate"),
+        StartBid = reader.GetInt32("startbid")
+      };
+    }
+  }
+  catch (Exception ex)
+  {
+    Console.WriteLine(ex.ToString());
+  }
+
+  if (listing != null)
+  {
+    return Results.Ok(listing);
+  }
+  else
+  {
+    return Results.NotFound($"Listing not found.");
+  }
+});
 
 //code according to:
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
