@@ -85,6 +85,47 @@ app.MapPost("/add-listing", (int sellerid, string title, string description, str
   Console.WriteLine("Listing added.");
 });
 
+// Endpoint to get all users info
+app.MapGet("/users",  () =>
+{
+  var users = new List<object>(); // List to store the fetched data, initialized inside the handler.
+  MySqlConnection conn = new MySqlConnection(connStr);
+  MySqlCommand cmd = null;
+  MySqlDataReader reader = null;
+
+  try
+  {
+    conn.Open();
+    cmd = new MySqlCommand("SELECT * FROM user", conn);
+    reader = cmd.ExecuteReader();
+
+    while (reader.Read())
+    {
+      var user = new 
+      {
+        Id = reader.GetInt32("id"),
+        Username = reader["username"] as string,
+        Password = reader["password"] as string,
+        JoinedDate = reader.GetDateTime("joineddate"),
+        Address = reader["address"] as string,
+        Email = reader["email"] as string,
+        Balance = reader.GetDecimal("balance"),
+        IsAdmin = reader.GetBoolean("isAdmin"),
+      };
+      users.Add(user);
+    }
+  }
+  catch (Exception ex)
+  {
+    Console.WriteLine(ex.ToString());
+  }
+
+  conn.Close();
+  Console.WriteLine("Done.");
+
+  return users; 
+});
+
 /*
 //POST http://localhost:3000/add-listing 
 sellerid 1 
@@ -108,139 +149,6 @@ app.Run("http://localhost:3000");
 /*
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
-app.MapGet("/users", () => @"[
-    {
-      ""id"": ""1"",
-      ""username"": ""admin"",
-      ""password"": ""admin"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""Admin, 123, Lund"",
-      ""email"": ""admin@shadowbid.com"",
-      ""balance"": 8000,
-      ""isAdmin"": true
-    },
-    {
-      ""id"": ""2"",
-      ""username"": ""usifer"",
-      ""password"": ""123abc"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""Usifer Baloba, 123, Lund"",
-      ""email"": ""abc123@abc.com"",
-      ""balance"": 9601,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""3"",
-      ""username"": ""alicesmith"",
-      ""password"": ""alice123"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""456 Oak Ave, Townsville"",
-      ""email"": ""alice.smith@email.com"",
-      ""balance"": 7000,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""4"",
-      ""username"": ""johndoe"",
-      ""password"": ""pass123"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""123 Main St, Cityville"",
-      ""email"": ""john.doe@email.com"",
-      ""balance"": 5000,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""5"",
-      ""username"": ""bobjohnson"",
-      ""password"": ""bob456"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""789 Pine Ln, Villagetown"",
-      ""email"": ""bob.johnson@email.com"",
-      ""balance"": 6000,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""6"",
-      ""username"": ""mikedavis"",
-      ""password"": ""mike001"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""202 Maple Rd, Countryside"",
-      ""email"": ""mike.davis@email.com"",
-      ""balance"": 5500,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""7"",
-      ""username"": ""sophiemiller"",
-      ""password"": ""sophie789"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""303 Birch Blvd, Suburbia"",
-      ""email"": ""sophie.miller@email.com"",
-      ""balance"": 6500,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""8"",
-      ""username"": ""alexturner"",
-      ""password"": ""alex002"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""404 Elm Lane, Outskirts"",
-      ""email"": ""alex.turner@email.com"",
-      ""balance"": 7500,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""9"",
-      ""username"": ""emmawhite"",
-      ""password"": ""emma456"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""505 Oakwood Dr, Riverside"",
-      ""email"": ""emma.white@email.com"",
-      ""balance"": 8500,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""10"",
-      ""username"": ""taratarantula"",
-      ""password"": ""tara"",
-      ""joineddate"": ""27-02-2024"",
-      ""address"": ""606 Cedar Grove, Lakeside"",
-      ""email"": ""tara.taran@email.com"",
-      ""balance"": 8685,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""11"",
-      ""username"": ""test"",
-      ""password"": ""test"",
-      ""joineddate"": ""2024-03-06"",
-      ""address"": ""test"",
-      ""email"": ""test@test"",
-      ""balance"": 0,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""12"",
-      ""username"": ""test6"",
-      ""password"": ""test6"",
-      ""joineddate"": ""2024-03-07"",
-      ""address"": ""test6"",
-      ""email"": ""test6@test6"",
-      ""balance"": 0,
-      ""isAdmin"": false
-    },
-    {
-      ""id"": ""13"",
-      ""username"": ""test2"",
-      ""password"": ""test2"",
-      ""joineddate"": ""2024-03-08"",
-      ""address"": ""test2"",
-      ""email"": ""test2@test2"",
-      ""balance"": 0,
-      ""isAdmin"": false
-    }
-  ]");
-app.Run("http://localhost:3000");
 
 app.MapGet("/listings", () => @"[
     {
