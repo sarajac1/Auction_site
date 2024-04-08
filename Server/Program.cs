@@ -49,6 +49,8 @@ app.MapGet("/listings",  () =>
 
   return listings; 
 });
+
+// QUESTION: will i have to change this when it is logged in user? I don't think so, but look it up or ask.
 app.MapGet("/listings/{id}", (int id) =>
 {
   object listing = null; // Initialize to null to handle case where no listing is found
