@@ -47,7 +47,7 @@ public static class Listings
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
-            return null; // Consider handling this more robustly depending on your application's needs
+            return null; 
         }
         finally
         {

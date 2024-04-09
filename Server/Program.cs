@@ -3,7 +3,7 @@ using MySql.Data.MySqlClient;
 using Server;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//https://www.nuget.org/packages/MySql.Data
 Listings.ConnectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
 string connStr = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
 
@@ -15,10 +15,9 @@ app.MapGet("/listings", () => Listings.GetAllListings());
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
 app.MapPost("/add-listing", (int sellerid, string title, string description, string image, string startdate, string enddate, decimal startbid) =>
 {
-  
   MySqlConnection conn = new MySqlConnection(connStr);
   MySqlCommand cmd = null;
-  DateTime startDateParsed = DateTime.Parse(startdate);  // Expected to be in "YYYY-MM-DD"
+  DateTime startDateParsed = DateTime.Parse(startdate);  
   DateTime endDateParsed = DateTime.Parse(enddate);  
 
   try
