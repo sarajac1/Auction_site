@@ -171,4 +171,56 @@ app.MapGet("/login", (HttpContext context) =>
   return user;
 });  
 
-app.Run("http://localhost:3000");
+// Endpoint to Register New User
+app.MapPost("/RegisterNewUser", (HttpContext context) =>
+{
+    string username = context.Request.Form["username"];
+    string password = context.Request.Form["password"];
+    string email = context.Request.Form["email"];
+    string address = context.Request.Form["address"];
+    string message = "";
+
+    MySqlConnection conn = new MySqlConnection(connStr);
+    MySqlCommand cmd = null;
+    
+    try
+    {
+        conn.Open();
+        cmd = new MySqlCommand("SELECT COUNT(*) FROM user WHERE username = @username", conn);
+        cmd.Parameters.AddWithValue("@username", username);
+        int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+        if (count > 0)
+        { 
+            return "User already exists: " + username;
+        }
+        else
+        {
+            cmd = new MySqlCommand("INSERT INTO user (username, password, joineddate, address, email, isAdmin) VALUES (@username, @password, @joineddate, @address, @email, @isAdmin)", conn);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@joineddate", DateTime.Today);
+            cmd.Parameters.AddWithValue("@address", address);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@isAdmin", false);
+
+            cmd.ExecuteNonQuery();
+            message = "User added successfully: " + username;  
+            Console.WriteLine("New User Registered!");
+        }    
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+        message = "User registration failed!";
+    }
+    finally
+    {
+        // Close the connection
+        conn.Close();
+    }
+
+    return message;
+});
+
+app.Run("http://localhost:3000"); 
