@@ -12,9 +12,10 @@ function ItemPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/db.json"); // Relative path from the public folder
+        const response = await fetch('/api/listings'); 
         const data = await response.json();
-        const listing = data.listings.find(
+        console.log(data);
+        const listing = data.find(
           (listing) => listing.id.toString() === itemId
         );
         setSelectedListing(listing);
@@ -26,19 +27,9 @@ function ItemPage() {
     fetchData();
   }, [itemId]);
 
+ 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/db.json");
-        const price = await response.json();
-        setBidPrice(price.bids);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setBidPrice([]);
-      }
-    };
-
-    fetchData();
+  refreshBids()
   }, []);
 
   /* Find highest bid */
@@ -90,20 +81,16 @@ function ItemPage() {
 
   // Inside ItemPage component
 
-  function refreshBids() {
+  async function refreshBids() {
     // Logic to re-fetch or re-calculate bids
-    const fetchData = async () => {
       try {
-        const response = await fetch("/db.json");
+        const response = await fetch("/api/bids");
         const price = await response.json();
         setBidPrice(price.bids);
       } catch (error) {
         console.error("Error fetching data:", error);
         setBidPrice([]);
       }
-    };
-
-    fetchData();
   }
 
   // Pass this function as a prop to BiddingForm
