@@ -4,46 +4,15 @@ using Server;
 
 var builder = WebApplication.CreateBuilder(args);
 //https://www.nuget.org/packages/MySql.Data
-Listings.ConnectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
-string connStr = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
-
+State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");
+builder.Services.AddSingleton(state);
 var app = builder.Build();
 
-app.MapGet("/listings", () => Listings.GetAllListings());
+app.MapGet("/listings", Listings.GetAllListings);
 
 //code according to:
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
-app.MapPost("/add-listing", (int sellerid, string title, string description, string image, string startdate, string enddate, decimal startbid) =>
-{
-  MySqlConnection conn = new MySqlConnection(connStr);
-  MySqlCommand cmd = null;
-  DateTime startDateParsed = DateTime.Parse(startdate);  
-  DateTime endDateParsed = DateTime.Parse(enddate);  
-
-  try
-  {
-    conn.Open();
-    string sql = "INSERT INTO listing (sellerid, title, description, image, startdate, enddate, startbid) VALUES (@SellerId, @Title, @Description, @Image, @StartDate, @EndDate, @StartBid)";
-    cmd = new MySqlCommand(sql, conn);
-
-    cmd.Parameters.AddWithValue("@SellerId", sellerid);
-    cmd.Parameters.AddWithValue("@Title", title);
-    cmd.Parameters.AddWithValue("@Description", description);
-    cmd.Parameters.AddWithValue("@Image", image);
-    cmd.Parameters.AddWithValue("@StartDate", startDateParsed.ToString("yyyy-MM-dd")); 
-    cmd.Parameters.AddWithValue("@EndDate", endDateParsed.ToString("yyyy-MM-dd HH:mm:ss"));
-    cmd.Parameters.AddWithValue("@StartBid", startbid);
-
-    cmd.ExecuteNonQuery();
-  }
-  catch (Exception ex)
-  {
-    Console.WriteLine(ex.ToString());
-  }
-  
-  conn.Close();
-  Console.WriteLine("Listing added.");
-});
+app.MapPost("/listings", Listings.Post);
 
 /*
 //POST http://localhost:3000/add-listing 
@@ -52,10 +21,10 @@ title Poop Vase
 description Merlin's poop that holds all his powers
 image https://imgur.com/gallery/oUwwY47
 startdate 2024-05-05 
-enddate 2024-05-19 00:00:00
+enddate 2024-05-19 00:00:00 
 startbid 100.0
 */
-
+/*
 app.MapDelete("/delete-listing/{id}", (int id) =>
 {
   
@@ -65,7 +34,7 @@ app.MapDelete("/delete-listing/{id}", (int id) =>
   try
   {
     conn.Open();
-    string sql = "DELETE FROM listing WHERE id =@id";
+    string sql = "DELETE FROM listings WHERE id =@id";
     cmd = new MySqlCommand(sql, conn);
     cmd.Parameters.AddWithValue("@id", id);
     
@@ -96,8 +65,11 @@ app.MapDelete("/delete-listing/{id}", (int id) =>
     cmd?.Dispose();
   }
 });
-
+*/
 app.Run("http://localhost:3000");
+
+public record State(string DB);
+
 
 /*
 app.MapGet("/listings/{id:int}", (int id) => Listings.GetListingById(id));

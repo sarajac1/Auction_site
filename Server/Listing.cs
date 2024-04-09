@@ -15,18 +15,38 @@ public static class Listings
 {
     public static string ConnectionString { get; set; }
 
-    public static List<Listing> GetAllListings()
+    public record PostData(
+        int SellerId,
+        string Title,
+        string Description,
+        string Image,
+        decimal StartBid);
+    public static IResult Post(PostData data, State state)
+    {
+                 string query = "INSERT INTO listings (sellerid, title, description, image, startbid) VALUES (@SellerId, @Title, @Description, @Image, @StartBid)";
+            var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [
+                new("@SellerId", data.SellerId),
+                new("@Title", data.Title),
+                new("@Description", data.Description),
+                new("@Image", data.Image),
+                new("@StartBid", data.StartBid)
+            ]);
+            if (result == 1)
+            {
+                return TypedResults.Created();
+            }
+            else
+            {
+                return TypedResults.Problem();
+            }
+    
+    }
+    public static List<Listing> GetAllListings(State state)
     {
         var listings = new List<Listing>();
-        MySqlConnection conn = new MySqlConnection(ConnectionString);
-        MySqlCommand cmd = null;
-        MySqlDataReader reader = null;
+    
+           var reader= MySqlHelper.ExecuteReader(state.DB,"SELECT * FROM listings");
 
-        try
-        {
-            conn.Open();
-            cmd = new MySqlCommand("SELECT * FROM listing", conn);
-            reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
@@ -43,19 +63,8 @@ public static class Listings
                 };
                 listings.Add(listing);
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-            return null; 
-        }
-        finally
-        {
-            if (reader != null) reader.Close();
-            if (cmd != null) cmd.Dispose();
-            conn.Close();
-        }
-
+        
+      
         return listings;
     }
     

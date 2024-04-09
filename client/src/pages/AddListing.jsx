@@ -18,7 +18,7 @@ function AddListing() {
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
     const seconds = String(date.getSeconds()).padStart(2, "0");
-    return `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
+    return `${yyyy}-${mm}-${dd}T${hours}:${minutes}:${seconds}`;
   };
 
   const today = new Date(); // Get today's date
@@ -52,26 +52,19 @@ function AddListing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const sellerId = localStorage.getItem("token_id");
-    const enddate = calculateEndDate();
-
-    const newListing = {
-      sellerid: sellerId,
-      title: listing.title,
-      description: listing.description,
-      image: listing.image,
-      startdate: listing.startdate,
-      enddate: enddate,
-      startbid: Number(listing.startbid)
-    };
-
+    
+    let data = new FormData(e.target)
+    data = Object.fromEntries(data)
+    data.sellerid = sellerId
+    
     try {
       // Send a POST request to your JSON-server. make sure to have the server running
-      const response = await fetch('http://localhost:3000/listings', {
+      const response = await fetch('/api/listings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newListing)
+        body: JSON.stringify(data)
       });
 
       if (!response.ok) {
@@ -97,7 +90,7 @@ function AddListing() {
       <div className="item-wrapper">
         <div className="addListing-wrapper">
         <h1>Create Listing</h1>
-        <form onSubmit={handleSubmit}>
+        <form name={"our-form"} onSubmit={handleSubmit}>
           <div className="add-listing">
             <div className="adllisting-col1">
               <p>Title</p>
