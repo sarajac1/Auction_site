@@ -16,6 +16,9 @@ app.MapPost("/listings", Listings.Post);
 app.MapGet("/users", Users.GetAllUsers);
 //we need: get bids, post bid, update bid, update(edit) listing, get user, delete user, update(edit) user?
 // do we need more? 
+app.MapGet("/bids", Bids.GetAllBids);
+app.MapGet("/bids/{itemid:int}", Bids.GetBidsByItemId);
+
 
 
 app.Run("http://localhost:3000");

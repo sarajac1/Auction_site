@@ -37,5 +37,31 @@ public static class Bids
         }
         return bids;
     }
-    
+    // Method for fetching bids for a specific item ID
+    public static List<Bid> GetBidsByItemId(int itemid, State state)
+    {
+        List<Bid> bids = new List<Bid>();
+        
+        //parameters handling
+        var parameters = new MySqlParameter[]
+        {
+            new MySqlParameter("@itemid", itemid)
+        };
+        var reader= MySqlHelper.ExecuteReader(state.DB,"SELECT * FROM bids WHERE itemid = @itemid", parameters); 
+        while (reader.Read())
+        { 
+            var bid = new Bid
+            { 
+                id = reader.GetInt32("id"),
+                itemid = reader.GetInt32("itemid"),
+                bidderid= reader.GetInt32("bidderid"),
+                bidamount = reader.GetInt32("bidamount"),
+                datetime = reader.GetDateTime("datetime"),
+                isactive = reader.GetBoolean("isactive") 
+            }; 
+            bids.Add(bid); 
+        }
+        return bids;
+    }
+  
 }
