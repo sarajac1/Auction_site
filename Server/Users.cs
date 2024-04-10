@@ -2,37 +2,44 @@ using MySql.Data.MySqlClient;
 
 namespace Server;
 
+public class User
+{
+    public int id { get; set; }
+    public string? username { get; set; }
+    public string? password { get; set; }
+    public DateTime joineddate { get; set; }
+    public string? address { get; set; }
+    public string? email { get; set; }
+    public int balance { get; set; }
+    public bool isAdmin { get; set; }
+}
+
 public static class Users
 {
-    private static string connectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
-
-    public static async Task<IEnumerable<object>> GetAllUsers()
+    public static string ConnectionString { get; set; }
+    public static List<User> GetAllUsers(State state)
     {
-        var users = new List<object>();
-        using (var connection = new MySqlConnection(connectionString))
-        {
-            await connection.OpenAsync();
-            var query = "SELECT * FROM user";
-            using (var cmd = new MySqlCommand(query, connection))
-            {
-                using (var reader = await cmd.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        users.Add(new
-                        {
-                            Id = reader["id"],
-                            Username = reader["username"].ToString(),
-                            Password = reader["password"].ToString(),
-                            //look it up how to convert to date?is it neccesary?
-                        });
-                    }
-                }
-            }
-        }
-        return users; 
-    }
+        var users = new List<User>();
     
+        var reader= MySqlHelper.ExecuteReader(state.DB,"SELECT * FROM users");
+
+        while (reader.Read())
+        { 
+            var user = new User 
+            {
+                id = reader.GetInt32("id"),
+                username = reader["username"] as string,
+                password = reader["password"] as string,
+                joineddate = reader.GetDateTime("joineddate"),
+                address = reader["address"] as string,
+                email = reader["email"] as string,
+                balance = reader.GetInt32("balance"),
+                isAdmin = reader.GetBoolean("isAdmin"),
+            };
+            users.Add(user);
+        }
+        return users;
+    }
 
 }
 
@@ -152,44 +159,4 @@ public class Users
     }
 }
 
-
-/*
- // A. using mock data and interface
-using System;
-
-namespace Server
-{
-    public class Users:IUsers
-    {
-        private string _id;
-        private string _username;
-        private string _password;
-        private string _joineddate;
-        private string _address;
-        private string _email;
-        private string _balance;
-        private string _isAdmin;
-
-        public Users(string id, string username, string password, string joineddate, string address, string email,
-            string balance, string isAdmin)
-        {
-            _id = id;
-            _username = username;
-            _password = password;
-            _joineddate = joineddate;
-            _address = address;
-            _email = email;
-            _balance = balance;
-            _isAdmin = isAdmin;
-        }
-
-        public string User()
-        {
-            return _id + " " +_username + " "+ _password + " "+ _joineddate + " "+ _address + " "+ _email + " "+ _balance + " "+ _isAdmin;
-            //throw new NotImplementedException();
-        }
-    }
-}
-#1#
 */
-

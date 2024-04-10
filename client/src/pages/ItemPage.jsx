@@ -79,8 +79,7 @@ function ItemPage() {
     );
   }
 
-  // Inside ItemPage component
-
+  
   async function refreshBids() {
     // Logic to re-fetch or re-calculate bids
       try {
@@ -92,12 +91,7 @@ function ItemPage() {
         setBidPrice([]);
       }
   }
-
-  // Pass this function as a prop to BiddingForm
   
-
-
-
 
   return (
     <div className="container">

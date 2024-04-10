@@ -44,7 +44,7 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
     // Check if the user is not logged in before proceeding
     if (!isLoggedIn) {
       setMessage('You must be logged in to place a bid.');
-      return; // Prevent the rest of the function from executing
+      return; 
     }
     const submissionTime = new Date();
     const bidAmount = Number(bid);
@@ -102,12 +102,9 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
           });
 
           if (userUpdateResponse.ok) {
-            console.log("User's balance updated successfully");
-            // Optionally, perform actions after successfully updating the user's balance,
-            // such as refreshing user data from the server to reflect the update in your app's UI.
+            console.log("Balance updated successfully");
           } else {
             console.error('Failed to update user\'s balance');
-            // Handle failure to update the user's balance in the JSON server
           }
         } catch (error) {
           console.error('Error updating user\'s balance:', error);
