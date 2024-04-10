@@ -55,7 +55,6 @@ function ItemPage() {
     const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
     return { days, hours };
   }
-
   function CalcEndDate(endDateString) {
     const currentDate = new Date();
     const endDate = new Date(endDateString);
@@ -78,8 +77,6 @@ function ItemPage() {
       </div>
     );
   }
-
-  
   async function refreshBids() {
     // Logic to re-fetch or re-calculate bids
       try {

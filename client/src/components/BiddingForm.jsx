@@ -12,7 +12,7 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/db.json");
+        const response = await fetch("/api/users/${token_id}");
         const data = await response.json();
         const userID = Number(localStorage.getItem("token_id"));
         const currentUser = data.users.find((user) => user.id == userID);
@@ -56,7 +56,7 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
     try {
       // Fetch existing bids for the selected item
-      const existingBidsResponse = await fetch(`http://localhost:3000/bids?itemid=${selectedListing.id}`);
+      const existingBidsResponse = await fetch(`/api/bids?itemid=${selectedListing.id}`);
       const existingBids = await existingBidsResponse.json();
 
       // Determine the highest existing bid amount for the item
@@ -67,7 +67,7 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
         setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
         return;
       }
-      const bidResponse = await fetch('http://localhost:3000/bids', {
+      const bidResponse = await fetch('/api/bids', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
         localStorage.setItem('newBalance', newBalance.toString());
 
         try {
-          const userUpdateResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
+          const userUpdateResponse = await fetch(`/api/users/${user.id}`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
