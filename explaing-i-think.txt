@@ -1,0 +1,30 @@
+1. made a minimal web API :
+      var builder = WebApplication.CreateBuilder(args);
+      var app = builder.Build();
+
+      app.MapGet("/", () => "Hello World!");
+
+      app.Run();
+  Reference:
+    https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-8.0
+    https://opa23-ha.lms.nodehill.se/article/exempel-dotnet-web-server-setup-template
+
+2. connected to db according to the lecture when he showed us how to connect our db. 
+  Reference:
+    file name dotnet-mysql-demo
+    and
+    https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
+
+
+
+3. looked at and implemented some things from dotnet-enum-record2 file
+  Reference:
+    it is the same lecture as the above
+    
+
+Add listing part of the code I used all of the above as well as this site:
+  Reference:
+    https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
+    as well as this:
+    https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
+
