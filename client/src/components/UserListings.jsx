@@ -12,9 +12,9 @@ const UserListings = ({ sellerid }) => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const listingsResponse = await fetch("/db.json");
-        const listingsData = await listingsResponse.json();        
-        const { listings, bids, users } = listingsData;
+        const listingsResponse = await fetch("/api/listings");
+        const listings = await listingsResponse.json();        
+       
         const filteredListings = listings.filter(listing => listing.sellerid.toString() === sellerid);
         const allListings = listings
 

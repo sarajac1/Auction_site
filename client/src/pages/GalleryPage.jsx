@@ -29,9 +29,9 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/db.json");
-        const price = await response.json();
-        setBidPrice(price.bids);
+        const response = await fetch("/api/bids");
+        const bids = await response.json();
+        setBidPrice(bids);
       } catch (error) {
         console.error("Error fetching data:", error);
         setBidPrice([]);
@@ -44,11 +44,8 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/db.json");
+        const response = await fetch("/api/listings");
         const data = await response.json();
-        const now = new Date();
-
-        const filteredListings = data.listings.filter(listing => new Date(listing.enddate) > now);
 
         setOriginalGalleryItems(filteredListings);
         setGalleryItems(filteredListings);
