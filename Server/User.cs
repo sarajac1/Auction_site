@@ -61,6 +61,27 @@ public static class Users
       return null;
     }
   }
+
+  // REGISTER NEW USER
+  public record PostData(string username, string password, string email, string address);
+  public static IResult Post(PostData data, State state)
+  {
+    string query = "INSERT INTO users (username, password, address, email) VALUES (@Username, @Password, @Address, @Email)";
+    var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [
+      new("@Username", data.username),
+      new("@Password", data.password),
+      new("@Address", data.address),
+      new("@Email", data.email),
+    ]);
+    if (result == 1)
+    {
+      return TypedResults.Created();
+    }
+    else
+    {
+      return TypedResults.Problem();
+    }
+  }
 }
 
 // Defined class for User entity
