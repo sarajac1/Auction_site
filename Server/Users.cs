@@ -4,7 +4,7 @@ namespace Server;
 
 public static class Users
 {
-    private static string connectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
+    private static string connectionString = "server=localhost;uid=root;pwd=Student1;database=auction_site;port=3306";
 
     public static async Task<IEnumerable<object>> GetAllUsers()
     {
@@ -32,26 +32,64 @@ public static class Users
         }
         return users; 
     }
-    
-}
 
 public record EditUserData(
     int UserId,
     string? Username,
     string? Password,
-    DateOnly JoinedDate,
+    DateOnly? JoinedDate,
     string? Address,
     string? Email,
-    int Balance,
-    bool IsAdmin
+    int? Balance,
+    bool? IsAdmin
 
 );
 
 public static async Task<IResult> EditUser(EditUserData data)
 {
     using (var connection = new MySqlConnection(connectionString))
+    {
         await connection.OpenAsync();
+        var query = @"
+        UPDATE users
+        SET
+            username = @Username,
+            password = @Password,
+            joinedDate = @JoinedDate,
+            address = @Address,
+            email = @Email,
+            balance = @Balance,
+            isAdmin = @IsAdmin
+        WHERE id = @UserId"; 
+
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+            //Add parameters to prevent SQL-injection 
+            cmd.Parameters.AddWithValue("@UserId", data.UserId);
+            cmd.Parameters.AddWithValue("@Username", data.Username);
+            cmd.Parameters.AddWithValue("@Password", data.Password);
+            cmd.Parameters.AddWithValue("@JoinedDate", data.JoinedDate);
+            cmd.Parameters.AddWithValue("@Address", data.Address);
+            cmd.Parameters.AddWithValue("@Email", data.Email);
+            cmd.Parameters.AddWithValue("@Balance", data.Balance);
+            cmd.Parameters.AddWithValue("@isAdmin", data.IsAdmin);
+
+                var result = await cmd.ExecuteNonQueryAsync();
+                if (result > 0)
+                {
+                    return Results.Ok($"User {data.UserId} updated successfully.");
+                }
+                else
+                {
+                    return Results.NotFound($"User {data.UserId} not found.");
+                }
+        }
+    }
+}    
+    
 }
+
+
 
 /*
 using System.Text;
