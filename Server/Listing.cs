@@ -70,6 +70,14 @@ public static class Listings
     
 }
 
+// delete a listing by its ID 
+// it should be similar to adding a listing except the query and no recor of PostData 
+//app.MapDelete("/listings/{id:int}", Listings.Delete); 
+
+// Update
+//Similar to add listing, has a record UpdateData, IResult static method, query is different
+
+
 
 /*
     public static IEnumerable<object> GetListingById(int id)
