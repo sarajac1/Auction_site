@@ -17,10 +17,12 @@ app.MapPost("/listings", Listings.Post);
 // GET ALL USERS
 app.MapGet("/users", Users.GetAllUsers);
 
+// GET A SPECIFIC USER
+app.MapPost("/login", Users.GetUser);
+
 
 app.Run("http://localhost:3000");
 
 public record State(string DB);
-
 
 

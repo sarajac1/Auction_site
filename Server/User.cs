@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 // Defined class to create user related endpoints/REST API
 public static class Users
 {
+  public record UserCredentials(string username, string password);
   // Defined a method GetAllUsers, which returns a List type of User(user details)
   public static List<User> GetAllUsers(State state)
   {
@@ -30,6 +31,36 @@ public static class Users
     return users;
   }
 
+  // TO AUTHENTICATE SPECIFIC USER 
+  // (https://opa23-ha.lms.nodehill.se/article/kodexempel-mysqlhelper-instead-of-mysqlconnection-to-enable-connection-pooling)
+  public static User GetUser(UserCredentials credentials, State state)
+  {
+    var reader = MySqlHelper.ExecuteReader(
+      state.DB,
+      "SELECT * FROM user WHERE username = @Username AND password = @Password",
+      [new("@Username", credentials.username), new("@Password", credentials.password)]
+      );
+
+    if (reader.Read())
+    {
+      var user = new User
+      {
+        id = reader.GetInt32("id"),
+        username = reader.GetString("username"),
+        password = reader.GetString("password"),
+        joinedDate = reader.GetDateTime("joineddate"),
+        address = reader.GetString("address"),
+        email = reader.GetString("email"),
+        balance = reader.GetDecimal("balance"),
+        isAdmin = reader.GetBoolean("isAdmin")
+      };
+      return user;
+    }
+    else
+    {
+      return null;
+    }
+  }
 }
 
 // Defined class for User entity
@@ -44,3 +75,5 @@ public class User
   public decimal balance { get; set; }
   public bool isAdmin { get; set; }
 }
+
+
