@@ -33,11 +33,24 @@ public static class Users
         return users; 
     }
     
-public static async Task<bool> UpdateUser(int userID, UserUpdateModel updateModel)
-{
-    using (var connection = new MySqlConnection(connectionString))
 }
 
+public record EditUserData(
+    int UserId,
+    string? Username,
+    string? Password,
+    DateOnly JoinedDate,
+    string? Address,
+    string? Email,
+    int Balance,
+    bool IsAdmin
+
+);
+
+public static async Task<IResult> EditUser(EditUserData data)
+{
+    using (var connection = new MySqlConnection(connectionString))
+        await connection.OpenAsync();
 }
 
 /*
