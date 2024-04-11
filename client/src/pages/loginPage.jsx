@@ -78,10 +78,21 @@ function LoginPage() {
       return;
     }
 
-    const existingUser = UsersList.find(
-      (user) => user.username === credentials.username && user.password === credentials.password
-    );
-
+    const data = {
+      "username": credentials.username,
+      "password": credentials.password
+    }
+    const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    
+    //https://opa23-ha.lms.nodehill.se/article/code-along-page-turner-fullstack-applikation
+    const existingUser= await res.json()
+      
     if (existingUser) {
       localStorage.setItem("token", credentials.username);
       localStorage.setItem("token_id", existingUser.id);
@@ -90,7 +101,7 @@ function LoginPage() {
       window.location.reload();
       window.location.href = '/';
     } else {
-      setAlertModal({ isOpen: true, message: 'Incorrect username or password. Please try again.' });
+      setAlertModal({ isOpen: true, message: 'Incorrect username or password. Please try again or register.' });
     }
   };
 
