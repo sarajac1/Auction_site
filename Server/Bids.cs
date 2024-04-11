@@ -9,19 +9,17 @@ public class Bid
     public DateTime datetime { get; set; }
     public bool isactive { get; set; }
 }
-//everything that has to do with bids will come here
+
 public static class Bids
 {
-    // Connection to the db
     public static string ConnectionString { get; set; }
-    // Method for fetching all bids
+    
     public static List<Bid> GetAllBids(State state)
     {
         var bids = new List<Bid>();
-        // Selecting the db
+        
         var reader= MySqlHelper.ExecuteReader(state.DB,"SELECT * FROM bids");
         
-        //goes through the fetch data and creates a Listing object (var bid= new Bid)
         while (reader.Read())
         {
             var bid = new Bid
@@ -37,12 +35,11 @@ public static class Bids
         }
         return bids;
     }
-    // Method for fetching bids for a specific item ID
+    // get bids with a specific item ID
     public static List<Bid> GetBidsByItemId(int itemid, State state)
     {
         List<Bid> bids = new List<Bid>();
         
-        //parameters handling
         var parameters = new MySqlParameter[]
         {
             new MySqlParameter("@itemid", itemid)
@@ -63,5 +60,13 @@ public static class Bids
         }
         return bids;
     }
-  
+
+    // i need a get a user based on a token ID?
+   // i need a get existing bids for a specific item/listing using ?
+        // the sql sstatement would be something like SELECT bid.id, listings.id FROM id,  itemid, bidder id...., WHERE  bid.itemid = listings.id and ...... 
+   
+   // get a bid with a specific itemid //MySQL query
+   //Get for the highest bid --> do i actually need it? will it not just compare it in the react? 
+   //i need a patch - to Update user balance
+   // i need a post to add the new bid
 }

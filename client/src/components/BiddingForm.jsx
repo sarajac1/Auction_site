@@ -12,7 +12,8 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/users/${token_id}");
+        // need an enpoint to get users with a specific token_id?? 
+        const response = await fetch(`/api/users/${token_id}`);
         const data = await response.json();
         const userID = Number(localStorage.getItem("token_id"));
         const currentUser = data.users.find((user) => user.id == userID);
@@ -40,33 +41,31 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    // Check if the user is not logged in before proceeding
+    
     if (!isLoggedIn) {
       setMessage('You must be logged in to place a bid.');
       return; 
     }
     const submissionTime = new Date();
     const bidAmount = Number(bid);
-    // Doesn't goes over the users balance
+    // do i need to fetch it from the db ? (GET)
     if (!user || bidAmount > user.balance) {
       setMessage('Insufficient balance for this bid.');
       return;
     }
 
     try {
-      // Fetch existing bids for the selected item
+      // GET existing bids for the selected item
       const existingBidsResponse = await fetch(`/api/bids?itemid=${selectedListing.id}`);
       const existingBids = await existingBidsResponse.json();
 
-      // Determine the highest existing bid amount for the item
+      // do i need a GET for the highest existing bid amount for the item??
       const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max.bidamount ? bid : max, { bidamount: 0, id: 0 });
       const newBidId = highestExistingBidAmount.id + 1;
-      // Compare the submitted bid with the highest existing bid
-      if (bidAmount <= highestExistingBidAmount.bidamount) {
-        setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
-        return;
-      }
+      // do i need a get for comparing?
+     
+      
+      //POST the new bid if successful
       const bidResponse = await fetch('/api/bids', {
         method: 'POST',
         headers: {
@@ -82,6 +81,8 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
         }),
       });
+      
+      
 
       if (bidResponse.ok) {
         setMessage('Bid is placed!');
@@ -91,6 +92,7 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
         localStorage.setItem('newBalance', newBalance.toString());
 
         try {
+          //PATCH/ update the users new balance- how do i do that? do i have to write an if statement in the endpoint?
           const userUpdateResponse = await fetch(`/api/users/${user.id}`, {
             method: 'PATCH',
             headers: {
@@ -114,10 +116,12 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
         onBidSuccess();
 
       }
+      // remove the catches
     } catch (error) {
       console.error('Error:', error);
       setMessage('Failed to place bid. Error: ' + error.message);
     }
+    // else should come here from line 66
   }
 
 

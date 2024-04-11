@@ -37,7 +37,7 @@ function ItemPage() {
     const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
 
     if (bidsForItem.length > 0) {
-      // Get the highest bid amount for the item
+      // Get the highest bid amount for the item?
       const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
       return highestBid;
     } else {
