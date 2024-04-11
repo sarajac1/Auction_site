@@ -2,36 +2,15 @@ using MySql.Data.MySqlClient;
 
 namespace Server;
 
-public static class Users
+public class User
 {
-    private static string connectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
-
-    public static async Task<IEnumerable<object>> GetAllUsers()
-    {
-        var users = new List<object>();
-        using (var connection = new MySqlConnection(connectionString))
-        {
-            await connection.OpenAsync();
-            var query = "SELECT * FROM user";
-            using (var cmd = new MySqlCommand(query, connection))
-            {
-                using (var reader = await cmd.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        users.Add(new
-                        {
-                            Id = reader["id"],
-                            Username = reader["username"].ToString(),
-                            Password = reader["password"].ToString(),
-                            //look it up how to convert to date?is it neccesary?
-                        });
-                    }
-                }
-            }
-        }
-        return users; 
-    }
-    
-
+    public int id { get; set; }
+    public string? username { get; set; }
+    public string? password { get; set; }
+    public DateTime joineddate { get; set; }
+    public string? address { get; set; }
+    public string? email { get; set; }
+    public int balance { get; set; }
+    public bool isAdmin { get; set; }
 }
+

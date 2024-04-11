@@ -17,42 +17,6 @@ public record State(string DB);
 
 // 
 /*
-// Endpoint to get all users info
-app.MapGet("/users",  () =>
-{
-  var users = new List<object>(); // List to store the fetched data, initialized inside the handler.
-  MySqlConnection conn = new MySqlConnection(connStr);
-  MySqlCommand cmd = null;
-  MySqlDataReader reader = null;
-  try
-  {
-    conn.Open();
-    cmd = new MySqlCommand("SELECT * FROM user", conn);
-    reader = cmd.ExecuteReader();
-    while (reader.Read())
-    {
-      var user = new 
-      {
-        Id = reader.GetInt32("id"),
-        Username = reader["username"] as string,
-        Password = reader["password"] as string,
-        JoinedDate = reader.GetDateTime("joineddate"),
-        Address = reader["address"] as string,
-        Email = reader["email"] as string,
-        Balance = reader.GetDecimal("balance"),
-        IsAdmin = reader.GetBoolean("isAdmin"),
-      };
-      users.Add(user);
-    }
-  }
-  catch (Exception ex)
-  {
-    Console.WriteLine(ex.ToString());
-  }
-  conn.Close();
-  Console.WriteLine("Done.");
-  return users; 
-});
 
 Steps to refractor:
 1. make a class to represent a user (whatever we have in the db we should have it here as):

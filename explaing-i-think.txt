@@ -28,3 +28,238 @@ Add listing part of the code I used all of the above as well as this site:
     as well as this:
     https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
 
+/// Import necessary namespaces 
+ 
+ using MySql.Data.MySqlClient; 
+ 
+ using Server; 
+ 
+   
+ 
+ // Set up the builder for the web application 
+ 
+ var builder = WebApplication.CreateBuilder(args); 
+ 
+   
+ 
+ // Create a new instance of the State class with the database connection string 
+ 
+ State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306"); 
+ 
+   
+ 
+ // Add the State instance to the application's services as a singleton to ensure it is shared across the app 
+ 
+ builder.Services.AddSingleton(state); 
+ 
+   
+ 
+ // Build the web application using the configurations set up in the builder 
+ 
+ var app = builder.Build(); 
+ 
+   
+ 
+ // Define an HTTP GET route for "/listings" that calls GetAllListings to fetch all listings 
+ 
+ app.MapGet("/listings", Listings.GetAllListings); 
+ 
+   
+ 
+ // Define an HTTP POST route for "/listings" that uses the Post method to create a new listing 
+ 
+ app.MapPost("/listings", Listings.Post); 
+ 
+   
+ 
+ // Start running the web application on localhost at port 3000 
+ 
+ app.Run("http://localhost:3000"); 
+ 
+   
+ 
+ // Define the namespace for the Server related classes 
+ 
+ namespace Server; 
+ 
+ using MySql.Data.MySqlClient; 
+ 
+   
+ 
+ // Define a class to represent a listing 
+ 
+ public class Listing 
+ 
+ { 
+ 
+     // Properties of the Listing class 
+ 
+     public int id { get; set; } 
+ 
+     public int sellerid { get; set; } 
+ 
+     public string? title { get; set; } 
+ 
+     public string? description { get; set; } 
+ 
+     public string? image { get; set; } 
+ 
+     public DateTime startdate { get; set; } 
+ 
+     public DateTime enddate { get; set; } 
+ 
+     public int startbid { get; set; } 
+ 
+ } 
+ 
+   
+ 
+ // Define a class that handles listing-related database operations 
+ 
+ public static class Listings 
+ 
+ { 
+ 
+     // Connection string to connect to the MySQL database – connection string to the db that is in the  program.cs  
+ 
+     public static string ConnectionString { get; set; } 
+ 
+   
+ 
+     // Define a record to hold the post data for a new listing 
+ 
+     public record PostData( 
+ 
+         int SellerId, 
+ 
+         string Title, 
+ 
+         string Description, 
+ 
+         string Image, 
+ 
+         decimal StartBid); 
+ 
+   
+ 
+     // Define a method to handle POST requests for new listings 
+ 
+     public static IResult Post(PostData data, State state) 
+ 
+     { 
+ 
+         // SQL query to insert a new listing 
+ 
+         string query = "INSERT INTO listings (sellerid, title, description, image, startbid) VALUES (@SellerId, @Title, @Description, @Image, @StartBid)"; 
+ 
+          
+ 
+         // Execute the query using the State object's DB connection and the query parameters 
+ 
+         var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [ 
+ 
+             new("@SellerId", data.SellerId), 
+ 
+             new("@Title", data.Title), 
+ 
+             new("@Description", data.Description), 
+ 
+             new("@Image", data.Image), 
+ 
+             new("@StartBid", data.StartBid) 
+ 
+         ]); 
+ 
+          
+ 
+         // Check the result and return the appropriate HTTP status 
+ 
+         if (result == 1) 
+ 
+         { 
+ 
+             return TypedResults.Created(); 
+ 
+         } 
+ 
+         else 
+ 
+         { 
+ 
+             return TypedResults.Problem(); 
+ 
+         } 
+ 
+     } 
+ 
+   
+ 
+     // Define a method to fetch all listings 
+ 
+     public static List<Listing> GetAllListings(State state) 
+ 
+     { 
+ 
+         var listings = new List<Listing>(); 
+ 
+          
+ 
+         // Execute a SELECT query to get all listings 
+ 
+         var reader = MySqlHelper.ExecuteReader(state.DB, "SELECT * FROM listings"); 
+ 
+   
+ 
+         // Iterate through the fetched data and create Listing objects 
+ 
+         while (reader.Read()) 
+ 
+         { 
+ 
+             var listing = new Listing 
+ 
+             { 
+ 
+                 id = reader.GetInt32("id"), 
+ 
+                 sellerid = reader.GetInt32("sellerid"), 
+ 
+                 title = reader["title"] as string, 
+ 
+                 description = reader["description"] as string, 
+ 
+                 image = reader["image"] as string, 
+ 
+                 startdate = reader.GetDateTime("startdate"), 
+ 
+                 enddate = reader.GetDateTime("enddate"), 
+ 
+                 startbid = reader.GetInt32("startbid") 
+ 
+             }; 
+ 
+             listings.Add(listing); 
+ 
+         } 
+ 
+         return listings; 
+ 
+     } 
+ 
+ } 
+ 
+  
+ 
+ // Define a method to delete a listing by its ID 
+ 
+ // it should be similar to adding a listing except the query and no recor of PostData 
+ 
+ app.MapDelete("/listings/{id:int}", Listings.Delete); 
+ 
+  
+ 
+  
+ 
+ // Define a record to hold the update data for a listing 
+ 
+ Similar to add listing, has a record UpdateData, IResult static method, query is different d listing, has a record UpdateData, IResult static method, query is different 
