@@ -1,15 +1,85 @@
 
 using MySql.Data.MySqlClient;
 using Server;
-//code according to:
-// https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
-//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
-//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
 
 var builder = WebApplication.CreateBuilder(args);
-
-string connStr = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
+//https://www.nuget.org/packages/MySql.Data
+State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");
+builder.Services.AddSingleton(state);
 var app = builder.Build();
+
+app.MapGet("/listings", Listings.GetAllListings);
+
+//code according to:
+//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
+app.MapPost("/listings", Listings.Post);
+
+/*
+//POST http://localhost:3000/add-listing 
+sellerid 1 
+title Poop Vase
+description Merlin's poop that holds all his powers
+image https://imgur.com/gallery/oUwwY47
+startdate 2024-05-05 
+enddate 2024-05-19 00:00:00 
+startbid 100.0
+*/
+/*
+app.MapDelete("/delete-listing/{id}", (int id) =>
+{
+  
+  MySqlConnection conn = new MySqlConnection(connStr);
+  MySqlCommand cmd = null;
+  
+  try
+  {
+    conn.Open();
+    string sql = "DELETE FROM listings WHERE id =@id";
+    cmd = new MySqlCommand(sql, conn);
+    cmd.Parameters.AddWithValue("@id", id);
+    
+    var result = cmd.ExecuteNonQuery();
+    if (result > 0)
+    {
+      Console.WriteLine("Listing deleted.");
+      return Results.Ok($"Listing deleted successfully.");
+    }
+    else
+    {
+      return Results.NotFound($"Listing not found.");
+    }
+  }
+  catch (Exception ex)
+  {
+    Console.WriteLine(ex.ToString());
+    return Results.Problem("Database error occurred.");
+  }
+  
+  finally
+  {
+    if (conn != null)
+    {
+      conn.Close();
+      conn.Dispose();
+    }
+    cmd?.Dispose();
+  }
+});
+*/
+app.Run("http://localhost:3000");
+
+public record State(string DB);
+
+
+/*
+app.MapGet("/listings/{id:int}", (int id) => Listings.GetListingById(id));
+*/
+
+/*
+ //code according to:
+   // https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-8.0&tabs=visual-studio
+   //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-connection.html
+   //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-stored-procedures.html
 app.MapGet("/listings",  () =>
 {
   var listings = new List<object>(); // List to store the fetched data, initialized inside the handler.
@@ -25,7 +95,7 @@ app.MapGet("/listings",  () =>
 
     while (reader.Read())
     {
-      var listing = new 
+      var listing = new
       {
         Id = reader.GetInt32("id"),
         SellerId = reader.GetInt32("sellerid"),
@@ -47,104 +117,10 @@ app.MapGet("/listings",  () =>
   conn.Close();
   Console.WriteLine("Done.");
 
-  return listings; 
+  return listings;
 });
-
-//code according to:
-//https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
-app.MapPost("/add-listing", (int sellerid, string title, string description, string image, string startdate, string enddate, decimal startbid) =>
-{
-  
-  MySqlConnection conn = new MySqlConnection(connStr);
-  MySqlCommand cmd = null;
-  DateTime startDateParsed = DateTime.Parse(startdate);  // Expected to be in "YYYY-MM-DD"
-  DateTime endDateParsed = DateTime.Parse(enddate);  
-
-  try
-  {
-    conn.Open();
-    string sql = "INSERT INTO listing (sellerid, title, description, image, startdate, enddate, startbid) VALUES (@SellerId, @Title, @Description, @Image, @StartDate, @EndDate, @StartBid)";
-    cmd = new MySqlCommand(sql, conn);
-
-    cmd.Parameters.AddWithValue("@SellerId", sellerid);
-    cmd.Parameters.AddWithValue("@Title", title);
-    cmd.Parameters.AddWithValue("@Description", description);
-    cmd.Parameters.AddWithValue("@Image", image);
-    cmd.Parameters.AddWithValue("@StartDate", startDateParsed.ToString("yyyy-MM-dd")); 
-    cmd.Parameters.AddWithValue("@EndDate", endDateParsed.ToString("yyyy-MM-dd HH:mm:ss"));
-    cmd.Parameters.AddWithValue("@StartBid", startbid);
-
-    cmd.ExecuteNonQuery();
-  }
-  catch (Exception ex)
-  {
-    Console.WriteLine(ex.ToString());
-  }
-  
-  conn.Close();
-  Console.WriteLine("Listing added.");
-});
-
-// Endpoint to get all users info
-app.MapGet("/users",  () =>
-{
-  var users = new List<object>(); // List to store the fetched data, initialized inside the handler.
-  MySqlConnection conn = new MySqlConnection(connStr);
-  MySqlCommand cmd = null;
-  MySqlDataReader reader = null;
-
-  try
-  {
-    conn.Open();
-    cmd = new MySqlCommand("SELECT * FROM user", conn);
-    reader = cmd.ExecuteReader();
-
-    while (reader.Read())
-    {
-      var user = new 
-      {
-        Id = reader.GetInt32("id"),
-        Username = reader["username"] as string,
-        Password = reader["password"] as string,
-        JoinedDate = reader.GetDateTime("joineddate"),
-        Address = reader["address"] as string,
-        Email = reader["email"] as string,
-        Balance = reader.GetDecimal("balance"),
-        IsAdmin = reader.GetBoolean("isAdmin"),
-      };
-      users.Add(user);
-    }
-  }
-  catch (Exception ex)
-  {
-    Console.WriteLine(ex.ToString());
-  }
-
-  conn.Close();
-  Console.WriteLine("Done.");
-
-  return users; 
-});
-
-/*
-//POST http://localhost:3000/add-listing 
-sellerid 1 
-title Poop Vase
-description Merlin's poop was that holds all his powers
-image https://imgur.com/gallery/oUwwY47
-startdate 2024-05-05 
-enddate 2024-05-19 00:00:00
-startbid 100.0
 */
 
-/*
-app.MapGet("/listings", () => Listings.GetAllListings());
-app.MapGet("/listings/{id:int}", (int id) => Listings.GetListingById(id));
-
-app.MapGroup("/users")
-    .MapGet("/", async () => await Users.GetAllUsers());*/
-
-app.Run("http://localhost:3000");
 
 /*
 var builder = WebApplication.CreateBuilder(args);
