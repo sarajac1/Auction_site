@@ -158,8 +158,18 @@ public static class Bids
         int result = MySqlHelper.ExecuteNonQuery(state.DB, updateQuery, updateParams);
         return result > 0;
     }
-
-
+    public static int GetHighestBidForItem(int itemId, State state)
+    {
+        string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
+        var highestBidParameter = new MySqlParameter("@itemid", itemId);
+    
+        using var reader = MySqlHelper.ExecuteReader(state.DB, highestBidQuery, highestBidParameter);
+        if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
+        {
+            return reader.GetInt32(reader.GetOrdinal("HighestBid"));
+        }
+        return -1; // Return -1 or some other indicator if there is no bid
+    }
 
 }
 

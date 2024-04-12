@@ -30,7 +30,7 @@ app.MapPost("/bids/place_bid", Bids.PlaceBid);
     "itemId": 1,
     "bidAmount": 500
 }*/
-
+app.MapGet("/bids/highest_Bid_For_Item/{itemId:int}", Bids.GetHighestBidForItem);
 
 app.Run("http://localhost:3000");
 
