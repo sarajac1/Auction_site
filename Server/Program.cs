@@ -25,7 +25,12 @@ app.MapGet("/bids", Bids.GetAllBids);
 app.MapGet("/bids/{itemid:int}", Bids.GetBidsByItemId);
 app.MapGet("/bids/user_balance/{id:int}", Bids.Single);
 app.MapPost("/bids/check_bid", Bids.CheckBid);
-app.MapPost("/bids/placebid", Bids.PlaceBid);
+/*{
+    "userId": 1,
+    "itemId": 1,
+    "bidAmount": 500
+}*/
+
 
 app.Run("http://localhost:3000");
 
