@@ -1,6 +1,7 @@
 namespace Server;
 using MySql.Data.MySqlClient;
 
+
 // Defined class to create user related endpoints/REST API
 public static class Users
 {
@@ -10,7 +11,7 @@ public static class Users
     int UserId,
     string? Username,
     string? Password,
-    DateOnly? JoinedDate,
+    DateTime? JoinedDate,
     string? Address,
     string? Email,
     int? Balance,

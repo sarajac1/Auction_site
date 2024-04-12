@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using MySql.Data.MySqlClient;
 using Server;
 
+
 var builder = WebApplication.CreateBuilder(args);
 //https://www.nuget.org/packages/MySql.Data
 State state = new("server=localhost;uid=root;pwd=Student1;database=auction_site;port=3306");
@@ -18,7 +19,17 @@ app.MapPost("/listings", Listings.Post);
 
 
 //endpoint for editing users
-app.MapPut("/users/edit", Users.EditUser); 
+app.MapPut("/edituser", (Server.Users.EditUserData editUser, State appState) =>
+{
+  if (Server.Users.EditUser(editUser, appState))
+  {
+    return Results.Ok("User updated.");
+  }
+  else
+  {
+    return Results.BadRequest("Error updating user");
+  }
+}).Accepts<Server.Users.EditUserData>("application/json");
 
 
 
