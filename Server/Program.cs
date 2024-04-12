@@ -29,6 +29,7 @@ app.MapPut("/edituser", (Server.Users.EditUserData editUser, State appState) =>
   {
     return Results.BadRequest("Error updating user");
   }
+  //Specifies content type of endpoint (.json)
 }).Accepts<Server.Users.EditUserData>("application/json");
 
 
