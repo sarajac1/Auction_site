@@ -24,7 +24,7 @@ app.MapPost("/registernewuser", Users.Post);
 app.MapGet("/bids", Bids.GetAllBids);
 app.MapGet("/bids/{itemid:int}", Bids.GetBidsByItemId);
 app.MapGet("/bids/user_balance/{id:int}", Bids.Single);
-app.MapPost("/bids/check_bid", Bids.CheckBid);
+app.MapPost("/bids/place_bid", Bids.PlaceBid);
 /*{
     "userId": 1,
     "itemId": 1,
