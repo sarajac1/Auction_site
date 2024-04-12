@@ -37,7 +37,7 @@ public static class Users
   {
     var reader = MySqlHelper.ExecuteReader(
       state.DB,
-      "SELECT * FROM user WHERE username = @Username AND password = @Password",
+      "SELECT * FROM users WHERE username = @Username AND password = @Password",
       [new("@Username", credentials.username), new("@Password", credentials.password)]
       );
 
