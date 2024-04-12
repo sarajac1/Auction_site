@@ -12,8 +12,14 @@ var app = builder.Build();
 app.MapGet("/listings", Listings.GetAllListings);
 app.MapPost("/listings", Listings.Post);
 
+// GET ALL USERS
 app.MapGet("/users", Users.GetAllUsers);
-app.MapGet("/users/{id:int}", Users.GetUserById);
+
+// GET A SPECIFIC USER
+app.MapPost("/login", Users.GetUser);
+
+// NEW USER REGISTRATION
+app.MapPost("/registernewuser", Users.Post);
 
 app.MapGet("/bids", Bids.GetAllBids);
 app.MapGet("/bids/{itemid:int}", Bids.GetBidsByItemId);
