@@ -87,9 +87,6 @@ public static class Bids
         return result;
     }
 
-    
-    public record PlaceBidRequestDTO(int UserId, int ItemId, int BidAmount);
-
     public record BidResult(bool Success, string Message, int? HighestBid = null);
 
     public record BidRequestDTO(int UserId, int ItemId, int BidAmount);
@@ -159,38 +156,25 @@ public static class Bids
         return result > 0;
     }
     public static int GetHighestBidForItem(int itemId, State state)
-    {
+    { 
         string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
         var highestBidParameter = new MySqlParameter("@itemid", itemId);
-    
-        using var reader = MySqlHelper.ExecuteReader(state.DB, highestBidQuery, highestBidParameter);
-        if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
+
+        try
         {
-            return reader.GetInt32(reader.GetOrdinal("HighestBid"));
+            using var reader = MySqlHelper.ExecuteReader(state.DB, highestBidQuery, highestBidParameter);
+            if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
+            {
+                return reader.GetInt32(reader.GetOrdinal("HighestBid"));
+            }
+            return -1; 
         }
-        return -1; // Return -1 or some other indicator if there is no bid
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error! {ex.Message}");
+            throw;
+        }
     }
 
 }
 
-//PLACE /POST new bid
-//{
-//GET user balance - done
-
-//GET is bid valid
-
-// POST new bid
-
-//UPDATE user balance
-//}
-
-
-
-    // i need a get a user based on a token ID?
-   // i need a get existing bids for a specific item/listing using ?
-        // the sql sstatement would be something like SELECT bid.id, listings.id FROM id,  itemid, bidder id...., WHERE  bid.itemid = listings.id and ...... 
-   
-   // get a bid with a specific itemid //MySQL query
-   //Get for the highest bid --> do i actually need it? will it not just compare it in the react? 
-   //i need a patch - to Update user balance
-   // i need a post to add the new bid

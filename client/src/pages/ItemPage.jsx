@@ -6,90 +6,40 @@ import BiddingForm from "../components/BiddingForm";
 function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
   const [selectedListing, setSelectedListing] = useState(null);
-  const [bidAmount, setBidAmount] = useState(0);
-  const [BidPrice, setBidPrice] = useState([]);
+  const [highestBid, setHighestBid] = useState(null);
 
+  // Fetching the listing details only when itemId changes
   useEffect(() => {
-    async function fetchData() {
+    const fetchListing = async () => {
       try {
-        const response = await fetch('/api/listings'); 
-        const data = await response.json();
-        console.log(data);
-        const listing = data.find(
-          (listing) => listing.id.toString() === itemId
-        );
+        const response = await fetch(`/api/listings/${itemId}`); 
+        const listing = await response.json();
         setSelectedListing(listing);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching listing:", error);
       }
-    }
+    };
 
-    fetchData();
+    fetchListing();
   }, [itemId]);
 
- 
+
   useEffect(() => {
-  refreshBids()
-  }, []);
-
-  /* Find highest bid */
-  function GetCurrentPrice(itemId, startBid) {
-    const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
-
-    if (bidsForItem.length > 0) {
-      // Get the highest bid amount for the item?
-      const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
-      return highestBid;
-    } else {
-      return startBid;
-    }
-  }
-
-  /* CALCULATING DATES */
-  function dateDiffInDaysAndHours(a, b) {
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    const _MS_PER_HOUR = 1000 * 60 * 60;
-    const timeDiff = b - a;
-    const days = Math.floor(timeDiff / _MS_PER_DAY);
-    const remainingMilliseconds = timeDiff % _MS_PER_DAY;
-    const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
-    return { days, hours };
-  }
-  function CalcEndDate(endDateString) {
-    const currentDate = new Date();
-    const endDate = new Date(endDateString);
-    const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
-
-    if (currentDate > endDate) {
-      return <div className="auction-ended redText" style={{ fontSize: "20px" }}>Auction ended</div>;
-    }
-
-    if (days <= 1) {
-      return (
-        <div className="redText">
-          Ends in: {days} days, {hours} hours
-        </div>
-      );
-    }
-    return (
-      <div className="darkText">
-        Ends in: {days} days, {hours} hours
-      </div>
-    );
-  }
-  async function refreshBids() {
-    // Logic to re-fetch or re-calculate bids
+    const fetchHighestBid = async () => {
       try {
-        const response = await fetch("/api/bids");
-        const price = await response.json();
-        setBidPrice(price.bids);
+        const response = await fetch(`/bids/highest_Bid_For_Item/${itemId}`);
+        const data = await response.json();
+        setHighestBid(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setBidPrice([]);
+        console.error("Error fetching bids:", error);
+        setHighestBid(null); 
       }
-  }
-  
+    };
 
+    fetchHighestBid();
+  }, [itemId]);
+
+  
   return (
     <div className="container">
       {/* If a listing is selected, display its details */}
@@ -100,8 +50,8 @@ function ItemPage() {
           </div>
           <div className="col2">
             <div className="date_div">
-              <div className="darkText">{selectedListing.startdate}</div>    
-              <div>{CalcEndDate(selectedListing.enddate)}</div>    
+              <div className="darkText">{selectedListing.startdate}</div>
+              <div className="darkText">Auction ends on: {selectedListing.enddate}</div>
             </div>
 
             <h1>{selectedListing.title}</h1>
@@ -113,11 +63,10 @@ function ItemPage() {
             </div>
             <div className="darkText">Highest bid is: </div>
             <div className="priceText">
-              {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
-              Souls
+              {highestBid ? `${highestBid} Souls` : "No bids yet"}
             </div>
             {/* Bid field */}
-            <BiddingForm selectedListing={selectedListing} onBidSuccess={refreshBids} />
+            <BiddingForm selectedListing={selectedListing} onBidSuccess={() => fetchHighestBid()} />
             <button
               className="discreet-button"
               onClick={() => setSelectedListing(null)}
