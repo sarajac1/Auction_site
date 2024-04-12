@@ -41,26 +41,30 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const bidAmount = Number(bid);
+    const bidAmount = Number(bid); // Ensure bid is a number
     try {
-      const response = await fetch(`/api/bids/place?itemid=${selectedListing.id}&bidderid=${user.id}&bidamount=${bidAmount}`, {
+      // Prepare the request payload
+      const payload = {
+        UserId: user.id,
+        ItemId: selectedListing.id,
+        BidAmount: bidAmount
+      };
+
+      // Make the fetch request to the correct endpoint
+      const response = await fetch('/bids/place_bid', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          itemid: selectedListing.id,
-          bidderid: user.id,
-          bidamount: bidAmount,
-        }),
+        body: JSON.stringify(payload),
       });
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.message);
+        throw new Error(result.Message || 'Unknown error'); // Make sure to use the correct property for error message
       }
 
-      setMessage(result.message);
+      setMessage(result.Message);
       onBidSuccess(); // Trigger any additional actions on successful bid
     } catch (error) {
       setMessage(`Error: ${error.message}`);
