@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 public static class Users
 {
   public record UserCredentials(string username, string password);
-  //Creating a record for editing user information
+  //Creating a record for editing user information. "?" means that null values are allowed. UserId must have a value.  
   public record EditUserData(
     int UserId,
     string? Username,
@@ -79,6 +79,8 @@ public static class Users
   {
     var parameters = new MySqlParameter[]
     {
+      //Creates placeholders with "@" to prevent SQL injection. data.(parameter) is the actual value.
+      //If not null, value is used, otherwise null value 
       new MySqlParameter("@UserId", data.UserId),
             new MySqlParameter("@Username", data.Username ?? (object)DBNull.Value),
             new MySqlParameter("@Password", data.Password ?? (object)DBNull.Value),
@@ -89,6 +91,21 @@ public static class Users
             new MySqlParameter("@IsAdmin", data.IsAdmin ?? (object)DBNull.Value)
 
     };
+
+    string query = @"
+    UPDATE users
+    SET
+        username = @Username,
+        password = @Password,
+        joinedDate = @JoinedDate,
+        address = @Address,
+        email = @Email,
+        balance = @Balance,
+        isAdmin = @IsAdmin
+        WHERE id = @UserId";
+
+    int affectedRows = MySqlHelper.ExecuteNonQuery(state.DB, query, parameters);
+    return affectedRows > 0;
   }
 }
 
