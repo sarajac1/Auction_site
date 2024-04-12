@@ -37,7 +37,7 @@ public static class Users
   {
     var reader = MySqlHelper.ExecuteReader(
       state.DB,
-      "SELECT * FROM user WHERE username = @Username AND password = @Password",
+      "SELECT * FROM users WHERE username = @Username AND password = @Password",
       [new("@Username", credentials.username), new("@Password", credentials.password)]
       );
 
@@ -59,6 +59,27 @@ public static class Users
     else
     {
       return null;
+    }
+  }
+
+  // REGISTER NEW USER
+  public record PostData(string username, string password, string email, string address);
+  public static IResult Post(PostData data, State state)
+  {
+    string query = "INSERT INTO users (username, password, address, email) VALUES (@Username, @Password, @Address, @Email)";
+    var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [
+      new("@Username", data.username),
+      new("@Password", data.password),
+      new("@Address", data.address),
+      new("@Email", data.email),
+    ]);
+    if (result == 1)
+    {
+      return TypedResults.Created();
+    }
+    else
+    {
+      return TypedResults.Problem();
     }
   }
 }
