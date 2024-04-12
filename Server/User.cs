@@ -5,7 +5,20 @@ using MySql.Data.MySqlClient;
 public static class Users
 {
   public record UserCredentials(string username, string password);
+  //Creating a record for editing user information
+  public record EditUserData(
+    int UserId,
+    string? Username,
+    string? Password,
+    DateOnly? JoinedDate,
+    string? Address,
+    string? Email,
+    int? Balance,
+    bool? IsAdmin
+  );
+
   // Defined a method GetAllUsers, which returns a List type of User(user details)
+
   public static List<User> GetAllUsers(State state)
   {
     var users = new List<User>();
@@ -60,6 +73,22 @@ public static class Users
     {
       return null;
     }
+  }
+
+  public static bool EditUser(EditUserData data, State state)
+  {
+    var parameters = new MySqlParameter[]
+    {
+      new MySqlParameter("@UserId", data.UserId),
+            new MySqlParameter("@Username", data.Username ?? (object)DBNull.Value),
+            new MySqlParameter("@Password", data.Password ?? (object)DBNull.Value),
+            new MySqlParameter("@JoinedDate", data.JoinedDate ?? (object)DBNull.Value),
+            new MySqlParameter("@Address", data.Address ?? (object)DBNull.Value),
+            new MySqlParameter("@Email", data.Email ?? (object)DBNull.Value),
+            new MySqlParameter("@Balance", data.Balance ?? (object)DBNull.Value),
+            new MySqlParameter("@IsAdmin", data.IsAdmin ?? (object)DBNull.Value)
+
+    };
   }
 }
 
