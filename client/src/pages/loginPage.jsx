@@ -78,10 +78,21 @@ function LoginPage() {
       return;
     }
 
-    const existingUser = UsersList.find(
-      (user) => user.username === credentials.username && user.password === credentials.password
-    );
-
+    const data = {
+      "username": credentials.username,
+      "password": credentials.password
+    }
+    const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    
+    //https://opa23-ha.lms.nodehill.se/article/code-along-page-turner-fullstack-applikation
+    const existingUser= await res.json()
+      
     if (existingUser) {
       localStorage.setItem("token", credentials.username);
       localStorage.setItem("token_id", existingUser.id);
@@ -90,7 +101,7 @@ function LoginPage() {
       window.location.reload();
       window.location.href = '/';
     } else {
-      setAlertModal({ isOpen: true, message: 'Incorrect username or password. Please try again.' });
+      setAlertModal({ isOpen: true, message: 'Incorrect username or password. Please try again or register.' });
     }
   };
 
@@ -119,32 +130,50 @@ function LoginPage() {
       return; 
     }
 
-    const d = new Date();
-    const text = d.toISOString().split('T');
+    //const d = new Date();
+    //const text = d.toISOString().split('T');
 
     const data = {
-      "id": UsersList.length + 1,
+      //"id": UsersList.length + 1,
       "username": newUser.newUsername,
       "password": newUser.newUserPassword,
-      "joineddate": text[0],
+      //"joineddate": text[0],
       "address": newUser.newUserAddress,
       "email": newUser.newUserEmail,
-      "balance": 0,
-      "isAdmin": false
+      //"balance": 0,
+      //"isAdmin": false
     };
 
     try {
-      const response = await fetch("/api/users", {
+      const response = await fetch("/api/registernewuser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
+      
       if (response.ok) {
-        localStorage.setItem("token", newUser.newUsername); 
-        localStorage.setItem("token_id", data.id);
-        localStorage.setItem("isAdmin", data.isAdmin.toString());
+        const data = {
+      "username": newUser.newUsername,
+      "password": newUser.newUserPassword
+    }
+        alert(JSON.stringify(data))
+        
+    const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    
+    //https://opa23-ha.lms.nodehill.se/article/code-along-page-turner-fullstack-applikation
+        const existingUser = await res.json()
+        alert(JSON.stringify(existingUser))
+        localStorage.setItem("token", existingUser.username); 
+        localStorage.setItem("token_id", existingUser.id);
+        localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
         setIsLoggedIn(true); 
 
         console.log('Registered successfully!');
