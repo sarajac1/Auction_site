@@ -39,6 +39,8 @@ app.MapGet("/users", Users.GetAllUsers);
 // GET A SPECIFIC USER
 app.MapPost("/login", Users.GetUser);
 
+// NEW USER REGISTRATION
+app.MapPost("/registernewuser", Users.Post);
 
 app.Run("http://localhost:3000");
 
