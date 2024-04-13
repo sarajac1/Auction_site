@@ -1,4 +1,3 @@
-
 using MySql.Data.MySqlClient;
 using Server;
 
@@ -31,6 +30,10 @@ app.MapPost("/bids/place_bid", Bids.PlaceBid);
     "bidAmount": 500
 }*/
 app.MapGet("/bids/highest_Bid_For_Item/{itemId:int}", Bids.GetHighestBidForItem);
+
+
+// GET ALL Items
+app.MapGet("/items", Items.GetAllItems);
 
 app.Run("http://localhost:3000");
 
