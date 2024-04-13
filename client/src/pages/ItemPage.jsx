@@ -24,6 +24,20 @@ function ItemPage() {
   }, [itemId]);
 
 
+  useEffect(() => {
+    const fetchHighestBid = async () => {
+      try {
+        const response = await fetch(`/bids/highest_Bid_For_Item/${itemId}`);
+        const data = await response.json();
+        setHighestBid(data);
+      } catch (error) {
+        console.error("Error fetching bids:", error);
+        setHighestBid(null);
+      }
+    };
+
+    fetchHighestBid();
+  }, [itemId]);
 
 
   return (
