@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-
 const Gallery = () => {
   const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
   const [GalleryItems, setGalleryItems] = useState([]);
@@ -12,43 +11,10 @@ const Gallery = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/listings');
+        const response = await fetch("/api/items");
         const data = await response.json();
         setOriginalGalleryItems(data);
         setGalleryItems(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setOriginalGalleryItems([]);
-        setGalleryItems([]);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/bids");
-        const bids = await response.json();
-        setBidPrice(bids);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setBidPrice([]);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/listings");
-        const data = await response.json();
-
-        setOriginalGalleryItems(filteredListings);
-        setGalleryItems(filteredListings);
       } catch (error) {
         console.error("Error fetching data:", error);
         setOriginalGalleryItems([]);
@@ -67,7 +33,6 @@ const Gallery = () => {
     );
     setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   };
-
   useEffect(() => {
     const filteredItems = originalGalleryItems.filter((item) =>
       item.title.includes(searchWord)
@@ -82,14 +47,14 @@ const Gallery = () => {
 
     if (filter === "LowestPrice") {
       sortedItems.sort((a, b) => {
-        const priceA = GetCurrentPrice(a.id, a.startbid);
-        const priceB = GetCurrentPrice(b.id, b.startbid);
+        const priceA = a.currentBid;
+        const priceB = b.currentBid;
         return priceA - priceB;
       });
     } else if (filter === "HighestPrice") {
       sortedItems.sort((a, b) => {
-        const priceA = GetCurrentPrice(a.id, a.startbid);
-        const priceB = GetCurrentPrice(b.id, b.startbid);
+        const priceA = a.currentBid;
+        const priceB = b.currentBid;
         return priceB - priceA;
       });
     } else if (filter === "EndsSoon") {
@@ -109,66 +74,25 @@ const Gallery = () => {
     setGalleryItems(sortedItems);
   };
 
-  function GetCurrentPrice(itemId, startBid) {
-    const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
-
-    if (bidsForItem.length > 0) {
-      // Get the highest bid amount for the item
-      const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
-      return highestBid;
-    } else {
-      return startBid;
-    }
-  }
-
-  function dateDiffInDaysAndHours(a, b) {
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    const _MS_PER_HOUR = 1000 * 60 * 60;
-    const timeDiff = b - a;
-    const days = Math.floor(timeDiff / _MS_PER_DAY);
-    const remainingMilliseconds = timeDiff % _MS_PER_DAY;
-    const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
-    return { days, hours };
-  }
-
-  function CalcEndDate(endDateString) {
-    const currentDate = new Date();
-    const endDate = new Date(endDateString);
-    const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
-
-    if (currentDate > endDate) {
-      return <div className="auction-ended">Auction ended</div>;
-    }
-
-    if (days <= 1) {
+  function EndsSoon(daysString, hoursString) {
+    if (daysString <= 1) {
       return (
         <div className="redText">
-          Ends in: {days} days, {hours} hours
+          Ends in: {daysString} days, {hoursString} hours
         </div>
       );
     }
     return (
       <div className="gallery-enddate">
-        Ends in: {days} days, {hours} hours
+        Ends in: {daysString} days, {hoursString} hours
       </div>
     );
   }
-
-  const deleteListing = async (id) => {
-    try {
-      // Sending DELETE request to the specific listing's endpoint
-      await fetch(`/listings/${id}`, { method: 'DELETE' });
-      // Filter out the deleted listing from GalleryItems state
-      const updatedGalleryItems = GalleryItems.filter(item => item.id !== id);
-      setGalleryItems(updatedGalleryItems);
-    } catch (error) {
-      console.error("Error deleting listing:", error);
-    }
-  };
-
-
   return (
-    <div className="container" style={{ paddingTop: "40px", paddingBottom: "40px" }}>
+    <div
+      className="container"
+      style={{ paddingTop: "40px", paddingBottom: "40px" }}
+    >
       <div className="searchbar-and-filter">
         <input
           type="search"
@@ -184,6 +108,7 @@ const Gallery = () => {
           <option value="HighestPrice">Highest Price</option>
         </select>
       </div>
+
       <div className="gallery-wrapper">
         {GalleryItems.map((GalleryItem) => (
           <Link
@@ -200,15 +125,17 @@ const Gallery = () => {
               <div className="text-container">
                 <div className="gallery-title">{GalleryItem.title}</div>
                 <div className="gallery-enddate">
-                  {CalcEndDate(GalleryItem.enddate)}
+                  {EndsSoon(
+                    GalleryItem.remainingDays,
+                    GalleryItem.remainingHours
+                  )}{" "}
                 </div>
                 <div className="gallery-price">
-                  {GetCurrentPrice(GalleryItem.id, GalleryItem.startbid)} Souls
+                  {GalleryItem.currentBid} Souls
                 </div>
               </div>
             </div>
           </Link>
-          
         ))}
       </div>
     </div>
