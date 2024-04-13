@@ -11,7 +11,6 @@ public static class Users
     int UserId,
     string? Username,
     string? Password,
-    DateTime? JoinedDate,
     string? Address,
     string? Email,
     int? Balance,
@@ -105,13 +104,12 @@ public static class Users
       //Creates placeholders with "@" to prevent SQL injection. data.(parameter) is the actual value.
       //If not null, value is used, otherwise null value 
       new MySqlParameter("@UserId", data.UserId),
-            new MySqlParameter("@Username", data.Username ?? (object)DBNull.Value),
-            new MySqlParameter("@Password", data.Password ?? (object)DBNull.Value),
-            new MySqlParameter("@JoinedDate", data.JoinedDate ?? (object)DBNull.Value),
-            new MySqlParameter("@Address", data.Address ?? (object)DBNull.Value),
-            new MySqlParameter("@Email", data.Email ?? (object)DBNull.Value),
-            new MySqlParameter("@Balance", data.Balance ?? (object)DBNull.Value),
-            new MySqlParameter("@IsAdmin", data.IsAdmin ?? (object)DBNull.Value)
+      new MySqlParameter("@Username", data.Username ?? (object)DBNull.Value),
+      new MySqlParameter("@Password", data.Password ?? (object)DBNull.Value),
+      new MySqlParameter("@Address", data.Address ?? (object)DBNull.Value),
+      new MySqlParameter("@Email", data.Email ?? (object)DBNull.Value),
+      new MySqlParameter("@Balance", data.Balance ?? (object)DBNull.Value),
+      new MySqlParameter("@IsAdmin", data.IsAdmin ?? (object)DBNull.Value)
 
     };
 
@@ -121,7 +119,6 @@ public static class Users
     SET
         username = @Username,
         password = @Password,
-        joinedDate = @JoinedDate,
         address = @Address,
         email = @Email,
         balance = @Balance,
