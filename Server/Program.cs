@@ -1,10 +1,9 @@
-
 using MySql.Data.MySqlClient;
 using Server;
 
 var builder = WebApplication.CreateBuilder(args);
 //https://www.nuget.org/packages/MySql.Data
-State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");
+State state = new("server=localhost;uid=root;pwd=4133;database=auction_site;port=3306");
 builder.Services.AddSingleton(state);
 var app = builder.Build();
 
@@ -23,8 +22,10 @@ app.MapPost("/login", Users.GetUser);
 // NEW USER REGISTRATION
 app.MapPost("/registernewuser", Users.Post);
 
+
+// GET ALL Items
+app.MapGet("/items", Items.GetAllItems);
+
 app.Run("http://localhost:3000");
 
 public record State(string DB);
-
-
