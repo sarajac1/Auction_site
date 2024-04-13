@@ -12,31 +12,16 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // need an enpoint to get users with a specific token_id?? 
-        const response = await fetch(`/api/users/${token_id}`);
-        const data = await response.json();
-        const userID = Number(localStorage.getItem("token_id"));
-        const currentUser = data.users.find((user) => user.id == userID);
-        if (currentUser) {
-          setUser(currentUser);
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
+        const token = localStorage.getItem("token");
+        setIsLoggedIn(!!token); // Set 'isLoggedIn' to true if token is not null, otherwise false
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-
-    // Retrieve the new balance from localStorage, if it exists
-    const storedBalance = localStorage.getItem('newBalance');
-
-    if (storedBalance !== null) {
-      setNewBalance(Number(storedBalance));
-    }
   }, []);
+
 
 
   async function handleSubmit(event) {
@@ -63,6 +48,11 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
       if (!response.ok) {
         throw new Error(result.Message || 'Unknown error'); // Make sure to use the correct property for error message
       }
+      // Update local storage and state with the new balance
+      const updatedBalance = result.newBalance; // Assuming 'newBalance' is returned by your API
+      localStorage.setItem('balance', updatedBalance); // Update balance in local storage
+      setNewBalance(updatedBalance); // Optionally update balance in state, if you need to use it in this component
+
 
       setMessage(result.Message);
       onBidSuccess(); // Trigger any additional actions on successful bid

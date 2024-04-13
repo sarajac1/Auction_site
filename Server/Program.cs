@@ -45,7 +45,7 @@ app.MapPost("/bids/place_bid", Bids.PlaceBid);
     "itemId": 1,
     "bidAmount": 500
 }*/
-app.MapGet("/bids/highest_Bid_For_Item/{itemId:int}", Bids.GetHighestBidForItem);
+app.MapGet("/bids/highest_Bid_For_Item/{itemid:int}", Bids.GetHighestBidForItem);
 
 
 
