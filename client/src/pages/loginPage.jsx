@@ -96,6 +96,7 @@ function LoginPage() {
     if (existingUser) {
       localStorage.setItem("token", credentials.username);
       localStorage.setItem("token_id", existingUser.id);
+      localStorage.setItem("balance", existingUser.balance);
       localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
       setIsLoggedIn(true);
       window.location.reload();

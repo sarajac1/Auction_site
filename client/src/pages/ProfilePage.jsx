@@ -3,41 +3,67 @@ import { Link, useParams } from "react-router-dom";
 import { useRef } from "react";
 
 function ProfilePage() {
-  const [userData, setUserData] = useState([]);
+  //const [userData, setUserData] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/db.json");
-        const data = await response.json();
-        setUserData(data.users);
-        const userID = localStorage.getItem("token_id");
-        setLoggedInUser(data.users.find((user) => user.id == userID));
+        const search_data = {
+          "username": localStorage.getItem("token"),
+        }
+        const response = await fetch("/api/finduserbyusername", {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(search_data),
+        });
+
+        const data = await response.json();        
+        //setUserData(data);
+        setLoggedInUser(data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setUserData([]);
+        //setUserData([]);
       } 
     };
 
-    fetchData();
+  fetchData();
   }, []);
 
   const inputAddRef = useRef(null);
 
-  function addToBalance() {
+  async function addToBalance() {
     const amount = parseInt(inputAddRef.current.value, 10);
     if (isNaN(amount) || amount <= 0) {
       alert("Please enter a valid number greater than 0");
       return;
     }
-    setLoggedInUser((prevUser) => ({
+    const search_data = {
+      "username": localStorage.getItem("token"),
+      "prevbalance": loggedInUser.balance,
+      "updatebalance": amount,
+        }
+        const res = await fetch("/api/addbalance", {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(search_data),
+        });
+    
+    if (res.ok && res.status == 201) {
+      setLoggedInUser((prevUser) => ({
       ...prevUser,
       balance: prevUser.balance + amount,
-    }));
+      }));      
+    } else {
+      alert("Add Balance update failed!")
+    }    
   }
 
-  function withdrawFromBalance() {
+  async function withdrawFromBalance() {
     const amount = parseInt(inputAddRef.current.value, 10);
     if (isNaN(amount) || amount <= 0) {
       alert("Please enter a valid number greater than 0");
@@ -46,10 +72,26 @@ function ProfilePage() {
       alert("Number too large!");
       return;
     }
-    setLoggedInUser((prevUser) => ({
+    const search_data = {
+      "username": localStorage.getItem("token"),
+      "prevbalance": loggedInUser.balance,
+      "updatebalance": amount,
+        }
+        const res = await fetch("/api/withdrawbalance", {
+          method: "POST",
+          headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(search_data),
+        });
+    if (res.ok && res.status == 201) {
+      setLoggedInUser((prevUser) => ({
       ...prevUser,
       balance: prevUser.balance - amount,
-    }));
+      }));      
+    } else {
+      alert("Withdraw update failed!")
+    }       
   }
 
   return (
@@ -72,7 +114,7 @@ function ProfilePage() {
       <input ref={inputAddRef} type="number" id="bid-input" name="message" /> <br />
       <button className="rounded-button-small add_to_ballance" onClick={addToBalance}>Add To Balance</button>
       <button className="rounded-button-small" onClick={withdrawFromBalance}>Withdraw from Balance</button>
-      <button className="rounded-button-small">Edit profile info</button>
+      {/*<button className="rounded-button-small">Edit profile info</button>*/}
 
     </div>
   );
