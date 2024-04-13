@@ -26,6 +26,19 @@ app.MapPost("/registernewuser", Users.Post);
 // GET ALL Items
 app.MapGet("/items", Items.GetAllItems);
 
+app.MapGet("/bids", Bids.GetAllBids);
+app.MapGet("/bids/{itemid:int}", Bids.GetBidsByItemId);
+app.MapGet("/bids/user_balance/{id:int}", Bids.Single);
+app.MapPost("/bids/place_bid", Bids.PlaceBid);
+/*{
+    "userId": 1,
+    "itemId": 1,
+    "bidAmount": 500
+}*/
+app.MapGet("/bids/highest_Bid_For_Item/{itemId:int}", Bids.GetHighestBidForItem);
+
+
+
 app.Run("http://localhost:3000");
 
 public record State(string DB);
