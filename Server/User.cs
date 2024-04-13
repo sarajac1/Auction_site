@@ -82,6 +82,75 @@ public static class Users
       return TypedResults.Problem();
     }
   }
+
+  // FIND USER BY USERNAME
+  public static User FindUserByUsername(UserCredentials credentials, State state)
+  {
+    var reader = MySqlHelper.ExecuteReader(
+      state.DB,
+      "SELECT * FROM users WHERE username = @Username", [new("@Username", credentials.username)]
+      );
+
+    if (reader.Read())
+    {
+      var user = new User
+      {
+        id = reader.GetInt32("id"),
+        username = reader.GetString("username"),
+        password = reader.GetString("password"),
+        joinedDate = reader.GetDateTime("joineddate"),
+        address = reader.GetString("address"),
+        email = reader.GetString("email"),
+        balance = reader.GetDecimal("balance"),
+        isAdmin = reader.GetBoolean("isAdmin")
+      };
+      return user;
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  // ADD USER BALANCE
+  public record Balance(string username, decimal updatebalance, decimal prevbalance);
+  public static IResult AddUserBalance(Balance data, State state)
+  {
+    string query = "UPDATE users SET balance = @AddToBalance + @PrevBalance WHERE username = @Username";
+    var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [
+      new("@Username", data.username),
+      new("@PrevBalance", data.prevbalance),
+      new("@AddToBalance", data.updatebalance),
+    ]);
+    if (result == 1)
+    {
+      return TypedResults.Created();
+    }
+    else
+    {
+      return TypedResults.Problem();
+    }
+  }
+
+  // WITHDRAW USER BALANCE
+  public static IResult WithdrawUserBalance(Balance data, State state)
+  {
+    string query = "UPDATE users SET balance = @PrevBalance - @WithdrawBalance WHERE username = @Username";
+    var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [
+      new("@Username", data.username),
+      new("@PrevBalance", data.prevbalance),
+      new("@WithdrawBalance", data.updatebalance),
+    ]);
+    if (result == 1)
+    {
+      return TypedResults.Created();
+    }
+    else
+    {
+      return TypedResults.Problem();
+    }
+  }
+
 }
 
 // Defined class for User entity
