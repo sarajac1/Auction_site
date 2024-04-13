@@ -18,12 +18,20 @@ app.MapGet("/listings/{id:int}", Listings.ListById);
 // GET ALL USERS
 app.MapGet("/users", Users.GetAllUsers);
 
-// GET A SPECIFIC USER
+// GET A SPECIFIC USER (existing user) 
 app.MapPost("/login", Users.GetUser);
 
 // NEW USER REGISTRATION
 app.MapPost("/registernewuser", Users.Post);
 
+// FIND USER BY ID
+app.MapPost("/finduserbyusername", Users.FindUserByUsername);
+
+// ADD TO USER BALANCE
+app.MapPost("/addbalance", Users.AddUserBalance);
+
+// WITHDRAW FROM USER BALANCE
+app.MapPost("/withdrawbalance", Users.WithdrawUserBalance);
 
 // GET ALL Items
 app.MapGet("/items", Items.GetAllItems);
