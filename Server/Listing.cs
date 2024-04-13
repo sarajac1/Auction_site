@@ -67,6 +67,32 @@ public static class Listings
       
         return listings;
     }
+    public record SingleDTO(int id, int sellerid, string title, string description, string image, DateTime startdate, DateTime enddate, int startbid);
+
+    public static SingleDTO? ListById(int id, State state)
+    {
+        SingleDTO? result = null;
+
+        string query = "SELECT * FROM listings WHERE id = @id";
+        var parameter = new MySqlParameter("@id", id);
+
+        using var reader = MySqlHelper.ExecuteReader(state.DB, query, parameter);
+        if (reader.Read())
+        {
+            int fetchedId = reader.GetInt32(reader.GetOrdinal("id"));
+            int fetchSellerId = reader.GetInt32(reader.GetOrdinal("sellerid"));
+            string fetchTitle = reader.GetString(reader.GetOrdinal("title"));
+            string fetchDescription = reader.GetString(reader.GetOrdinal("description"));
+            string fetchImage = reader.GetString(reader.GetOrdinal("image"));
+            DateTime fetchStartDate = reader.GetDateTime(reader.GetOrdinal("startdate"));
+            DateTime fetchEndDate = reader.GetDateTime(reader.GetOrdinal("enddate"));
+            int fetchStartBid = reader.GetInt32(reader.GetOrdinal("startbid"));
+
+            result = new SingleDTO(fetchedId, fetchSellerId, fetchTitle, fetchDescription, fetchImage, fetchStartDate, fetchEndDate, fetchStartBid);
+        }
+
+        return result;
+    }
     
 }
 

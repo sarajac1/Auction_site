@@ -12,7 +12,8 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/db.json");
+        // need an enpoint to get users with a specific token_id?? 
+        const response = await fetch(`/api/users/${token_id}`);
         const data = await response.json();
         const userID = Number(localStorage.getItem("token_id"));
         const currentUser = data.users.find((user) => user.id == userID);
@@ -40,103 +41,51 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    // Check if the user is not logged in before proceeding
-    if (!isLoggedIn) {
-      setMessage('You must be logged in to place a bid.');
-      return; // Prevent the rest of the function from executing
-    }
-    const submissionTime = new Date();
-    const bidAmount = Number(bid);
-    // Doesn't goes over the users balance
-    if (!user || bidAmount > user.balance) {
-      setMessage('Insufficient balance for this bid.');
-      return;
-    }
-
+    const bidAmount = Number(bid); // Ensure bid is a number
     try {
-      // Fetch existing bids for the selected item
-      const existingBidsResponse = await fetch(`http://localhost:3000/bids?itemid=${selectedListing.id}`);
-      const existingBids = await existingBidsResponse.json();
+      // Prepare the request payload
+      const payload = {
+        UserId: user.id,
+        ItemId: selectedListing.id,
+        BidAmount: bidAmount
+      };
 
-      // Determine the highest existing bid amount for the item
-      const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max.bidamount ? bid : max, { bidamount: 0, id: 0 });
-      const newBidId = highestExistingBidAmount.id + 1;
-      // Compare the submitted bid with the highest existing bid
-      if (bidAmount <= highestExistingBidAmount.bidamount) {
-        setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
-        return;
-      }
-      const bidResponse = await fetch('http://localhost:3000/bids', {
+      // Make the fetch request to the correct endpoint
+      const response = await fetch('/bids/place_bid', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          id: newBidId,
-          itemid: selectedListing.id,
-          bidderid: user.id,
-          bidamount: bidAmount,
-          datetime: submissionTime.toISOString(),
-          isactive: true,
-
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (bidResponse.ok) {
-        setMessage('Bid is placed!');
-        const newBalance = user.balance - bidAmount;
-        setNewBalance(newBalance);
-
-        localStorage.setItem('newBalance', newBalance.toString());
-
-        try {
-          const userUpdateResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              balance: newBalance,
-            }),
-          });
-
-          if (userUpdateResponse.ok) {
-            console.log("User's balance updated successfully");
-            // Optionally, perform actions after successfully updating the user's balance,
-            // such as refreshing user data from the server to reflect the update in your app's UI.
-          } else {
-            console.error('Failed to update user\'s balance');
-            // Handle failure to update the user's balance in the JSON server
-          }
-        } catch (error) {
-          console.error('Error updating user\'s balance:', error);
-        }
-
-
-        onBidSuccess();
-
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.Message || 'Unknown error'); // Make sure to use the correct property for error message
       }
+
+      setMessage(result.Message);
+      onBidSuccess(); // Trigger any additional actions on successful bid
     } catch (error) {
-      console.error('Error:', error);
-      setMessage('Failed to place bid. Error: ' + error.message);
+      setMessage(`Error: ${error.message}`);
     }
   }
 
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label className='bid_amount_text'>
-          <p>Bid Amount:</p>
-          <div className='bids_buttons'>
-            <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
-            <button className="rounded-button" type="submit">Place Bid</button>
-          </div>
 
-        </label>
-      </form>
-    </div>
+  return (
+      <div>
+        <form onSubmit={handleSubmit}>
+          <label className='bid_amount_text'>
+            <p>Bid Amount:</p>
+            <div className='bids_buttons'>
+              <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
+              <button className="rounded-button" type="submit">Place Bid</button>
+            </div>
+
+          </label>
+        </form>
+      </div>
   );
 }
 
