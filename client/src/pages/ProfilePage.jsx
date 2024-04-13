@@ -54,10 +54,12 @@ function ProfilePage() {
         });
     
     if (res.ok && res.status == 201) {
+      localStorage.setItem("balance", loggedInUser.balance + amount);
       setLoggedInUser((prevUser) => ({
       ...prevUser,
-      balance: prevUser.balance + amount,
-      }));      
+        balance: prevUser.balance + amount,              
+      }));
+      
     } else {
       alert("Add Balance update failed!")
     }    
@@ -85,6 +87,7 @@ function ProfilePage() {
         body: JSON.stringify(search_data),
         });
     if (res.ok && res.status == 201) {
+      localStorage.setItem("balance", loggedInUser.balance - amount);
       setLoggedInUser((prevUser) => ({
       ...prevUser,
       balance: prevUser.balance - amount,
