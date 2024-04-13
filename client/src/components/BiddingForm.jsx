@@ -8,60 +8,62 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   const [user, setUser] = useState(null);
   const [newBalance, setNewBalance] = useState(null);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token); // Set 'isLoggedIn' to true if token is not null, otherwise false
+        if (token) {
+          const response = await fetch(`/users`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const data = await response.json();
+          setUser(data);
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching user data:", error);
       }
     };
 
     fetchData();
   }, []);
 
-
-
   async function handleSubmit(event) {
     event.preventDefault();
     const bidAmount = Number(bid); // Ensure bid is a number
+    if (!user) {
+      setMessage("User not logged in.");
+      return;
+    }
+
     try {
-      // Prepare the request payload
       const payload = {
         UserId: user.id,
         ItemId: selectedListing.id,
         BidAmount: bidAmount
       };
 
-      // Make the fetch request to the correct endpoint
-      const response = await fetch('/bids/place_bid', {
+      const response = await fetch(`/item/${selectedListing.id}/place_bid`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.Message || 'Unknown error'); // Make sure to use the correct property for error message
+        throw new Error(result.Message || 'Unknown error');
       }
-      // Update local storage and state with the new balance
-      const updatedBalance = result.newBalance; // Assuming 'newBalance' is returned by your API
-      localStorage.setItem('balance', updatedBalance); // Update balance in local storage
-      setNewBalance(updatedBalance); // Optionally update balance in state, if you need to use it in this component
-
 
       setMessage(result.Message);
-      onBidSuccess(); // Trigger any additional actions on successful bid
+      setNewBalance(result.NewBalance); // Assume NewBalance is returned on successful bid
+      localStorage.setItem('balance', result.NewBalance); // Update balance in local storage
+      onBidSuccess();
     } catch (error) {
       setMessage(`Error: ${error.message}`);
     }
   }
-
-
 
   return (
       <div>
@@ -72,9 +74,9 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
               <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
               <button className="rounded-button" type="submit">Place Bid</button>
             </div>
-
           </label>
         </form>
+        {message && <p>{message}</p>}
       </div>
   );
 }
