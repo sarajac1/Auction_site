@@ -1,11 +1,24 @@
 namespace Server;
 using MySql.Data.MySqlClient;
 
+
 // Defined class to create user related endpoints/REST API
 public static class Users
 {
   public record UserCredentials(string username, string password);
+  //Creates a record for editing user information. "?" means that null values are allowed. UserId must have a value.  
+  public record EditUserData(
+    int UserId,
+    string? Username,
+    string? Password,
+    string? Address,
+    string? Email,
+    int? Balance,
+    bool? IsAdmin
+  );
+
   // Defined a method GetAllUsers, which returns a List type of User(user details)
+
   public static List<User> GetAllUsers(State state)
   {
     var users = new List<User>();
@@ -151,6 +164,40 @@ public static class Users
     }
   }
 
+
+  public static bool EditUser(EditUserData data, State state)
+  {
+    //Creates array of objects
+    var parameters = new MySqlParameter[]
+    {
+      //Creates placeholders with "@" to prevent SQL injection. data.(parameter) is the actual value.
+      //If not null, value is used, otherwise null value 
+      new MySqlParameter("@UserId", data.UserId),
+      new MySqlParameter("@Username", data.Username ?? (object)DBNull.Value),
+      new MySqlParameter("@Password", data.Password ?? (object)DBNull.Value),
+      new MySqlParameter("@Address", data.Address ?? (object)DBNull.Value),
+      new MySqlParameter("@Email", data.Email ?? (object)DBNull.Value),
+      new MySqlParameter("@Balance", data.Balance ?? (object)DBNull.Value),
+      new MySqlParameter("@IsAdmin", data.IsAdmin ?? (object)DBNull.Value)
+
+    };
+
+    //Query with "@" to prevent SQL injection
+    string query = @"
+    UPDATE users
+    SET
+        username = @Username,
+        password = @Password,
+        address = @Address,
+        email = @Email,
+        balance = @Balance,
+        isAdmin = @IsAdmin
+        WHERE id = @UserId";
+
+    int affectedRows = MySqlHelper.ExecuteNonQuery(state.DB, query, parameters);
+    //Returns true if rows were updated
+    return affectedRows > 0;
+  }
 }
 
 // Defined class for User entity
