@@ -91,7 +91,7 @@ public static class Bids
 
     public record BidRequestDTO(int UserId, int ItemId, int BidAmount);
     
-    public static BidResult PlaceBid(BidRequestDTO request, State state)
+    public static BidResult PlaceBid(int id, BidRequestDTO request, State state)
     {
         var user = Single(request.UserId, state);
     

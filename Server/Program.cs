@@ -39,7 +39,7 @@ app.MapGet("/items", Items.GetAllItems);
 app.MapGet("/bids", Bids.GetAllBids);
 app.MapGet("/bids/{itemid:int}", Bids.GetBidsByItemId);
 app.MapGet("/bids/user_balance/{id:int}", Bids.Single);
-app.MapPost("/bids/place_bid", Bids.PlaceBid);
+app.MapPost("/item/{id:int}/place_bid", Bids.PlaceBid);
 /*{
     "userId": 1,
     "itemId": 1,
