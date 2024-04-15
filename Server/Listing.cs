@@ -64,7 +64,16 @@ public static class Listings
         }
         return listings;
     }
-    public record SingleDTO(int id, int sellerid, string title, string description, string image, DateTime startdate, DateTime enddate, int startbid);
+    public record SingleDTO(
+        int id, 
+        int sellerid, 
+        string title, 
+        string description, 
+        string image, 
+        string startdate, // Changed to string
+        string enddate, // Changed to string
+        int startbid
+    );
 
     public static SingleDTO? ListById(int id, State state)
     {
@@ -85,10 +94,22 @@ public static class Listings
             DateTime fetchEndDate = reader.GetDateTime(reader.GetOrdinal("enddate"));
             int fetchStartBid = reader.GetInt32(reader.GetOrdinal("startbid"));
 
-            result = new SingleDTO(fetchedId, fetchSellerId, fetchTitle, fetchDescription, fetchImage, fetchStartDate, fetchEndDate, fetchStartBid);
+            // Format the end date to "yyyy-MM-dd 00:00"
+            string formattedEndDate = fetchEndDate.ToString("yyyy-MM-dd 'at' HH:mm");
+
+            result = new SingleDTO(
+                fetchedId, 
+                fetchSellerId, 
+                fetchTitle, 
+                fetchDescription, 
+                fetchImage, 
+                fetchStartDate.ToString("yyyy-MM-dd HH:mm:ss"), // Assuming you want to keep the full datetime for startdate
+                formattedEndDate,  // Now using the formatted string
+                fetchStartBid);
         }
 
         return result;
     }
+
 }
 

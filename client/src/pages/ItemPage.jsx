@@ -50,8 +50,7 @@ function ItemPage() {
               </div>
               <div className="col2">
                 <div className="date_div">
-                  <div className="darkText">{selectedListing.startdate}</div>
-                  <div className="darkText">Auction ends on: {selectedListing.enddate}</div>
+                   <div className="darkText">Auction ends on: {selectedListing.enddate}</div>
                 </div>
 
                 <h1>{selectedListing.title}</h1>
