@@ -72,63 +72,6 @@ public static class Bids
         }
         return bids;
     }
-
-
-
-    public static string ConnectionString { get; set; }
-
-    public static List<Bid> GetAllBids2(State state)
-    {
-        var bids = new List<Bid>();
-
-        var reader = MySqlHelper.ExecuteReader(state.DB, "SELECT * FROM bids");
-
-        while (reader.Read())
-        {
-            var bid = new Bid
-            {
-                id = reader.GetInt32("id"),
-                itemid = reader.GetInt32("itemid"),
-                bidderid = reader.GetInt32("bidderid"),
-                bidamount = reader.GetInt32("bidamount"),
-                datetime = reader.GetDateTime("datetime"),
-                isactive = reader.GetBoolean("isactive")
-            };
-            bids.Add(bid);
-        }
-
-        return bids;
-    }
-
-    // get bids with a specific item ID
-    public static List<Bid> GetBidsByItemId(int itemid, State state)
-    {
-        List<Bid> bids = new List<Bid>();
-
-        var parameters = new MySqlParameter[]
-        {
-            new MySqlParameter("@itemid", itemid)
-        };
-        var reader = MySqlHelper.ExecuteReader(state.DB, "SELECT * FROM bids WHERE itemid = @itemid", parameters);
-        while (reader.Read())
-        {
-            var bid = new Bid
-            {
-                id = reader.GetInt32("id"),
-                itemid = reader.GetInt32("itemid"),
-                bidderid = reader.GetInt32("bidderid"),
-                bidamount = reader.GetInt32("bidamount"),
-                datetime = reader.GetDateTime("datetime"),
-                isactive = reader.GetBoolean("isactive")
-            };
-            bids.Add(bid);
-        }
-
-        return bids;
-    }
-
-    //Get user balance:
-
     public record SingleDTO(int id, int balance);
 
     public static SingleDTO? Single(int id, State state)
@@ -149,12 +92,12 @@ public static class Bids
 
         return result;
     }
-
+    
     public record BidResult(bool Success, string Message, int? HighestBid = null);
 
     public record BidRequestDTO(int UserId, int ItemId, int BidAmount);
     
-    public static BidResult PlaceBid(BidRequestDTO request, State state)
+    public static BidResult PlaceBid(int id, BidRequestDTO request, State state)
     {
         var user = Single(request.UserId, state);
     
@@ -218,26 +161,26 @@ public static class Bids
         int result = MySqlHelper.ExecuteNonQuery(state.DB, updateQuery, updateParams);
         return result > 0;
     }
-    public static int GetHighestBidForItem(int itemId, State state)
-    { 
-        string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
-        var highestBidParameter = new MySqlParameter("@itemid", itemId);
+   public static IResult GetHighestBidForItem(int itemid, State state)
+{
+    string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
+    var highestBidParameter = new MySqlParameter("@itemid", itemid);
 
-        try
+    try
+    {
+        using var reader = MySqlHelper.ExecuteReader(state.DB, highestBidQuery, highestBidParameter);
+        if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
         {
-            using var reader = MySqlHelper.ExecuteReader(state.DB, highestBidQuery, highestBidParameter);
-            if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
-            {
-                return reader.GetInt32(reader.GetOrdinal("HighestBid"));
-            }
-            return -1; 
+            int highestBid = reader.GetInt32(reader.GetOrdinal("HighestBid"));
+            return Results.Json(new { HighestBid = highestBid });  
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error! {ex.Message}");
-            throw;
-        }
+        return Results.Json(new { Message = "No active bids found for this item." });
     }
-
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error retrieving highest bid: {ex.Message}");
+        return Results.Problem($"Server error: {ex.Message}", statusCode: 500);  
+    }
 }
 
+}
