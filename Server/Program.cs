@@ -60,6 +60,13 @@ app.MapGet("/bids", Bids.GetAllBids);
 // GET BIDS FOR A SPECIFIC ITEM
 app.MapGet("/bids/{itemId}", Bids.GetBidsForItem);
 
+app.MapGet("/listings/{id:int}", Listings.ListById);
+app.MapGet("/item/{itemid:int}/highestBid", Bids.GetHighestBidForItem);
+
+app.MapPost("/item/{id:int}/place_bid", Bids.PlaceBid);
+
 app.Run("http://localhost:3000");
+
+
 
 public record State(string DB);
