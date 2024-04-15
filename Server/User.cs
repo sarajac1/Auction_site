@@ -1,11 +1,24 @@
 namespace Server;
 using MySql.Data.MySqlClient;
 
+
 // Defined class to create user related endpoints/REST API
 public static class Users
 {
   public record UserCredentials(string username, string password);
+  //Creates a record for editing user information. "?" means that null values are allowed. UserId must have a value.  
+  public record EditUserData(
+    int UserId,
+    string? Username,
+    string? Password,
+    string? Address,
+    string? Email,
+    int? Balance,
+    bool? IsAdmin
+  );
+
   // Defined a method GetAllUsers, which returns a List type of User(user details)
+
   public static List<User> GetAllUsers(State state)
   {
     var users = new List<User>();
@@ -81,6 +94,109 @@ public static class Users
     {
       return TypedResults.Problem();
     }
+  }
+
+  // FIND USER BY USERNAME
+  public static User FindUserByUsername(UserCredentials credentials, State state)
+  {
+    var reader = MySqlHelper.ExecuteReader(
+      state.DB,
+      "SELECT * FROM users WHERE username = @Username", [new("@Username", credentials.username)]
+      );
+
+    if (reader.Read())
+    {
+      var user = new User
+      {
+        id = reader.GetInt32("id"),
+        username = reader.GetString("username"),
+        password = reader.GetString("password"),
+        joinedDate = reader.GetDateTime("joineddate"),
+        address = reader.GetString("address"),
+        email = reader.GetString("email"),
+        balance = reader.GetDecimal("balance"),
+        isAdmin = reader.GetBoolean("isAdmin")
+      };
+      return user;
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  // ADD USER BALANCE
+  public record Balance(string username, decimal updatebalance, decimal prevbalance);
+  public static IResult AddUserBalance(Balance data, State state)
+  {
+    string query = "UPDATE users SET balance = @AddToBalance + @PrevBalance WHERE username = @Username";
+    var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [
+      new("@Username", data.username),
+      new("@PrevBalance", data.prevbalance),
+      new("@AddToBalance", data.updatebalance),
+    ]);
+    if (result == 1)
+    {
+      return TypedResults.Created();
+    }
+    else
+    {
+      return TypedResults.Problem();
+    }
+  }
+
+  // WITHDRAW USER BALANCE
+  public static IResult WithdrawUserBalance(Balance data, State state)
+  {
+    string query = "UPDATE users SET balance = @PrevBalance - @WithdrawBalance WHERE username = @Username";
+    var result = MySqlHelper.ExecuteNonQuery(state.DB, query, [
+      new("@Username", data.username),
+      new("@PrevBalance", data.prevbalance),
+      new("@WithdrawBalance", data.updatebalance),
+    ]);
+    if (result == 1)
+    {
+      return TypedResults.Created();
+    }
+    else
+    {
+      return TypedResults.Problem();
+    }
+  }
+
+
+  public static bool EditUser(EditUserData data, State state)
+  {
+    //Creates array of objects
+    var parameters = new MySqlParameter[]
+    {
+      //Creates placeholders with "@" to prevent SQL injection. data.(parameter) is the actual value.
+      //If not null, value is used, otherwise null value 
+      new MySqlParameter("@UserId", data.UserId),
+      new MySqlParameter("@Username", data.Username ?? (object)DBNull.Value),
+      new MySqlParameter("@Password", data.Password ?? (object)DBNull.Value),
+      new MySqlParameter("@Address", data.Address ?? (object)DBNull.Value),
+      new MySqlParameter("@Email", data.Email ?? (object)DBNull.Value),
+      new MySqlParameter("@Balance", data.Balance ?? (object)DBNull.Value),
+      new MySqlParameter("@IsAdmin", data.IsAdmin ?? (object)DBNull.Value)
+
+    };
+
+    //Query with "@" to prevent SQL injection
+    string query = @"
+    UPDATE users
+    SET
+        username = @Username,
+        password = @Password,
+        address = @Address,
+        email = @Email,
+        balance = @Balance,
+        isAdmin = @IsAdmin
+        WHERE id = @UserId";
+
+    int affectedRows = MySqlHelper.ExecuteNonQuery(state.DB, query, parameters);
+    //Returns true if rows were updated
+    return affectedRows > 0;
   }
 }
 

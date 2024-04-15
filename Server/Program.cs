@@ -1,5 +1,8 @@
+
+using System.ComponentModel.DataAnnotations;
 using MySql.Data.MySqlClient;
 using Server;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +14,28 @@ var app = builder.Build();
 app.MapGet("/listings", Listings.GetAllListings);
 app.MapPost("/listings", Listings.Post);
 
+
+
+//endpoint for editing users
+app.MapPut("/edituser", (Server.Users.EditUserData editUser, State appState) =>
+{
+  if (Server.Users.EditUser(editUser, appState))
+  {
+    return Results.Ok("User updated.");
+  }
+  else
+  {
+    return Results.BadRequest("Error updating user");
+  }
+  //Specifies content type of endpoint (.json)
+}).Accepts<Server.Users.EditUserData>("application/json");
+
+
+
 // GET ALL USERS
 app.MapGet("/users", Users.GetAllUsers);
 
-// GET A SPECIFIC USER
+// GET A SPECIFIC USER (existing user) 
 app.MapPost("/login", Users.GetUser);
 
 // NEW USER REGISTRATION
@@ -31,9 +52,23 @@ app.MapPost("/bids/place_bid", Bids.PlaceBid);
 }*/
 app.MapGet("/bids/highest_Bid_For_Item/{itemId:int}", Bids.GetHighestBidForItem);
 
+// FIND USER BY ID
+app.MapPost("/finduserbyusername", Users.FindUserByUsername);
+
+// ADD TO USER BALANCE
+app.MapPost("/addbalance", Users.AddUserBalance);
+
+// WITHDRAW FROM USER BALANCE
+app.MapPost("/withdrawbalance", Users.WithdrawUserBalance);
 
 // GET ALL Items
 app.MapGet("/items", Items.GetAllItems);
+
+// GET ALL BIDS
+app.MapGet("/bids", Bids.GetAllBids);
+
+// GET BIDS FOR A SPECIFIC ITEM
+app.MapGet("/bids/{itemId}", Bids.GetBidsForItem);
 
 app.Run("http://localhost:3000");
 
