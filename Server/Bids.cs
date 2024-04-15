@@ -93,7 +93,7 @@ public static class Bids
         return result;
     }
     
-    public record BidResult(bool Success, string Message, int? HighestBid = null, int? NewBalance = null);
+    public record BidResult(bool Success, string Message, int? HighestBid = null);
 
     public record BidRequestDTO(int UserId, int ItemId, int BidAmount);
     
@@ -137,7 +137,6 @@ public static class Bids
             // Update balance if bid is successfully placed
             if (UpdateUserBalance(request.UserId, request.BidAmount, state))
             {
-                int newBalance = Single(request.UserId, state).balance;
                 return new BidResult(true, "Bid successfully placed.", request.BidAmount);
             }
             else

@@ -61,11 +61,9 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
         }
 
         setMessage(result.Message);
-        if (result.Success) {
         setNewBalance(result.NewBalance); // Assume NewBalance is returned on successful bid
         localStorage.setItem('balance', result.NewBalance); // Update balance in local storage
         onBidSuccess();
-        }
       } catch (error) {
         setMessage(`Error: ${error.message}`);
       }

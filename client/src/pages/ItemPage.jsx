@@ -7,8 +7,6 @@ function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
   const [selectedListing, setSelectedListing] = useState(null);
   const [highestBid, setHighestBid] = useState(null);
-  const [currentBid, setCurrentBid] = useState(null);
-
 
   // Fetching the listing details only when itemId changes
   useEffect(() => {
