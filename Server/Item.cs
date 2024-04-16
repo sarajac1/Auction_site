@@ -10,6 +10,7 @@ public class Item
     public string? Image { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public int StartBid { get; set; }
     public int CurrentBid { get; set; }
     public int RemainingDays { get; set; }
     public int RemainingHours { get; set; }
@@ -51,7 +52,7 @@ public static class Items
         var items = new List<Item>();
     
         var reader= MySqlHelper.ExecuteReader(state.DB,
-            "select id, seller_username, title, description, image, startdate, enddate, current_bid, remaining_days, remaining_hours from active_auctions");
+            "select id, seller_username, title, description, image, startdate, enddate, startbid, current_bid, remaining_days, remaining_hours from active_auctions");
 
 
         while (reader.Read())
@@ -65,6 +66,7 @@ public static class Items
                 Image = reader["image"] as string,
                 StartDate = reader.GetDateTime("startdate"),
                 EndDate = reader.GetDateTime("enddate"),
+                StartBid = reader.GetInt32("startbid"),
                 CurrentBid = reader.GetInt32("current_bid"),
                 RemainingDays = reader.GetInt32("remaining_days"),
                 RemainingHours = reader.GetInt32("remaining_hours"),
