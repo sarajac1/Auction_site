@@ -15,6 +15,8 @@ app.MapGet("/listings", Listings.GetAllListings);
 //https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-parameters.html
 app.MapPost("/listings", Listings.Post);
 
+//endpoint for deleting a listing 
+app.MapDelete("/listings/{id:int}", (int id, State appState) => Listings.Delete(id, appState));
 
 
 //endpoint for editing users
