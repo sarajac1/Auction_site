@@ -5,14 +5,13 @@ const ViewUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [searchWord, setSearchWord] = useState("");
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-      const response = await fetch("/db.json");
-      const data = await response.json();
-      setUsers(data.users);
+      const response = await fetch("/api/users");
+        const data = await response.json();
+        console.log(data)
+        setUsers(data);        
     } catch (error) {
       console.error("Error fetching data: ", error);
       setUsers([]);
@@ -31,13 +30,8 @@ const ViewUsersPage = () => {
     user.email.toLowerCase().includes(searchWord) ||
     user.address.toLowerCase().includes(searchWord) 
   );
-
-
-
-
   return (
-    <div className="container">
-      
+    <div className="container">      
       <div className="searchbar-users">
         <input
           type="search"
@@ -69,14 +63,12 @@ const ViewUsersPage = () => {
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.username}</td>
-              <td>{user.joineddate}</td>
+              <td>{user.joinedDate.substring(0,10)}</td>
               <td>{user.address}</td>
               <td>{user.email}</td>
               <td>{user.balance}</td>
               <td>{user.isAdmin ? 'Yes' : 'No'}</td>
-              <td><Link to={`/edit/${user.id}`} className="edit-user-link">[EDIT]</Link></td>
-              
-              
+              <td><Link to={`/edit/${user.id}`} className="edit-user-link">[EDIT]</Link></td>  
             </tr>
           ))}
         </tbody>
@@ -85,6 +77,4 @@ const ViewUsersPage = () => {
   )
 }
 
-
-export default ViewUsersPage; 
-
+export default ViewUsersPage;

@@ -42,7 +42,7 @@ app.MapPost("/login", Users.GetUser);
 // NEW USER REGISTRATION
 app.MapPost("/registernewuser", Users.Post);
 
-// FIND USER BY ID
+// FIND USER BY USERNAME
 app.MapPost("/finduserbyusername", Users.FindUserByUsername);
 
 // ADD TO USER BALANCE
