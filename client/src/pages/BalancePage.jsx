@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from "react";
 
-const BalancePage = () => {
+function BalancePage(){
   //const [userData, setUserData] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
 
-  const fetchData = async () => {
+  async function fetchData  () {
     try {
-      //const response = await fetch("api/users");
-      //const data = await response.json();
-      //setUserData(data);
-      //const userID = localStorage.getItem("token_id");
+      const search_data = {
+        "username": localStorage.getItem("token"),
+      }
+      const response = await fetch("/api/finduserbyusername", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(search_data),
+      });
+
+      const data = await response.json();
+
+      console.log(data)
+      setUserBalance(data);
+      const userID = localStorage.getItem("token_id");
       setLoggedInUser(localStorage.getItem("token"));
-      setUserBalance(localStorage.getItem("balance"))
+      setUserBalance(data.balance)
       
     } catch (error) {
       console.error("Error fetching data:", error);

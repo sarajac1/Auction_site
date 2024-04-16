@@ -57,12 +57,12 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
         const result = await response.json();
         console.log(result)
         if (!response.ok) {
-          throw new Error(result.Message || 'Unknown error');
+          throw new Error(result.message || 'Unknown error');
         }
 
-        setMessage(result.Message);
-        setNewBalance(result.NewBalance); // Assume NewBalance is returned on successful bid
-        localStorage.setItem('balance', result.NewBalance); // Update balance in local storage
+        setMessage(result.message);
+        setNewBalance(result.highestBid); // Assume NewBalance is returned on successful bid
+        localStorage.setItem('balance', result.highestBid); // Update balance in local storage
         onBidSuccess();
       } catch (error) {
         setMessage(`Error: ${error.message}`);
