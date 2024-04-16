@@ -67,8 +67,30 @@ public static class Listings
       
         return listings;
     }
-    
+
+    public static IResult Delete(int listingId, State state)
+    {
+        string query = "DELETE FROM listings WHERE id = @ListingId";
+        var parameters = new MySqlParameter[] {
+            new MySqlParameter("@ListingId", listingId)
+    };
+
+        int result = MySqlHelper.ExecuteNonQuery(state.DB, query, parameters);
+
+        if (result == 1)
+        {
+            return TypedResults.NoContent();
+        }
+        else
+        {
+            return TypedResults.NotFound();
+        }
+    }
+
+
 }
+    
+
 
 
 /*
