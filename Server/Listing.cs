@@ -11,6 +11,7 @@ public class Listing
     public DateTime startdate { get; set; }
     public DateTime enddate { get; set; }
     public int startbid { get; set; }
+    public decimal highbidamount { get; set; }
 }
 public static class Listings
 {
@@ -46,8 +47,11 @@ public static class Listings
     {
         var listings = new List<Listing>();
 
-        var reader = MySqlHelper.ExecuteReader(state.DB, "SELECT listings.*, users.username FROM listings LEFT JOIN users ON listings.sellerid = users.id;");
+        var query = "SELECT users.username,IFNULL(MAX(bidamount),0) AS highestbidamount,listings.* FROM listings" +
+        " LEFT JOIN users ON listings.sellerid = users.id " +
+        " LEFT JOIN bids ON bids.itemid = listings.id GROUP BY listings.id";
 
+        var reader = MySqlHelper.ExecuteReader(state.DB, query);
 
         while (reader.Read())
         {
@@ -61,7 +65,8 @@ public static class Listings
                 startdate = reader.GetDateTime("startdate"),
                 enddate = reader.GetDateTime("enddate"),
                 startbid = reader.GetInt32("startbid"),
-                sellername = reader["username"] as string
+                sellername = reader["username"] as string,
+                highbidamount = reader.GetDecimal("highestbidamount"),
             };
             listings.Add(listing);
         }

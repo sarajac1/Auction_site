@@ -83,7 +83,7 @@ const UserListings = ({ sellerid }) => {
                     <div>{listing.sellername}</div>
                     <div className='line_which_will_work bottom_line'></div>
                   </td>
-                  <td className="listings_info listings_table_details">{getHighestBid(listing.id)}<div className='line_which_will_work bottom_line'></div></td>
+                  <td className="listings_info listings_table_details">{(listing.highbidamount)}<div className='line_which_will_work bottom_line'></div></td>
 
                   <td className="listings_info listings_table_details">
                     <div>{listing.enddate}</div>
@@ -119,7 +119,7 @@ const UserListings = ({ sellerid }) => {
                     <div className='line_which_will_work bottom_line'></div>
                   </td>
                   <td className="listings_info listings_table_details">{listing.startbid} S <div className='line_which_will_work bottom_line'></div></td>
-                  <td className="listings_info listings_table_details">{getHighestBid(listing.id)}<div className='line_which_will_work bottom_line'></div></td>
+                  <td className="listings_info listings_table_details">{(listing.highbidamount)}<div className='line_which_will_work bottom_line'></div></td>
                   <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)} <div className='line_which_will_work bottom_line'></div></td>
                   <td className="listings_info listings_table_details"> <div className="actions">
                     <button className="edit_button">Edit</button>
