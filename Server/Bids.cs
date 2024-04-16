@@ -72,94 +72,84 @@ public static class Bids
         }
         return bids;
     }
-    public record SingleDTO(int id, int balance);
-
-    public static SingleDTO? Single(int id, State state)
-    {
-        SingleDTO? result = null;
-
-        string query = "SELECT id, balance FROM users WHERE id = @id";
-        var parameter = new MySqlParameter("@id", id);
-
-        using var reader = MySqlHelper.ExecuteReader(state.DB, query, parameter);
-        if (reader.Read())
-        {
-            int fetchedId = reader.GetInt32(reader.GetOrdinal("id"));
-            int fetchedBalance = reader.GetInt32(reader.GetOrdinal("balance"));
-
-            result = new SingleDTO(fetchedId, fetchedBalance);
-        }
-
-        return result;
-    }
-    
     public record BidResult(bool Success, string Message, int? HighestBid = null);
 
     public record BidRequestDTO(int UserId, int ItemId, int BidAmount);
     
     public static BidResult PlaceBid(int id, BidRequestDTO request, State state)
+{
+    int? highestBid = null;
+    using var connection = new MySqlConnection(state.DB);
+    connection.Open();
+
+    // Start a transaction
+    using var transaction = connection.BeginTransaction();
+    try
     {
-        var user = Single(request.UserId, state);
-    
-        if (user == null)
-            return new BidResult(false, "User not found.");
-
-        if (user.balance < request.BidAmount)
-            return new BidResult(false, "Insufficient balance for this bid.");
-
         // Check highest bid
         string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
         var highestBidParameter = new MySqlParameter("@itemid", request.ItemId);
-    
-        using var reader = MySqlHelper.ExecuteReader(state.DB, highestBidQuery, highestBidParameter);
-        int highestBid = 0;
-    
-        if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
-        {
-            highestBid = reader.GetInt32(reader.GetOrdinal("HighestBid"));
 
-            if (request.BidAmount <= highestBid)
+        using (var command = new MySqlCommand(highestBidQuery, connection))
+        {
+            command.Parameters.Add(highestBidParameter);
+            using (var reader = command.ExecuteReader())
             {
-                return new BidResult(false, "There is already a higher or equal bid.", highestBid);
+                if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
+                {
+                    highestBid = reader.GetInt32(reader.GetOrdinal("HighestBid"));
+                }
+            }
+        }
+
+        if (highestBid.HasValue && request.BidAmount <= highestBid)
+        {
+            return new BidResult(false, "There is already a higher or equal bid.", highestBid);
+        }
+
+        // Check user balance
+        string balanceQuery = "SELECT balance FROM users WHERE id = @userId";
+        using (var balanceCommand = new MySqlCommand(balanceQuery, connection))
+        {
+            balanceCommand.Parameters.Add(new MySqlParameter("@userId", request.UserId));
+            int currentBalance = (int)balanceCommand.ExecuteScalar();
+            if (currentBalance < request.BidAmount)
+            {
+                return new BidResult(false, "Insufficient balance to place the bid.");
             }
         }
 
         // Insert the bid
         string insertQuery = "INSERT INTO bids (itemid, bidderid, bidamount, datetime, isactive) VALUES (@itemid, @bidderid, @bidamount, NOW(), TRUE)";
-        var insertParams = new[] {
-            new MySqlParameter("@itemid", request.ItemId),
-            new MySqlParameter("@bidderid", request.UserId),
-            new MySqlParameter("@bidamount", request.BidAmount)
-        };
-
-        if (MySqlHelper.ExecuteNonQuery(state.DB, insertQuery, insertParams) > 0)
+        using (var insertCommand = new MySqlCommand(insertQuery, connection))
         {
-            // Update balance if bid is successfully placed
-            if (UpdateUserBalance(request.UserId, request.BidAmount, state))
+            insertCommand.Parameters.AddRange(new MySqlParameter[]
             {
-                return new BidResult(true, "Bid successfully placed.", request.BidAmount);
-            }
-            else
-            {
-                return new BidResult(false, "Failed to update user balance.");
-            }
+                new MySqlParameter("@itemid", request.ItemId),
+                new MySqlParameter("@bidderid", request.UserId),
+                new MySqlParameter("@bidamount", request.BidAmount)
+            });
+            insertCommand.ExecuteNonQuery();
         }
-        else
-        {
-            return new BidResult(false, "Failed to place the bid.");
-        }
-    }
 
-    public static bool UpdateUserBalance(int userId, int bidAmount, State state)
-    {
+        // Update user balance
         string updateQuery = "UPDATE users SET balance = balance - @bidAmount WHERE id = @userId";
-        var updateParams = new[] {
-            new MySqlParameter("@userId", userId),
-            new MySqlParameter("@bidAmount", bidAmount)
-        };
+        using (var updateCommand = new MySqlCommand(updateQuery, connection))
+        {
+            updateCommand.Parameters.Add(new MySqlParameter("@userId", request.UserId));
+            updateCommand.Parameters.Add(new MySqlParameter("@bidAmount", request.BidAmount));
+            updateCommand.ExecuteNonQuery();
+        }
 
-        int result = MySqlHelper.ExecuteNonQuery(state.DB, updateQuery, updateParams);
-        return result > 0;
+        // Commit the transaction
+        transaction.Commit();
+        return new BidResult(true, "Bid successfully placed.", request.BidAmount);
     }
-
+    catch (Exception ex)
+    {
+        // Roll back the transaction on error
+        transaction.Rollback();
+        return new BidResult(false, "Failed to place the bid due to an error: " + ex.Message);
+    }
+}
 }
