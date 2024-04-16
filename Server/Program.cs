@@ -53,6 +53,7 @@ app.MapPost("/withdrawbalance", Users.WithdrawUserBalance);
 
 // GET ALL Items
 app.MapGet("/items", Items.GetAllItems);
+app.MapGet("/items/{id}", Items.GetSingle);
 
 // GET ALL BIDS
 app.MapGet("/bids", Bids.GetAllBids);
