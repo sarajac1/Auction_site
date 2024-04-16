@@ -8,136 +8,86 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   const [user, setUser] = useState(null);
   const [newBalance, setNewBalance] = useState(null);
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/db.json");
-        const data = await response.json();
-        const userID = Number(localStorage.getItem("token_id"));
-        const currentUser = data.users.find((user) => user.id == userID);
-        if (currentUser) {
-          setUser(currentUser);
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
+  useEffect(() => { //FETCH DATA FUNCTION SHOULD BE DEFINED OUTSIDE USEEFFECT
     fetchData();
-
-    // Retrieve the new balance from localStorage, if it exists
-    const storedBalance = localStorage.getItem('newBalance');
-
-    if (storedBalance !== null) {
-      setNewBalance(Number(storedBalance));
-    }
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("token"); //USERNAME IS RETRIVED FROM LOCALSTORAGE
+      if (token) { // FETCHING ALL USERS IS NOT REQUIRED, BECAUSE USERNAME & USERID EXIST IN LOCALSTORAGE
+        /*const response = await fetch(`/users`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await response.json();
+        setUser(data);*/
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    // Check if the user is not logged in before proceeding
-    if (!isLoggedIn) {
-      setMessage('You must be logged in to place a bid.');
-      return; // Prevent the rest of the function from executing
-    }
-    const submissionTime = new Date();
-    const bidAmount = Number(bid);
-    // Doesn't goes over the users balance
-    if (!user || bidAmount > user.balance) {
-      setMessage('Insufficient balance for this bid.');
+    const bidAmount = Number(bid); // Ensure bid is a number
+    console.log(isLoggedIn)
+    console.log(JSON.stringify(selectedListing))
+    if (!isLoggedIn) { // USER LOGIN FLAG CAN BE CHECKED WITH ISLOGGEDIN, AS IT IS SET IN USEEFFECT
+      setMessage("User not logged in.");
       return;
-    }
+    } else // ELSE WAS ADDED FOR BETTER TRACKING
+    { console.log("IN ELSE")
+      try {
+        const payload = {
+          UserId: localStorage.getItem('token_id'), // USERID IS RETRIVED FROM LOCALSTORAGE WITH 'TOKEN_ID'
+          ItemId: selectedListing.id,
+          BidAmount: bidAmount
+        };
+        console.log(JSON.stringify(payload))
 
-    try {
-      // Fetch existing bids for the selected item
-      const existingBidsResponse = await fetch(`http://localhost:3000/bids?itemid=${selectedListing.id}`);
-      const existingBids = await existingBidsResponse.json();
+        const response = await fetch(`/api/item/${selectedListing.id}/place_bid`, { // '/api' PROXY WAS MISSING
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
 
-      // Determine the highest existing bid amount for the item
-      const highestExistingBidAmount = existingBids.reduce((max, bid) => bid.bidamount > max.bidamount ? bid : max, { bidamount: 0, id: 0 });
-      const newBidId = highestExistingBidAmount.id + 1;
-      // Compare the submitted bid with the highest existing bid
-      if (bidAmount <= highestExistingBidAmount.bidamount) {
-        setMessage(`Your bid must be higher than the current highest bid of ${highestExistingBidAmount}.`);
-        return;
-      }
-      const bidResponse = await fetch('http://localhost:3000/bids', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: newBidId,
-          itemid: selectedListing.id,
-          bidderid: user.id,
-          bidamount: bidAmount,
-          datetime: submissionTime.toISOString(),
-          isactive: true,
-
-        }),
-      });
-
-      if (bidResponse.ok) {
-        setMessage('Bid is placed!');
-        const newBalance = user.balance - bidAmount;
-        setNewBalance(newBalance);
-
-        localStorage.setItem('newBalance', newBalance.toString());
-
-        try {
-          const userUpdateResponse = await fetch(`http://localhost:3000/users/${user.id}`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              balance: newBalance,
-            }),
-          });
-
-          if (userUpdateResponse.ok) {
-            console.log("User's balance updated successfully");
-            // Optionally, perform actions after successfully updating the user's balance,
-            // such as refreshing user data from the server to reflect the update in your app's UI.
-          } else {
-            console.error('Failed to update user\'s balance');
-            // Handle failure to update the user's balance in the JSON server
-          }
-        } catch (error) {
-          console.error('Error updating user\'s balance:', error);
+        const result = await response.json();
+        console.log(result)
+        if (!response.ok) {
+          throw new Error(result.Message || 'Unknown error');
         }
 
-
+        setMessage(result.Message);
+        setNewBalance(result.NewBalance); // Assume NewBalance is returned on successful bid
+        localStorage.setItem('balance', result.NewBalance); // Update balance in local storage
         onBidSuccess();
-
+      } catch (error) {
+        setMessage(`Error: ${error.message}`);
       }
-    } catch (error) {
-      console.error('Error:', error);
-      setMessage('Failed to place bid. Error: ' + error.message);
+
     }
+
+
   }
 
-
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label className='bid_amount_text'>
-          <p>Bid Amount:</p>
-          <div className='bids_buttons'>
-            <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
-            <button className="rounded-button" type="submit">Place Bid</button>
-          </div>
-
-        </label>
-      </form>
-    </div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <label className='bid_amount_text'>
+            <p>Bid Amount:</p>
+            <div className='bids_buttons'>
+              <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
+              <button className="rounded-button" type="submit">Place Bid</button>
+            </div>
+          </label>
+        </form>
+        {message && <p>{message}</p>}
+      </div>
   );
 }
 
 export default BiddingForm;
+ 

@@ -74,77 +74,31 @@ public static class Listings
 
         return listings;
     }
+    public record SingleDTO(int id, int sellerid, string title, string description, string image, DateTime startdate, DateTime enddate, int startbid);
 
+    public static SingleDTO? ListById(int id, State state)
+    {
+        SingleDTO? result = null;
+
+        string query = "SELECT * FROM listings WHERE id = @id";
+        var parameter = new MySqlParameter("@id", id);
+
+        using var reader = MySqlHelper.ExecuteReader(state.DB, query, parameter);
+        if (reader.Read())
+        {
+            int fetchedId = reader.GetInt32(reader.GetOrdinal("id"));
+            int fetchSellerId = reader.GetInt32(reader.GetOrdinal("sellerid"));
+            string fetchTitle = reader.GetString(reader.GetOrdinal("title"));
+            string fetchDescription = reader.GetString(reader.GetOrdinal("description"));
+            string fetchImage = reader.GetString(reader.GetOrdinal("image"));
+            DateTime fetchStartDate = reader.GetDateTime(reader.GetOrdinal("startdate"));
+            DateTime fetchEndDate = reader.GetDateTime(reader.GetOrdinal("enddate"));
+            int fetchStartBid = reader.GetInt32(reader.GetOrdinal("startbid"));
+
+            result = new SingleDTO(fetchedId, fetchSellerId, fetchTitle, fetchDescription, fetchImage, fetchStartDate, fetchEndDate, fetchStartBid);
+        }
+
+        return result;
+    }
 }
 
-
-/*
-using MySql.Data.MySqlClient;
-
-namespace Server;
-
-public static class Listings
-{
-    private static string connectionString = "server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306";
-
-    public static IEnumerable<object> GetAllListings()
-    {
-        var listings = new List<object>();
-        using (var connection = new MySqlConnection(connectionString))
-        {
-            connection.Open();  // Synchronous open
-            var query = "SELECT * FROM listing";
-            using (var cmd = new MySqlCommand(query, connection))
-            {
-                using (var reader = cmd.ExecuteReader())  // Synchronous execute reader
-                {
-                    while (reader.Read())  // Synchronous read
-                    {
-                        listings.Add(new
-                        {
-                            Id = reader["id"],
-                            SellerId = reader["sellerid"],
-                            Title = reader["title"].ToString(),
-                            Description = reader["description"].ToString(),
-                            StartDate = reader["startdate"],
-                            EndDate = reader["enddate"],
-                            StartBid = reader["startbid"]
-                        });
-                    }
-                }
-            }
-        }
-        return listings;
-    }
-
-    public static IEnumerable<object> GetListingById(int id)
-    {
-        var listings = new List<object>();
-        using (var connection = new MySqlConnection(connectionString))
-        {
-            connection.Open();  // Synchronous open
-            var query = "SELECT * FROM listing WHERE id = @id";
-            using (var cmd = new MySqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@id", id);
-                using (var reader = cmd.ExecuteReader())  // Synchronous execute reader
-                {
-                    while (reader.Read())  // Synchronous read
-                    {
-                        listings.Add(new
-                        {
-                            Id = reader["id"],
-                            SellerId = reader["sellerid"],
-                            Title = reader["title"].ToString(),
-                            Description = reader["description"].ToString(),
-                            StartDate = reader["startdate"],
-                            EndDate = reader["enddate"],
-                            StartBid = reader["startbid"]
-                        });
-                    }
-                }
-            }
-        }
-        return listings;
-    }
-}*/
