@@ -93,7 +93,7 @@ const UserListings = ({ sellerid }) => {
               ))}
             </tbody>  
           </table>
-          <button className='button_create_listing'><a className='a_create_listing' href="/ArchivedListing">Archived Listings</a></button>
+          {/*<button className='button_create_listing'><a className='a_create_listing' href="/ArchivedListing">Archived Listings</a></button>*/}
         </div>
 
       ) : (

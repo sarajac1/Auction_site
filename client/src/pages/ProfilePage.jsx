@@ -101,7 +101,7 @@ function ProfilePage() {
     <div className="container profile_container">
       {loggedInUser ? (
         <>
-          <div className="profile_text profile_joined_date profile_display">Joined Date: <div className="profile_info_different_collor">{loggedInUser.joineddate}</div></div>
+          <div className="profile_text profile_joined_date profile_display">Joined Date: <div className="profile_info_different_collor">{loggedInUser.joinedDate}</div></div>
           <h1 className="profile_text profile_heading">Profile</h1>
           <div className='line_which_will_work top_line profile_line'></div>
           <div className="profile_text profile_username profile_user_info profile_display">Username: <div className="profile_info_different_collor">{loggedInUser.username}</div></div>
