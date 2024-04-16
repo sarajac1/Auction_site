@@ -6,7 +6,7 @@ using Server;
 
 var builder = WebApplication.CreateBuilder(args);
 //https://www.nuget.org/packages/MySql.Data
-State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");;builder.Services.AddSingleton(state);
+State state = new("server=localhost;uid=root;pwd=4133;database=auction_site;port=3306");builder.Services.AddSingleton(state);
 var app = builder.Build();
 
 app.MapGet("/listings", Listings.GetAllListings);
@@ -61,7 +61,6 @@ app.MapGet("/bids", Bids.GetAllBids);
 app.MapGet("/bids/{itemId}", Bids.GetBidsForItem);
 
 app.MapGet("/listings/{id:int}", Listings.ListById);
-app.MapGet("/item/{itemid:int}/highestBid", Bids.GetHighestBidForItem);
 
 app.MapPost("/item/{id:int}/place_bid", Bids.PlaceBid);
 
