@@ -72,11 +72,11 @@ public static class Listings
         }
 
 
-        public static IResult Delete(int listingId, State state)
+    public static IResult Delete(int listingId, State state)
         {
-            string query = "DELETE FROM listings WHERE id = @ListingId";
-            var parameters = new MySqlParameter[] {
-            new MySqlParameter("@ListingId", listingId)
+        string query = "DELETE FROM listings WHERE id = @ListingId";
+        var parameters = new MySqlParameter[] {
+        new MySqlParameter("@ListingId", listingId)
     };
 
             int result = MySqlHelper.ExecuteNonQuery(state.DB, query, parameters);
