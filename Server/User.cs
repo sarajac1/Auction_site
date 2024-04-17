@@ -21,8 +21,10 @@ public static class Users
 
   public static List<User> GetAllUsers(State state)
   {
+    Console.WriteLine(state);
     var users = new List<User>();
     var reader = MySqlHelper.ExecuteReader(state.DB, "SELECT * FROM users");
+    Console.WriteLine(reader);
 
     // runs only if there are any records in reader
     while (reader.Read())
@@ -33,9 +35,9 @@ public static class Users
         username = reader.GetString("username"),
         password = reader.GetString("password"),
         joinedDate = reader.GetDateTime("joineddate"),
-        address = reader.GetString("address"),
-        email = reader.GetString("email"),
-        balance = reader.GetDecimal("balance"),
+        address = reader["address"].Equals(null) ? "" : reader.GetString("address"),
+        email = reader["email"].Equals(null) ? "" : reader.GetString("email"),
+        balance = reader["balance"].Equals(null) ? 0 : reader.GetDecimal("balance"),
         isAdmin = reader.GetBoolean("isAdmin")
       };
       users.Add(user);
@@ -62,9 +64,9 @@ public static class Users
         username = reader.GetString("username"),
         password = reader.GetString("password"),
         joinedDate = reader.GetDateTime("joineddate"),
-        address = reader.GetString("address"),
-        email = reader.GetString("email"),
-        balance = reader.GetDecimal("balance"),
+        address = reader["address"].Equals(null) ? "" : reader.GetString("address"),
+        email = reader["email"].Equals(null) ? "" : reader.GetString("email"),
+        balance = reader["balance"].Equals(null) ? 0 : reader.GetDecimal("balance"),
         isAdmin = reader.GetBoolean("isAdmin")
       };
       return user;

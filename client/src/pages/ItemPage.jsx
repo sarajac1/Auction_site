@@ -2,67 +2,37 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import BiddingForm from "../components/BiddingForm";
 
-
 function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
   const [selectedListing, setSelectedListing] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
-  const [BidPrice, setBidPrice] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/listings'); 
-        const data = await response.json();
-        console.log(data);
-        const listing = data.find(
-          (listing) => listing.id.toString() === itemId
-        );
-        setSelectedListing(listing);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-    fetchData();
-  }, [itemId]);
-
- 
-  useEffect(() => {
-  refreshBids()
+    fetchItem()
   }, []);
+  
+  // Inside ItemPage component
 
-  /* Find highest bid */
-  function GetCurrentPrice(itemId, startBid) {
-    const bidsForItem = BidPrice.filter((bid) => bid.itemid === itemId);
-
-    if (bidsForItem.length > 0) {
-      // Get the highest bid amount for the item
-      const highestBid = Math.max(...bidsForItem.map((bid) => bid.bidamount));
-      return highestBid;
-    } else {
-      return startBid;
+  async function fetchItem() {
+    // Logic to re-fetch or re-calculate bids
+    try {
+      const response = await fetch("/api/items/"+itemId);
+      const item = await response.json();
+      console.dir(item)
+      setSelectedListing(item);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   }
+  // Pass this function as a prop to BiddingForm
 
-  /* CALCULATING DATES */
-  function dateDiffInDaysAndHours(a, b) {
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    const _MS_PER_HOUR = 1000 * 60 * 60;
-    const timeDiff = b - a;
-    const days = Math.floor(timeDiff / _MS_PER_DAY);
-    const remainingMilliseconds = timeDiff % _MS_PER_DAY;
-    const hours = Math.floor(remainingMilliseconds / _MS_PER_HOUR);
-    return { days, hours };
-  }
-
-  function CalcEndDate(endDateString) {
-    const currentDate = new Date();
-    const endDate = new Date(endDateString);
-    const { days, hours } = dateDiffInDaysAndHours(currentDate, endDate);
-
-    if (currentDate > endDate) {
-      return <div className="auction-ended redText" style={{ fontSize: "20px" }}>Auction ended</div>;
+  function EndsSoon(days, hours) {
+    if (days <= 0 && hours <= 0) {
+      return (
+        <div className="auction-ended redText" style={{ fontSize: "20px" }}>
+          Auction ended
+        </div>
+      );
     }
 
     if (days <= 1) {
@@ -79,26 +49,6 @@ function ItemPage() {
     );
   }
 
-  // Inside ItemPage component
-
-  async function refreshBids() {
-    // Logic to re-fetch or re-calculate bids
-      try {
-        const response = await fetch("/api/bids");
-        const price = await response.json();
-        setBidPrice(price.bids);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setBidPrice([]);
-      }
-  }
-
-  // Pass this function as a prop to BiddingForm
-  
-
-
-
-
   return (
     <div className="container">
       {/* If a listing is selected, display its details */}
@@ -109,8 +59,13 @@ function ItemPage() {
           </div>
           <div className="col2">
             <div className="date_div">
-              <div className="darkText">{selectedListing.startdate}</div>    
-              <div>{CalcEndDate(selectedListing.enddate)}</div>    
+              <div className="darkText">{selectedListing.startdate}</div>
+              <div>
+                {EndsSoon(
+                  selectedListing.remainingDays,
+                  selectedListing.remainingHours
+                )}
+              </div>
             </div>
 
             <h1>{selectedListing.title}</h1>
@@ -118,15 +73,15 @@ function ItemPage() {
               {selectedListing.description}
               <br />
               <br />
-              Starting Bid: {selectedListing.startbid} Souls
+              Starting Bid: {selectedListing.startBid} Souls
             </div>
             <div className="darkText">Highest bid is: </div>
-            <div className="priceText">
-              {GetCurrentPrice(selectedListing.id, selectedListing.startbid)}{" "}
-              Souls
-            </div>
+            <div className="priceText">{selectedListing.currentBid} Souls</div>
             {/* Bid field */}
-            <BiddingForm selectedListing={selectedListing} onBidSuccess={refreshBids} />
+            <BiddingForm
+              selectedListing={selectedListing}
+              onBidSuccess={fetchItem}
+            />
             <button
               className="discreet-button"
               onClick={() => setSelectedListing(null)}
@@ -135,7 +90,6 @@ function ItemPage() {
                 Back to Listings
               </Link>
             </button>
-            
           </div>
         </div>
       )}

@@ -6,7 +6,7 @@ using Server;
 
 var builder = WebApplication.CreateBuilder(args);
 //https://www.nuget.org/packages/MySql.Data
-State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");;builder.Services.AddSingleton(state);
+State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");builder.Services.AddSingleton(state);
 var app = builder.Build();
 
 app.MapGet("/listings", Listings.GetAllListings);
@@ -44,7 +44,7 @@ app.MapPost("/login", Users.GetUser);
 // NEW USER REGISTRATION
 app.MapPost("/registernewuser", Users.Post);
 
-// FIND USER BY ID
+// FIND USER BY USERNAME
 app.MapPost("/finduserbyusername", Users.FindUserByUsername);
 
 // ADD TO USER BALANCE
@@ -55,6 +55,7 @@ app.MapPost("/withdrawbalance", Users.WithdrawUserBalance);
 
 // GET ALL Items
 app.MapGet("/items", Items.GetAllItems);
+app.MapGet("/items/{id}", Items.GetSingle);
 
 // GET ALL BIDS
 app.MapGet("/bids", Bids.GetAllBids);
@@ -62,6 +63,12 @@ app.MapGet("/bids", Bids.GetAllBids);
 // GET BIDS FOR A SPECIFIC ITEM
 app.MapGet("/bids/{itemId}", Bids.GetBidsForItem);
 
+app.MapGet("/listings/{id:int}", Listings.ListById);
+
+app.MapPost("/item/{id:int}/place_bid", Bids.PlaceBid);
+
 app.Run("http://localhost:3000");
+
+
 
 public record State(string DB);

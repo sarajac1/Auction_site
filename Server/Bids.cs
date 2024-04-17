@@ -72,4 +72,64 @@ public static class Bids
         }
         return bids;
     }
+    
+    public record BidResult(bool Success, string Message, int? HighestBid = null);
+
+    public record BidRequestDTO(int UserId, int ItemId, int BidAmount);
+    
+    public static BidResult PlaceBid(int id, BidRequestDTO request, State state)
+    {
+        
+        string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
+        var highestBidParameter = new MySqlParameter("@itemid", request.ItemId);
+    
+        using var reader = MySqlHelper.ExecuteReader(state.DB, highestBidQuery, highestBidParameter);
+        int highestBid = 0;
+    
+        if (reader.Read() && !reader.IsDBNull(reader.GetOrdinal("HighestBid")))
+        {
+            highestBid = reader.GetInt32(reader.GetOrdinal("HighestBid"));
+
+            if (request.BidAmount <= highestBid)
+            {
+                return new BidResult(false, "There is already a higher or equal bid.", highestBid);
+            }
+        }
+
+        string insertQuery = "INSERT INTO bids (itemid, bidderid, bidamount, datetime, isactive) VALUES (@itemid, @bidderid, @bidamount, NOW(), TRUE)";
+        var insertParams = new[] {
+            new MySqlParameter("@itemid", request.ItemId),
+            new MySqlParameter("@bidderid", request.UserId),
+            new MySqlParameter("@bidamount", request.BidAmount)
+        };
+
+        if (MySqlHelper.ExecuteNonQuery(state.DB, insertQuery, insertParams) > 0)
+        {
+            if (UpdateUserBalance(request.UserId, request.BidAmount, state))
+            {
+                return new BidResult(true, "Bid successfully placed.", request.BidAmount);
+            }
+            else
+            {
+                return new BidResult(false, "Failed to update user balance.");
+            }
+        }
+        else
+        {
+            return new BidResult(false, "Failed to place the bid.");
+        }
+    }
+
+    public static bool UpdateUserBalance(int userId, int bidAmount, State state)
+    {
+        string updateQuery = "UPDATE users SET balance = balance - @bidAmount WHERE id = @userId";
+        var updateParams = new[] {
+            new MySqlParameter("@userId", userId),
+            new MySqlParameter("@bidAmount", bidAmount)
+        };
+
+        int result = MySqlHelper.ExecuteNonQuery(state.DB, updateQuery, updateParams);
+        return result > 0;
+    }
+  
 }
