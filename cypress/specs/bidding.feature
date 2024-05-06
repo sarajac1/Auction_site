@@ -6,7 +6,7 @@ Feature: Bidding
     And that I am on "/item/1" page
   
   Scenario: bid
-    When I enter a "bidAmount" "621"
+    When I enter a "bidAmount" "625"
     And I click on the the "placeBidButton"
-    Then "highestBid" updates to the inputted "621"
+    Then "highestBid" updates to the inputted "625"
 
