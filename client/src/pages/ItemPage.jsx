@@ -75,8 +75,8 @@ function ItemPage() {
               <br />
               Starting Bid: {selectedListing.startBid} Souls
             </div>
-            <div className="darkText">Highest bid is: </div>
-            <div className="priceText">{selectedListing.currentBid} Souls</div>
+            <div className="darkText" >Highest bid is: </div>
+            <div className="priceText" id="highestBid">{selectedListing.currentBid} Souls</div>
             {/* Bid field */}
             <BiddingForm
               selectedListing={selectedListing}

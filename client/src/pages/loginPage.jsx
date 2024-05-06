@@ -25,13 +25,13 @@ function LoginPage() {
       setIsLoggedIn(false);
     }
 
-    async function load() {
+/*     async function load() {
       const response = await fetch("/db.json");
       let AllUsers = await response.json();
       const UsersList = AllUsers.users;
       setUsersList(UsersList);
     }
-    load();
+    load(); */
   }, []);
 
   const [UsersList, setUsersList] = useState([]);
@@ -313,6 +313,7 @@ function LoginPage() {
                     <input
                       style={{ marginLeft: "20px" }}
                       type="text"
+                      id="username"
                       name="newUsername"
                       placeholder="Enter Username"
                       value={newUser.newUsername}
@@ -324,6 +325,7 @@ function LoginPage() {
                     <input
                       style={{ marginLeft: "20px" }}
                       type={passwordShown ? "text" : "password"}
+                      id="password"
                       name="newUserPassword"
                       placeholder="Enter Password"
                       value={newUser.newUserPassword}
