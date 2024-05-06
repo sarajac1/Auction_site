@@ -89,7 +89,7 @@ const Gallery = () => {
     );
   }
   return (
-    <div
+    <div id="GalleryPage"
       className="container"
       style={{ paddingTop: "40px", paddingBottom: "40px" }}
     >
