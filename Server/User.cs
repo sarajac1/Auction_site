@@ -101,30 +101,32 @@ public static class Users
   // FIND USER BY USERNAME
   public static User FindUserByUsername(UserCredentials credentials, State state)
   {
-    var reader = MySqlHelper.ExecuteReader(
-      state.DB,
-      "SELECT * FROM users WHERE username = @Username", [new("@Username", credentials.username)]
-      );
+    using (var connection = new MySqlConnection(state.DB))
+    {
+      connection.Open();
+      var command = new MySqlCommand("SELECT * FROM users WHERE username = @Username", connection);
+      command.Parameters.AddWithValue("@Username", credentials.username);
 
-    if (reader.Read())
-    {
-      var user = new User
+      using (var reader = command.ExecuteReader())
       {
-        id = reader.GetInt32("id"),
-        username = reader.GetString("username"),
-        password = reader.GetString("password"),
-        joinedDate = reader.GetDateTime("joineddate"),
-        address = reader.GetString("address"),
-        email = reader.GetString("email"),
-        balance = reader.GetDecimal("balance"),
-        isAdmin = reader.GetBoolean("isAdmin")
-      };
-      return user;
+        if (reader.Read())
+        {
+          var user = new User
+          {
+            id = reader.GetInt32("id"),
+            username = reader.GetString("username"),
+            password = reader.GetString("password"),
+            joinedDate = reader.GetDateTime("joineddate"),
+            address = reader.GetString("address"),
+            email = reader.GetString("email"),
+            balance = reader.GetDecimal("balance"),
+            isAdmin = reader.GetBoolean("isAdmin")
+          };
+          return user;
+        }
+      }
     }
-    else
-    {
-      return null;
-    }
+    return null;
   }
 
   // ADD USER BALANCE
