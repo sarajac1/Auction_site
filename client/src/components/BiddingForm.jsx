@@ -76,9 +76,9 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   return (
       <div>
         <form onSubmit={handleSubmit}>
-          <label className='bid_amount_text'>
+          <label className='bid_amount_text' id="bidAmount">
             <p>Bid Amount:</p>
-            <div className='bids_buttons'>
+            <div className='bids_buttons' id="placeBidButton">
               <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
               <button className="rounded-button" type="submit">Place Bid</button>
             </div>
