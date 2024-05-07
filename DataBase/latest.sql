@@ -19,7 +19,7 @@
 -- Temporary view structure for view `active_auctions`
 --
 
-CREATE DATABASE 'auction_site';
+CREATE DATABASE auction_site;
 USE auction_site;
 
 SET @saved_cs_client     = @@character_set_client;
