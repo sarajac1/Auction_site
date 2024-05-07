@@ -43,7 +43,7 @@ SET character_set_client = @saved_cs_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 
 CREATE DATABASE 'auction_site';
-
+USE auction_site;
 
 
 CREATE TABLE `bids` (
