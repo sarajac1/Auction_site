@@ -19,6 +19,9 @@
 -- Temporary view structure for view `active_auctions`
 --
 
+CREATE DATABASE 'auction_site';
+USE auction_site;
+
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `active_auctions` AS SELECT 
@@ -41,10 +44,6 @@ SET character_set_client = @saved_cs_client;
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-
-CREATE DATABASE 'auction_site';
-USE auction_site;
-
 
 CREATE TABLE `bids` (
   `id` int NOT NULL AUTO_INCREMENT,
