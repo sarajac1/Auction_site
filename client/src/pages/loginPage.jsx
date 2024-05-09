@@ -159,7 +159,7 @@ function LoginPage() {
       "username": newUser.newUsername,
       "password": newUser.newUserPassword
     }
-        alert(JSON.stringify(data))
+        //alert(JSON.stringify(data))
         
     const res = await fetch("/api/login", {
         method: "POST",
@@ -171,7 +171,7 @@ function LoginPage() {
     
     //https://opa23-ha.lms.nodehill.se/article/code-along-page-turner-fullstack-applikation
         const existingUser = await res.json()
-        alert(JSON.stringify(existingUser))
+        //alert(JSON.stringify(existingUser))
         localStorage.setItem("token", existingUser.username); 
         localStorage.setItem("token_id", existingUser.id);
         localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
