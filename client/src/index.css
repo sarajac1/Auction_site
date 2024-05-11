@@ -816,6 +816,9 @@ input {
     flex-direction: column;
   }
 
+  .end-date-container {
+    color: whitesmoke;
+  }
   .description-input {
     width: 100%;
     max-width: 100%;
