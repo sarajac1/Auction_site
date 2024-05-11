@@ -1,0 +1,11 @@
+import { Given, Then } from "@badeball/cypress-cucumber-preprocessor";
+
+Given('I am on the {string} page and am not logged in', (path: string) => {
+  cy.visit(path);
+}); 
+
+Then('I should see navigation tabs to {string} and {string}', (tab1: string, tab2: string) => {
+  cy.get('nav').should('be.visible');
+  cy.contains(tab1).should('be.visible');
+  cy.contains(tab2).should('be.visible');
+}); 
