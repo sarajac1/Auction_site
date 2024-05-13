@@ -281,7 +281,7 @@ function LoginPage() {
                     <button className="forgot_pass_button" type="button" onClick={handleForgotPasswordClick}>Forgot Password</button>
                   </div>
                   <div className="two_buttons_div">
-                    <button className="rounded-button-small register_button" onClick={handleRegisterClick}>
+                    <button id="register" className="rounded-button-small register_button" onClick={handleRegisterClick}>
                       Register
                     </button>
                     <button className="rounded-button-small" type="submit">
