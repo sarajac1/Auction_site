@@ -3,28 +3,23 @@ import React, { useState, useEffect } from 'react';
 const UserListings = ({ sellerid }) => {
   const [listings, setListings] = useState([]);
   const [allListings, setAllListings] = useState([]);
-  const [bids, setBids] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [bids, setBids] = useState([]);  
   const isAdmin = localStorage.getItem("isAdmin") === 'true';
-
-
 
   useEffect(() => {
     const fetchListings = async () => {
       try {
         const listingsResponse = await fetch("/api/listings");
-        const listings = await listingsResponse.json();        
-       
+        const listings = await listingsResponse.json();               
         const filteredListings = listings.filter(listing => listing.sellerid.toString() === sellerid);
         const allListings = listings
 
         // Filter listings based on sellerid
-
         // Update state with filtered listings
         setListings(filteredListings);
         setBids(bids);
         setAllListings(allListings);
-        setUsers(users);
+        //setUsers(users);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -42,17 +37,7 @@ const UserListings = ({ sellerid }) => {
     return 'No bids';
   };
 
-  const getUserName = (sellerid) => {
-    const filteredUsers = users.filter(user => user.id.toString() === sellerid.toString())
-    console.log(filteredUsers)
-    if (filteredUsers.length > 0) {
-      
-      return `${filteredUsers[0].username}`;
-    }
-    return 'No User Found!';
-  };
-
-
+ 
   const calculateTimeLeft = (endDate) => {
     const now = new Date();
     const end = new Date(endDate);
@@ -95,10 +80,10 @@ const UserListings = ({ sellerid }) => {
                     <div className='line_which_will_work bottom_line'></div>
                   </td>
                   <td className="listings_info listings_table_details">
-                    <div>{getUserName(listing.sellerid)}</div>
+                    <div>{listing.sellername}</div>
                     <div className='line_which_will_work bottom_line'></div>
                   </td>
-                  <td className="listings_info listings_table_details">{getHighestBid(listing.id)}<div className='line_which_will_work bottom_line'></div></td>
+                  <td className="listings_info listings_table_details">{(listing.highbidamount)}<div className='line_which_will_work bottom_line'></div></td>
 
                   <td className="listings_info listings_table_details">
                     <div>{listing.enddate}</div>
@@ -134,7 +119,7 @@ const UserListings = ({ sellerid }) => {
                     <div className='line_which_will_work bottom_line'></div>
                   </td>
                   <td className="listings_info listings_table_details">{listing.startbid} S <div className='line_which_will_work bottom_line'></div></td>
-                  <td className="listings_info listings_table_details">{getHighestBid(listing.id)}<div className='line_which_will_work bottom_line'></div></td>
+                  <td className="listings_info listings_table_details">{(listing.highbidamount)}<div className='line_which_will_work bottom_line'></div></td>
                   <td className="listings_info listings_table_details">{calculateTimeLeft(listing.enddate)} <div className='line_which_will_work bottom_line'></div></td>
                   <td className="listings_info listings_table_details"> <div className="actions">
                     <button className="edit_button">Edit</button>

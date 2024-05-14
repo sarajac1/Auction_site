@@ -6,41 +6,22 @@ function ItemPage() {
   const { id: itemId } = useParams(); // hook to extract parameters from the URL; renaming the id to itemId
   const [selectedListing, setSelectedListing] = useState(null);
   const [bidAmount, setBidAmount] = useState(0);
-  const [BidPrice, setBidPrice] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("/api/items");
-        const data = await response.json();
-        console.log(data);
-        const listing = data.find(
-          (listing) => listing.id.toString() === itemId
-        );
-        setSelectedListing(listing);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-    fetchData();
-  }, [itemId]);
-
-  useEffect(() => {
-    refreshBids();
+    fetchItem()
   }, []);
-
+  
   // Inside ItemPage component
 
-  async function refreshBids() {
+  async function fetchItem() {
     // Logic to re-fetch or re-calculate bids
     try {
-      const response = await fetch("/api/items");
-      const price = await response.json();
-      setBidPrice(price.bids);
+      const response = await fetch("/api/items/"+itemId);
+      const item = await response.json();
+      console.dir(item)
+      setSelectedListing(item);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setBidPrice([]);
     }
   }
   // Pass this function as a prop to BiddingForm
@@ -94,12 +75,12 @@ function ItemPage() {
               <br />
               Starting Bid: {selectedListing.startBid} Souls
             </div>
-            <div className="darkText">Highest bid is: </div>
-            <div className="priceText">{selectedListing.currentBid} Souls</div>
+            <div className="darkText" >Highest bid is: </div>
+            <div className="priceText" id="highestBid">{selectedListing.currentBid} Souls</div>
             {/* Bid field */}
             <BiddingForm
               selectedListing={selectedListing}
-              onBidSuccess={refreshBids}
+              onBidSuccess={fetchItem}
             />
             <button
               className="discreet-button"

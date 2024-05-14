@@ -77,6 +77,41 @@ public static class Items
       
         return items;
     }
+    public static IResult GetSingle(int id,State state)
+    {
+ 
+    
+        var reader= MySqlHelper.ExecuteReader(state.DB,
+            "select id, seller_username, title, description, image, startdate, enddate, startbid, current_bid, remaining_days, remaining_hours from active_auctions where id = @id",
+            [new("@id",id)]);
+
+
+        if (reader.Read())
+        {
+            var item = new Item
+            {
+                Id = reader.GetInt32("id"),
+                SellerName = reader["seller_username"] as string,
+                Title = reader["title"] as string,
+                Description = reader["description"] as string,
+                Image = reader["image"] as string,
+                StartDate = reader.GetDateTime("startdate"),
+                EndDate = reader.GetDateTime("enddate"),
+                StartBid = reader.GetInt32("startbid"),
+                CurrentBid = reader.GetInt32("current_bid"),
+                RemainingDays = reader.GetInt32("remaining_days"),
+                RemainingHours = reader.GetInt32("remaining_hours"),
+            };
+            return TypedResults.Ok(item);
+        }
+        else
+        {
+            return TypedResults.NotFound();
+        }
+        
+      
+      
+    }
         public static List<Item> GetSearchedItems(State state)
     {
         var items = new List<Item>();

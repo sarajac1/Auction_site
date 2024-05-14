@@ -72,26 +72,6 @@ public static class Bids
         }
         return bids;
     }
-    public record SingleDTO(int id, int balance);
-
-    public static SingleDTO? Single(int id, State state)
-    {
-        SingleDTO? result = null;
-
-        string query = "SELECT id, balance FROM users WHERE id = @id";
-        var parameter = new MySqlParameter("@id", id);
-
-        using var reader = MySqlHelper.ExecuteReader(state.DB, query, parameter);
-        if (reader.Read())
-        {
-            int fetchedId = reader.GetInt32(reader.GetOrdinal("id"));
-            int fetchedBalance = reader.GetInt32(reader.GetOrdinal("balance"));
-
-            result = new SingleDTO(fetchedId, fetchedBalance);
-        }
-
-        return result;
-    }
     
     public record BidResult(bool Success, string Message, int? HighestBid = null);
 
@@ -99,15 +79,7 @@ public static class Bids
     
     public static BidResult PlaceBid(int id, BidRequestDTO request, State state)
     {
-        var user = Single(request.UserId, state);
-    
-        if (user == null)
-            return new BidResult(false, "User not found.");
-
-        if (user.balance < request.BidAmount)
-            return new BidResult(false, "Insufficient balance for this bid.");
-
-        // Check highest bid
+        
         string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
         var highestBidParameter = new MySqlParameter("@itemid", request.ItemId);
     
@@ -124,7 +96,6 @@ public static class Bids
             }
         }
 
-        // Insert the bid
         string insertQuery = "INSERT INTO bids (itemid, bidderid, bidamount, datetime, isactive) VALUES (@itemid, @bidderid, @bidamount, NOW(), TRUE)";
         var insertParams = new[] {
             new MySqlParameter("@itemid", request.ItemId),
@@ -134,7 +105,6 @@ public static class Bids
 
         if (MySqlHelper.ExecuteNonQuery(state.DB, insertQuery, insertParams) > 0)
         {
-            // Update balance if bid is successfully placed
             if (UpdateUserBalance(request.UserId, request.BidAmount, state))
             {
                 return new BidResult(true, "Bid successfully placed.", request.BidAmount);
@@ -161,5 +131,5 @@ public static class Bids
         int result = MySqlHelper.ExecuteNonQuery(state.DB, updateQuery, updateParams);
         return result > 0;
     }
-
+  
 }

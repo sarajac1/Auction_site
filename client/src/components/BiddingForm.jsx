@@ -57,12 +57,12 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
         const result = await response.json();
         console.log(result)
         if (!response.ok) {
-          throw new Error(result.Message || 'Unknown error');
+          throw new Error(result.message || 'Unknown error');
         }
 
-        setMessage(result.Message);
-        setNewBalance(result.NewBalance); // Assume NewBalance is returned on successful bid
-        localStorage.setItem('balance', result.NewBalance); // Update balance in local storage
+        setMessage(result.message);
+        setNewBalance(result.highestBid); // Assume NewBalance is returned on successful bid
+        localStorage.setItem('balance', result.highestBid); // Update balance in local storage
         onBidSuccess();
       } catch (error) {
         setMessage(`Error: ${error.message}`);
@@ -76,9 +76,9 @@ function BiddingForm({ selectedListing, onBidSuccess }) {
   return (
       <div>
         <form onSubmit={handleSubmit}>
-          <label className='bid_amount_text'>
+          <label className='bid_amount_text' id="bidAmount">
             <p>Bid Amount:</p>
-            <div className='bids_buttons'>
+            <div className='bids_buttons' id="placeBidButton">
               <input id="bid-input" type="number" value={bid} onChange={e => setBid(e.target.value)} />
               <button className="rounded-button" type="submit">Place Bid</button>
             </div>
