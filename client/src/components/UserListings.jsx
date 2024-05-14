@@ -131,7 +131,7 @@ const UserListings = ({ sellerid }) => {
               ))}
             </tbody>
           </table>
-          <button className='button_create_listing'><a className='a_create_listing' href="/AddListing">Create listing</a></button>
+            <button id="createListingButton" className='button_create_listing'><a className='a_create_listing' href="/AddListing">Create listing</a></button>
         </div>)}
     </div>
 );

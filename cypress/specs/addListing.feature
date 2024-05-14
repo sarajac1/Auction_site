@@ -1,7 +1,8 @@
 Feature: Add Listing
-  Check that i can add a listing
+  Check that i can go to the add listing page
 
-  Scenario: add listing
+  Scenario: view add listing page 
     Given I log in with username "usifer" and password "123abc"
-    And that I am on "/AddListing" page
+    And that I am on "/listings" 
+    When I click on "createListingButton"
     Then "/AddListing" page will be displayed
