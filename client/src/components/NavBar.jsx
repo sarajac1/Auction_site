@@ -33,8 +33,8 @@ function NavBar() {
               {/* Links shown when user is logged in (not admin) */}
               {isLoggedIn && !isAdmin && (
                 <>
-                  <Link to="/listings">Your Listings</Link>
-                  <Link to="/bids">Your Bids</Link>
+                  <Link to="/listings" id="your-listings">Your Listings</Link>
+                  <Link to="/bids" id="your-bids">Your Bids</Link>
                   <Link to="/profile">Profile</Link>
                   <span>{Balance(userName.id)} </span>
                 </>
@@ -44,7 +44,7 @@ function NavBar() {
                   {/* Admin-specific links */}
                   {isLoggedIn && isAdmin && (
                     <>
-                      <Link to="/listings">Listings</Link>
+                  <Link to="/listings" id="your-listings">Listings</Link>
                       <Link to="/users">Users</Link>
                     </>
                   )}
