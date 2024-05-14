@@ -5,13 +5,12 @@ const Gallery = () => {
   const [originalGalleryItems, setOriginalGalleryItems] = useState([]);
   const [GalleryItems, setGalleryItems] = useState([]);
   const [BidPrice, setBidPrice] = useState([]);
-
   const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/items");
+        const response = await fetch("/api/GetAllItems");
         const data = await response.json();
         setOriginalGalleryItems(data);
         setGalleryItems(data);
@@ -25,6 +24,25 @@ const Gallery = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `/api/GetSearchedItems?search=${searchWord}`
+        );
+        const data = await response.json();
+        setOriginalGalleryItems(data);
+        setGalleryItems(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setOriginalGalleryItems([]);
+        setGalleryItems([]);
+      }
+    };
+
+    fetchData();
+  }, [searchWord]);
+
   const SearchGallery = (event) => {
     const searchWord = event.target.value;
     const regex = new RegExp(`\\b${searchWord}\\b|${searchWord}`, "i");
@@ -33,6 +51,7 @@ const Gallery = () => {
     );
     setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   };
+
   useEffect(() => {
     const filteredItems = originalGalleryItems.filter((item) =>
       item.title.includes(searchWord)
@@ -40,6 +59,8 @@ const Gallery = () => {
     setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   }, [searchWord, originalGalleryItems]);
 
+  //Filter original
+  /*
   const FilterGallery = (event) => {
     const filter = event.target.value;
 
@@ -72,6 +93,22 @@ const Gallery = () => {
     }
 
     setGalleryItems(sortedItems);
+  };*/
+
+  //Filter
+  const FilterGallery = (event) => {
+    const filter = event.target.value;
+    //    let sortedItems = [...originalGalleryItems];
+
+    fetch(`/api/GetFilteredItems?sorting=${filter}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setGalleryItems(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    //    setGalleryItems(sortedItems);
   };
 
   function EndsSoon(daysString, hoursString) {
