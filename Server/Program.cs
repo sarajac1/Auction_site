@@ -54,8 +54,16 @@ app.MapPost("/addbalance", Users.AddUserBalance);
 // WITHDRAW FROM USER BALANCE
 app.MapPost("/withdrawbalance", Users.WithdrawUserBalance);
 
-// GET ALL Items
-app.MapGet("/items", Items.GetAllItems);
+// GET ALL ITEMS
+app.MapGet("/GetAllItems", Items.GetAllItems);
+
+// GET SEARCHED ITEMS
+app.MapGet("/GetSearchedItems", Items.GetSearchedItems);
+
+// GET FILTERED ITEMS
+app.MapGet("/GetFilteredItems", Items.GetFilteredItems);
+
+// GET Single, NEEDS TO BE CHECKED!
 app.MapGet("/items/{id}", Items.GetSingle);
 
 // GET ALL BIDS
