@@ -13,6 +13,16 @@ When("I filter by {string}", (a) => {
 Then(
   "I should see all titles filtered from items that ends soon to newest",
   () => {
-    // TODO: implement step
+    cy.get(".filterBar").should("have.value", "EndsSoon");
+    cy.wait(5000);
+
+    cy.get(".gallery-enddate-day").then(($daysLeft) => {
+      for (let i = 0; i < $daysLeft.length - 1; i++) {
+        const currentDays = parseFloat($daysLeft.eq(i).text());
+        const nextDays = parseFloat($daysLeft.eq(i + 1).text());
+
+        cy.wrap(currentDays).should("be.lte", nextDays);
+      }
+    });
   }
 );

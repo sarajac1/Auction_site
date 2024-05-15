@@ -14,6 +14,6 @@ When("I click on an item", () => {
 });
 
 Then("I should get to the item page for that item", () => {
-  cy.get(".item-blurb");
+  cy.get(".item-blurb").should("be.visible");
   // TODO: implement step
 });

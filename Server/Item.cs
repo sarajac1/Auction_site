@@ -160,10 +160,10 @@ public static List<Item> GetFilteredItems(State state, string sorting)
             query += " ORDER BY enddate ASC";
             break;
         case "Newest":
-            query += " ORDER BY startdate DESC";
+            query += " ORDER BY enddate DESC";
             break;
         default:
-            query += " ORDER BY startdate DESC";
+            query += " ORDER BY enddate DESC";
             break;
     }
 
