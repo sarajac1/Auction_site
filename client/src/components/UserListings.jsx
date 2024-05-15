@@ -61,7 +61,7 @@ const UserListings = ({ sellerid }) => {
   return (
     <div className='listings_page'>
       {isAdmin ? (
-      <div className='listings_page_content'>
+      <div id="listings" className='listings_page_content'>
           <h2 className="listings_heading">All Current Listings</h2>
           <table className='listing_table'>
             <thead className='table_head'>
@@ -93,7 +93,7 @@ const UserListings = ({ sellerid }) => {
               ))}
             </tbody>  
           </table>
-          <button className='button_create_listing'><a className='a_create_listing' href="/ArchivedListing">Archived Listings</a></button>
+          {/*  <button className='button_create_listing'><a className='a_create_listing' href="/ArchivedListing">Archived Listings</a></button> */}
         </div>
 
       ) : (

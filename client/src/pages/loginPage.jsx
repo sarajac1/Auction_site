@@ -159,7 +159,7 @@ function LoginPage() {
       "username": newUser.newUsername,
       "password": newUser.newUserPassword
     }
-        alert(JSON.stringify(data))
+        //alert(JSON.stringify(data))
         
     const res = await fetch("/api/login", {
         method: "POST",
@@ -171,7 +171,7 @@ function LoginPage() {
     
     //https://opa23-ha.lms.nodehill.se/article/code-along-page-turner-fullstack-applikation
         const existingUser = await res.json()
-        alert(JSON.stringify(existingUser))
+        //alert(JSON.stringify(existingUser))
         localStorage.setItem("token", existingUser.username); 
         localStorage.setItem("token_id", existingUser.id);
         localStorage.setItem("isAdmin", existingUser.isAdmin.toString());
@@ -281,7 +281,7 @@ function LoginPage() {
                     <button className="forgot_pass_button" type="button" onClick={handleForgotPasswordClick}>Forgot Password</button>
                   </div>
                   <div className="two_buttons_div">
-                    <button className="rounded-button-small register_button" onClick={handleRegisterClick}>
+                    <button id="register" className="rounded-button-small register_button" onClick={handleRegisterClick}>
                       Register
                     </button>
                     <button className="rounded-button-small" type="submit">
