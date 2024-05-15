@@ -61,7 +61,7 @@ const UserListings = ({ sellerid }) => {
   return (
     <div className='listings_page'>
       {isAdmin ? (
-      <div className='listings_page_content'>
+      <div id="listings" className='listings_page_content'>
           <h2 className="listings_heading">All Current Listings</h2>
           <table className='listing_table'>
             <thead className='table_head'>
