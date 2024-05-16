@@ -52,7 +52,7 @@ function NavBar() {
                 {/* Links shown for guests */}
                   {!isLoggedIn && (
                 <>
-                  <Link to="/about-us">About us</Link>
+                  <Link to="/about-us">About Us</Link>
                   <Link to="/jobs">Jobs</Link>
                 </>
               )}
