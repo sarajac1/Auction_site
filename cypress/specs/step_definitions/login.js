@@ -23,5 +23,5 @@ Given('I log in with username {string} and password {string}', (username, passwo
   cy.get('input[name="username"]').type(username);
   cy.get('input[name="password"]').type(password);
   cy.get('button[type="submit"]').click();
-  cy.url().should('include', '/'); // Verifying successful login
+  cy.url().should('include', '/'); 
 });
