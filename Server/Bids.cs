@@ -72,14 +72,41 @@ public static class Bids
         }
         return bids;
     }
-    
+    public record SingleDTO(int id, int balance);
+
+    public static SingleDTO? Single(int id, State state)
+    {
+        SingleDTO? result = null;
+
+        string query = "SELECT id, balance FROM users WHERE id = @id";
+        var parameter = new MySqlParameter("@id", id);
+
+        using var reader = MySqlHelper.ExecuteReader(state.DB, query, parameter);
+        if (reader.Read())
+        {
+            int fetchedId = reader.GetInt32(reader.GetOrdinal("id"));
+            int fetchedBalance = reader.GetInt32(reader.GetOrdinal("balance"));
+
+            result = new SingleDTO(fetchedId, fetchedBalance);
+        }
+
+        return result;
+    }
+
     public record BidResult(bool Success, string Message, int? HighestBid = null);
 
     public record BidRequestDTO(int UserId, int ItemId, int BidAmount);
     
     public static BidResult PlaceBid(int id, BidRequestDTO request, State state)
     {
-        
+        var user = Single(request.UserId, state);
+
+        if (user == null)
+            return new BidResult(false, "User not found.");
+
+        if (user.balance < request.BidAmount)
+            return new BidResult(false, "Insufficient balance for this bid.");
+
         string highestBidQuery = "SELECT MAX(bidamount) as HighestBid FROM bids WHERE itemid = @itemid AND isactive = TRUE";
         var highestBidParameter = new MySqlParameter("@itemid", request.ItemId);
     
