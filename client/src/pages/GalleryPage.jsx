@@ -59,42 +59,6 @@ const Gallery = () => {
     setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
   }, [searchWord, originalGalleryItems]);
 
-  //Filter original
-  /*
-  const FilterGallery = (event) => {
-    const filter = event.target.value;
-
-    let sortedItems = [...originalGalleryItems];
-
-    if (filter === "LowestPrice") {
-      sortedItems.sort((a, b) => {
-        const priceA = a.currentBid;
-        const priceB = b.currentBid;
-        return priceA - priceB;
-      });
-    } else if (filter === "HighestPrice") {
-      sortedItems.sort((a, b) => {
-        const priceA = a.currentBid;
-        const priceB = b.currentBid;
-        return priceB - priceA;
-      });
-    } else if (filter === "EndsSoon") {
-      sortedItems.sort((a, b) => {
-        const endDateA = new Date(a.enddate);
-        const endDateB = new Date(b.enddate);
-        return endDateA - endDateB;
-      });
-    } else if (filter === "Newest") {
-      sortedItems.sort((a, b) => {
-        const dateA = new Date(a.startdate);
-        const dateB = new Date(b.startdate);
-        return dateB - dateA;
-      });
-    }
-
-    setGalleryItems(sortedItems);
-  };*/
-
   //Filter
   const FilterGallery = (event) => {
     const filter = event.target.value;
@@ -115,18 +79,23 @@ const Gallery = () => {
     if (daysString <= 1) {
       return (
         <div className="redText">
-          Ends in: {daysString} days, {hoursString} hours
+          Ends in: <div className="gallery-enddate-day">{daysString} </div>
+          days,
+          {hoursString} hours
         </div>
       );
     }
     return (
       <div className="gallery-enddate">
-        Ends in: {daysString} days, {hoursString} hours
+        Ends in: <div className="gallery-enddate-day">{daysString} </div>
+        days,
+        {hoursString} hours
       </div>
     );
   }
   return (
-    <div id="GalleryPage"
+    <div
+      id="GalleryPage"
       className="container"
       style={{ paddingTop: "40px", paddingBottom: "40px" }}
     >
