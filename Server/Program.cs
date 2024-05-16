@@ -6,7 +6,7 @@ using Server;
 
 var builder = WebApplication.CreateBuilder(args);
 //https://www.nuget.org/packages/MySql.Data
-State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");
+State state = new("server=localhost;uid=root;pwd=4133;database=auction_site;port=3306");
 builder.Services.AddSingleton(state);
 var app = builder.Build();
 
@@ -58,7 +58,8 @@ app.MapPost("/withdrawbalance", Users.WithdrawUserBalance);
 app.MapGet("/GetAllItems", Items.GetAllItems);
 
 // GET SEARCHED ITEMS
-app.MapGet("/GetSearchedItems", Items.GetSearchedItems);
+app.MapGet("/GetSearchedItems", (string search, State appState) => Items.GetSearchedItems(search, appState));
+
 
 // GET FILTERED ITEMS
 app.MapGet("/GetFilteredItems", Items.GetFilteredItems);
