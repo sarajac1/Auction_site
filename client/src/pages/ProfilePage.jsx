@@ -117,7 +117,7 @@ function ProfilePage() {
       <h2 className="profile_text">Update Balance</h2>
       <input ref={inputAddRef} type="number" id="bid-input" name="message" /> <br />
       <button id="addbalance" className="rounded-button-small add_to_ballance" onClick={addToBalance}>Add To Balance</button>
-      <button className="rounded-button-small" onClick={withdrawFromBalance}>Withdraw from Balance</button>
+      <button id="withdrawBalance" className="rounded-button-small" onClick={withdrawFromBalance}>Withdraw from Balance</button>
       {/*<button className="rounded-button-small">Edit profile info</button>*/}
 
     </div>
