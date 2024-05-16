@@ -9,12 +9,16 @@ Given('that I am on {string}', (pageUrl) => {
 });
 
 When('I enter {string} in the {string}', (value, field) => {
-  if (field === "bid-input") {
-    cy.get(`#${field}`).clear().type(value);
-  }
+  cy.get(`#${field}`).clear().type(value);
 });
 
-Then('I click on the {string} button the balance is updated', (buttonId) => {
+When('I click on the {string} button', (buttonId) => {
   cy.get(`#${buttonId}`).click();
+});
+Then('the balance is updated', () => {
+  cy.get('#currentBalance .profile_info_different_collor').invoke('text').then((balanceText) => {
+    const balance = parseFloat(balanceText);
+    expect(balance).to.be.greaterThan(0);
+  });
 });
 
