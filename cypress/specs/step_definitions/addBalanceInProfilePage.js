@@ -4,21 +4,21 @@
     cy.visit(pageUrl);
   });
 
-Given('that I am on {string}', (pageUrl) => {
-  cy.visit(pageUrl);
-});
-
-When('I enter {string} in the {string}', (value, field) => {
-  cy.get(`#${field}`).clear().type(value);
-});
-
-When('I click on the {string} button', (buttonId) => {
-  cy.get(`#${buttonId}`).click();
-});
-Then('the balance is updated', () => {
-  cy.get('#currentBalance .profile_info_different_collor').invoke('text').then((balanceText) => {
-    const balance = parseFloat(balanceText);
-    expect(balance).to.be.greaterThan(0);
+  Given('that I am on {string}', (pageUrl) => {
+    cy.visit(pageUrl);
   });
+
+  When('I enter {string} in the {string}', (value, field) => {
+    cy.get(`#${field}`).clear().type(value);
+  });
+
+  When('I click on the {string} button', (buttonId) => {
+    cy.get(`#${buttonId}`).click();
+  });
+  Then('the balance is updated', () => {
+    cy.get('#currentBalance .profile_info_different_collor').invoke('text').then((balanceText) => {
+      const balance = parseFloat(balanceText);
+      expect(balance).to.be.greaterThan(0);
+    });
 });
 
