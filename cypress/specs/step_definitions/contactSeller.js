@@ -11,8 +11,19 @@ Given('I am on the bids page', () => {
   cy.visit('/bids'); // Убедитесь, что это правильный URL страницы ставок
 });
 
+Given('I have won a bid', () => {
+  // Этот шаг проверяет наличие выигранной ставки
+  cy.get('.bids_table tbody tr').should('have.length.greaterThan', 0);
+  cy.get('.bids_table tbody tr').each(($el) => {
+    if ($el.hasClass('text-white') && $el.find('td').eq(2).text().trim() === 'Win') {
+      cy.wrap($el).as('winningBid');
+      return false; // Останавливаем перебор строк
+    }
+  });
+});
+
 When('I click on the "Contact Seller" button for the winning item', () => {
-  cy.get('.contact_seller_cell .bids_button_contact_seller').first().click();
+  cy.get('@winningBid').find('.bids_button_contact_seller').click();
 });
 
 Then('I should see contact details for the seller', () => {

@@ -1,7 +1,7 @@
 Feature: Contact Seller
 
   Background:
-    Given I am logged in as user "mikedavis" with password "mike001"
+    Given I am logged in as user "usifer" with password "123abc"
     And I am on the bids page
 
   Scenario: Successfully contact the seller after winning a bid

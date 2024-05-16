@@ -1,7 +1,7 @@
 Feature: Create Listing
 
   Background:
-    Given I am logged in as "mikedavis" with password "mike001"
+    Given I am logged in as "usifer" with password "123abc"
     And I am on the listings page
 
   Scenario: User can create a listing successfully
