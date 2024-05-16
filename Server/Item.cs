@@ -112,41 +112,31 @@ public static class Items
       
       
     }
-public static List<Item> GetSearchedItems(State state, string searchString)
+public static List<Item> GetSearchedItems(string search, State state)
 {
     var items = new List<Item>();
 
-    using (var connection = new MySqlConnection(state.DB))
-    {
-        connection.Open();
-        
-        var query = "SELECT id, seller_username, title, description, image, startdate, enddate, startbid, current_bid, remaining_days, remaining_hours FROM active_auctions WHERE title LIKE @searchString";
-        using (var command = new MySqlCommand(query, connection))
-        {
-            command.Parameters.AddWithValue("@searchString", "%" + searchString + "%");
+    var reader = MySqlHelper.ExecuteReader(state.DB,
+        "SELECT id, seller_username, title, description, image, startdate, enddate, startbid, current_bid, remaining_days, remaining_hours FROM active_auctions WHERE title LIKE CONCAT('%', @search_string, '%') OR description LIKE CONCAT('%', @search_string, '%')",
+        new MySqlParameter("@search_string", search));
 
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var item = new Item
-                    {
-                        Id = reader.GetInt32("id"),
-                        SellerName = reader["seller_username"] as string,
-                        Title = reader["title"] as string,
-                        Description = reader["description"] as string,
-                        Image = reader["image"] as string,
-                        StartDate = reader.GetDateTime("startdate"),
-                        EndDate = reader.GetDateTime("enddate"),
-                        StartBid = reader.GetInt32("startbid"),
-                        CurrentBid = reader.GetInt32("current_bid"),
-                        RemainingDays = reader.GetInt32("remaining_days"),
-                        RemainingHours = reader.GetInt32("remaining_hours"),
-                    };
-                    items.Add(item);
-                }
-            }
-        }
+    while (reader.Read())
+    {
+        var item = new Item
+        {
+            Id = reader.GetInt32("id"),
+            SellerName = reader["seller_username"] as string,
+            Title = reader["title"] as string,
+            Description = reader["description"] as string,
+            Image = reader["image"] as string,
+            StartDate = reader.GetDateTime("startdate"),
+            EndDate = reader.GetDateTime("enddate"),
+            StartBid = reader.GetInt32("startbid"),
+            CurrentBid = reader.GetInt32("current_bid"),
+            RemainingDays = reader.GetInt32("remaining_days"),
+            RemainingHours = reader.GetInt32("remaining_hours"),
+        };
+        items.Add(item);
     }
 
     return items;

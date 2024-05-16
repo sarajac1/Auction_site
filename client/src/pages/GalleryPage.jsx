@@ -24,45 +24,23 @@ const Gallery = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `/api/GetSearchedItems?search=${searchWord}`
-        );
-        const data = await response.json();
-        setOriginalGalleryItems(data);
-        setGalleryItems(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setOriginalGalleryItems([]);
-        setGalleryItems([]);
-      }
-    };
-
-    fetchData();
-  }, [searchWord]);
-
   const SearchGallery = (event) => {
     const searchWord = event.target.value;
-    const regex = new RegExp(`\\b${searchWord}\\b|${searchWord}`, "i");
-    const filteredItems = originalGalleryItems.filter((item) =>
-      regex.test(item.title)
-    );
-    setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
+    setSearchWord(searchWord);
+    if (searchWord !== "")
+      fetch(`/api/GetSearchedItems?search=${searchWord}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setGalleryItems(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
   };
-
-  useEffect(() => {
-    const filteredItems = originalGalleryItems.filter((item) =>
-      item.title.includes(searchWord)
-    );
-    setGalleryItems(searchWord ? filteredItems : originalGalleryItems);
-  }, [searchWord, originalGalleryItems]);
 
   //Filter
   const FilterGallery = (event) => {
     const filter = event.target.value;
-    //    let sortedItems = [...originalGalleryItems];
 
     fetch(`/api/GetFilteredItems?sorting=${filter}`)
       .then((response) => response.json())
@@ -72,7 +50,6 @@ const Gallery = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-    //    setGalleryItems(sortedItems);
   };
 
   function EndsSoon(daysString, hoursString) {
