@@ -6,4 +6,4 @@ Feature: Add balance in profile page
     And that I am on "/profile" pagee
     When I enter "500" in the "bid-input"
     Then I click on the "addbalance" button 
-    Then the balance is updated
+    Then the balance is updated by "500"

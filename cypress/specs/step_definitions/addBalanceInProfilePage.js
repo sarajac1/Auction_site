@@ -15,9 +15,9 @@
   When('I click on the {string} button', (buttonId) => {
     cy.get(`#${buttonId}`).click();
   });
-  Then('the balance is updated', () => {
+  Then('the balance is updated by {string}', () => {
     cy.get('#currentBalance .profile_info_different_collor').invoke('text').then((balanceText) => {
-      const balance = parseFloat(balanceText);
+      const balance = parseInt(balanceText, 10);
       expect(balance).to.be.greaterThan(0);
     });
 });
