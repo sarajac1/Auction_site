@@ -1,7 +1,7 @@
 Feature: Bidding
     Check that i can make a bid   
   
-  Scenario: bid
+  Scenario: make a bid
     Given I log in with username "usifer" and password "123abc"
     And that I am on "/item/1" page
     Given I fetch the latest bid
