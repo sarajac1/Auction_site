@@ -35,6 +35,7 @@ function ProfilePage() {
   const inputAddRef = useRef(null);
 
   async function addToBalance() {
+    alert("1")
     const amount = parseInt(inputAddRef.current.value, 10);
     if (isNaN(amount) || amount <= 0) {
       alert("Please enter a valid number greater than 0");
@@ -108,14 +109,14 @@ function ProfilePage() {
           <div className="profile_text profile_password profile_user_info profile_display">Password: <div className="profile_info_different_collor">{loggedInUser.password}</div></div>
           <div className="profile_text profile_email profile_user_info profile_display">Email: <div className="profile_info_different_collor">{loggedInUser.email}</div></div>
           <div className="profile_text profile_address profile_user_info profile_display">Address: <div className="profile_info_different_collor">{loggedInUser.address}</div></div>
-          <div className="profile_text profile_current_ballance profile_user_info profile_display">Current Balance: <div className="profile_info_different_collor">{loggedInUser.balance}</div></div>
+          <div id="currentBalance" className="profile_text profile_current_ballance profile_user_info profile_display">Current Balance: <div className="profile_info_different_collor">{loggedInUser.balance}</div></div>
         </>
       ) : (
         <p>Loading user data...</p>
       )}
       <h2 className="profile_text">Update Balance</h2>
       <input ref={inputAddRef} type="number" id="bid-input" name="message" /> <br />
-      <button className="rounded-button-small add_to_ballance" onClick={addToBalance}>Add To Balance</button>
+      <button id="addbalance" className="rounded-button-small add_to_ballance" onClick={addToBalance}>Add To Balance</button>
       <button className="rounded-button-small" onClick={withdrawFromBalance}>Withdraw from Balance</button>
       {/*<button className="rounded-button-small">Edit profile info</button>*/}
 
