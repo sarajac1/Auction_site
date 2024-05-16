@@ -112,35 +112,45 @@ public static class Items
       
       
     }
-        public static List<Item> GetSearchedItems(State state)
+public static List<Item> GetSearchedItems(State state, string searchString)
+{
+    var items = new List<Item>();
+
+    using (var connection = new MySqlConnection(state.DB))
     {
-        var items = new List<Item>();
-
-        var reader = MySqlHelper.ExecuteReader(state.DB,
-            "select id, seller_username, title, description, image, startdate, enddate, startbid, current_bid, remaining_days, remaining_hours from active_auctions WHERE title LIKE '%search_string%'");
-
-        while (reader.Read())
-        {
-            var item = new Item
-            {
-                Id = reader.GetInt32("id"),
-                SellerName = reader["seller_username"] as string,
-                Title = reader["title"] as string,
-                Description = reader["description"] as string,
-                Image = reader["image"] as string,
-                StartDate = reader.GetDateTime("startdate"),
-                EndDate = reader.GetDateTime("enddate"),
-                StartBid = reader.GetInt32("startbid"),
-                CurrentBid = reader.GetInt32("current_bid"),
-                RemainingDays = reader.GetInt32("remaining_days"),
-                RemainingHours = reader.GetInt32("remaining_hours"),
-            };
-            items.Add(item);
-        }
+        connection.Open();
         
-      
-        return items;
+        var query = "SELECT id, seller_username, title, description, image, startdate, enddate, startbid, current_bid, remaining_days, remaining_hours FROM active_auctions WHERE title LIKE @searchString";
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@searchString", "%" + searchString + "%");
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var item = new Item
+                    {
+                        Id = reader.GetInt32("id"),
+                        SellerName = reader["seller_username"] as string,
+                        Title = reader["title"] as string,
+                        Description = reader["description"] as string,
+                        Image = reader["image"] as string,
+                        StartDate = reader.GetDateTime("startdate"),
+                        EndDate = reader.GetDateTime("enddate"),
+                        StartBid = reader.GetInt32("startbid"),
+                        CurrentBid = reader.GetInt32("current_bid"),
+                        RemainingDays = reader.GetInt32("remaining_days"),
+                        RemainingHours = reader.GetInt32("remaining_hours"),
+                    };
+                    items.Add(item);
+                }
+            }
+        }
     }
+
+    return items;
+}
 
 public static List<Item> GetFilteredItems(State state, string sorting)
 {
