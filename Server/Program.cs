@@ -6,7 +6,7 @@ using Server;
 
 var builder = WebApplication.CreateBuilder(args);
 //https://www.nuget.org/packages/MySql.Data
-State state = new("server=localhost;uid=root;pwd=root;database=auction_site;port=3307");
+State state = new("server=localhost;uid=root;pwd=mypassword;database=auction_site;port=3306");
 builder.Services.AddSingleton(state);
 var app = builder.Build();
 
