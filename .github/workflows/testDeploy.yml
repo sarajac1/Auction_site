@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: npm install && npm ci
       - name: Start the client server
-        run: nohup cd ./client && npm run dev
+        run: nohup cd client && npm run dev
       - name: Start the dotnet server
         run: nohup cd .. && cd ./server && dotnet run
       - name: Install Cypress dependencies
