@@ -50,7 +50,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
@@ -69,5 +69,5 @@ jobs:
             cd /var/www/Auction_site/Server
             rm -r dist
             cp -r /var/www/Auction_site/client/dist .
-            pm2 delete onlineauktion
-            pm2 start --name onlineauktion "dotnet run"
+            pm2 delete Auction_site
+            pm2 start --name Auction_site "dotnet run"
