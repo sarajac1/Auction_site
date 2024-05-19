@@ -40,4 +40,4 @@ jobs:
           script: |
             cd /var/www/Auction_site
             git pull
-            ~~~~
+            
