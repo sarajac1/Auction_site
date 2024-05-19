@@ -7,5 +7,5 @@ Feature: Bidding
     Given I fetch the latest bid
     When I enter the new bid amount
     And I click on the the "placeBidButton"
-    Then "highestBid" updates to the new bid amount
+    Then "highestBid" updates to the new bid amountt
 

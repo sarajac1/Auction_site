@@ -25,7 +25,7 @@ When('I click on the the {string}', (buttonId) => {
   cy.get(`#${buttonId} button`).click();
 });
 
-Then('{string} updates to the new bid amount', (elementId) => {
+Then('{string} updates to the new bid amountt', (elementId) => {
   cy.get('@newBidAmount').then((newBid) => {
     cy.get(`#${elementId}`).should(($element) => {
       const text = $element.text();
