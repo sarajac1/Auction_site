@@ -2,9 +2,9 @@ name: Test Deploy
 
 on:
   push:
-    branches: ["dev", "dev", "actionsBranch"]
+    branches: ["dev", "main", "actionsBranch", "Showcase"]
   pull_request:
-    branches: ["main", "dev", "actionsBranch"]
+    branches: ["main", "dev", "actionsBranch", "Showcase"]
 
 jobs:
   cypress_tests:
