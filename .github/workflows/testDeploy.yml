@@ -2,9 +2,9 @@ name: Test Deploy
 
 on:
   push:
-    branches: ["dev", "dev", "actionsBranch", "balanceFromDecomalToInt"]
+    branches: ["dev", "dev", "actionsBranch", "balanceFromDecimalToInt"]
   pull_request:
-    branches: ["main", "dev", "actionsBranch", "balanceFromDecomalToInt"]
+    branches: ["main", "dev", "actionsBranch", "balanceFromDecimalToInt"]
 
 jobs:
   cypress_tests:
