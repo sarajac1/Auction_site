@@ -6,9 +6,7 @@ on:
   pull_request:
     branches: ["main"]
 
-
 jobs:
-
   cypress_tests:
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +16,7 @@ jobs:
         with:
           node-version: "20"
       - name: Install dependencies
-        run: npm ci
+        run: npm install npm@5 && npm ci
       - name: Start the server
         run: nohup npm run start &
       - name: Install Cypress dependencies
@@ -27,8 +25,7 @@ jobs:
         run: npm run test
 
   deploy:
-    runs-on:
-      ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Doing a deploy
         uses: appleboy/ssh-action@v0.1.10
