@@ -45,9 +45,10 @@ jobs:
       #   working-directory: ./cypress
 
   deploy:
+    needs: cypress_tests
     runs-on: ubuntu-latest
     steps:
-      - name: Doing a deploy
+      - name: Deploying build
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.HOST }}
@@ -55,6 +56,20 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /var/www/Auction_site
+            echo "Deploying to the server"
+            source /root/.nvm/nvm.sh
+            nvm use v20.12.2
+            echo "Checking node and npm versions"
+            node -v
+            npm -v
+            cd /var/www/Onlineauktion
             git pull
-            ~~~~
+            rm -r cypress
+            cd /var/www/Onlineauktion/Client
+            npm ci
+            npm run build
+            cd /var/www/Onlineauktion/Server
+            rm -r dist
+            cp -r /var/www/Onlineauktion/Client/dist .
+            pm2 delete onlineauktion
+            pm2 start --name onlineauktion "dotnet run"
