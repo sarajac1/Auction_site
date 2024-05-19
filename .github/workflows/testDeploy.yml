@@ -32,6 +32,7 @@ jobs:
           cache: "npm"
       - name: Install and start client server
         run: |
+          npm install
           npm ci
           npm run dev &
           npx wait-on http://localhost:5173
