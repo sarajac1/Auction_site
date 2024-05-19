@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "node ./client/src/App.js",
+    "start": "node ./backend/server.js",
     "test": "cd ./cypress && npm run test",
     "dev": "vite",
     "build": "vite build",
