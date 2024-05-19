@@ -1,0 +1,75 @@
+name: Test Deploy
+
+on:
+  push:
+    branches: ["dev", "dev", "actionsBranch"]
+  pull_request:
+    branches: ["main", "dev", "actionsBranch"]
+
+jobs:
+  cypress_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET Server
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore .NET dependencies
+        run: dotnet restore
+        working-directory: ./Server
+      - name: Build .NET Server
+        run: dotnet build --no-restore
+        working-directory: ./Server
+      - name: Run .NET Server
+        run: nohup dotnet run &
+        working-directory: ./Server
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Install and start client server
+        run: |
+          npm install
+          npm ci
+          npm run dev &
+          npx wait-on http://localhost:5173
+        working-directory: ./client
+      # Cypress Tests should be Disabled
+      # - name: Install and run Cypress tests
+      #   run: |
+      #     npm ci
+      #     npm run test
+      #   working-directory: ./cypress
+
+  deploy:
+    needs: cypress_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying build
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            echo "Deploying to the server"
+            source /root/.nvm/nvm.sh
+            nvm use v20.12.2
+            echo "Checking node and npm versions"
+            node -v
+            npm -v
+            cd /var/www/Auction_site
+            git pull
+            rm -r cypress
+            cd /var/www/Auction_site/client
+            npm ci
+            npm run build
+            cd /var/www/Auction_site/Server
+            rm -r dist
+            cp -r /var/www/Auction_site/client/dist .
+            pm2 delete Auction_site
+            pm2 start --name Auction_site "dotnet run"
