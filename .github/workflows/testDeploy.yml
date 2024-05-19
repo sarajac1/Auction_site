@@ -62,14 +62,14 @@ jobs:
             echo "Checking node and npm versions"
             node -v
             npm -v
-            cd /var/www/Onlineauktion
+            cd /var/www/Auction_site
             git pull
             rm -r cypress
-            cd /var/www/Onlineauktion/Client
+            cd /var/www/Auction_site/client
             npm ci
             npm run build
-            cd /var/www/Onlineauktion/Server
+            cd /var/www/Auction_site/Server
             rm -r dist
-            cp -r /var/www/Onlineauktion/Client/dist .
-            pm2 delete onlineauktion
-            pm2 start --name onlineauktion "dotnet run"
+            cp -r /var/www/Auction_site/client/dist .
+            pm2 delete Auction_site
+            pm2 start --name Auction_site "dotnet run"
