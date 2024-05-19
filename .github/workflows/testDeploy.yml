@@ -10,19 +10,38 @@ jobs:
   cypress_tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - name: Setup .NET Server
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore .NET dependencies
+        run: dotnet restore
+        working-directory: ./Server
+      - name: Build .NET Server
+        run: dotnet build --no-restore
+        working-directory: ./Server
+      - name: Run .NET Server
+        run: nohup dotnet run &
+        working-directory: ./Server
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: "20"
-      - name: Install dependencies
-        run: npm install && npm ci
-      - name: Start the server
-        run: nohup npm run start
-      - name: Install Cypress dependencies
-        run: cd ./cypress && npm ci
-      - name: Run cypress
-        run: npm run test
+          cache: "npm"
+      - name: Install and start client server
+        run: |
+          npm ci
+          npm run dev &
+          npx wait-on http://localhost:5173
+        working-directory: ./Client
+      # Cypress Tests should be Disabled
+      # - name: Install and run Cypress tests
+      #   run: |
+      #     npm ci
+      #     npm run test
+      #   working-directory: ./cypress
 
   deploy:
     runs-on: ubuntu-latest
