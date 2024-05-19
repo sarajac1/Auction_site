@@ -49,7 +49,7 @@ CREATE TABLE `bids` (
   `id` int NOT NULL AUTO_INCREMENT,
   `itemid` int DEFAULT NULL,
   `bidderid` int DEFAULT NULL,
-  `bidamount` decimal(10,2) DEFAULT NULL,
+  `bidamount` int DEFAULT NULL,
   `datetime` datetime DEFAULT NULL,
   `isactive` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -82,7 +82,7 @@ CREATE TABLE `listings` (
   `image` text,
   `startdate` date NOT NULL DEFAULT (now()),
   `enddate` datetime NOT NULL DEFAULT ((now() + interval 7 day)),
-  `startbid` decimal(10,2) DEFAULT NULL,
+  `startbid` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `sellerid` (`sellerid`),
   CONSTRAINT `listing_ibfk_1` FOREIGN KEY (`sellerid`) REFERENCES `users` (`id`)
@@ -110,7 +110,7 @@ CREATE TABLE `users` (
   `joineddate` date NOT NULL DEFAULT (now()),
   `address` text,
   `email` varchar(255) DEFAULT NULL,
-  `balance` decimal(10,2) DEFAULT '0.00',
+  `balance` int DEFAULT '0',
   `isAdmin` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
