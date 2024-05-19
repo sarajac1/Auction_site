@@ -17,10 +17,8 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: npm install && npm ci
-      - name: Start the client server
-        run: cd ./client && npm run dev
-      - name: Start the dotnet server
-        run: nohup cd .. && cd ./server && dotnet run
+      - name: Start the server
+        run: nohup npm run start
       - name: Install Cypress dependencies
         run: cd ./cypress && npm ci
       - name: Run cypress
