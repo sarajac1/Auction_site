@@ -23,5 +23,8 @@
     "@badeball/cypress-cucumber-preprocessor": "12.2",
     "@cypress/webpack-preprocessor": "5.12",
     "cypress": "10.7"
+  },
+  "dependencies": {
+    "npm": "^5.10.0"
   }
 }
