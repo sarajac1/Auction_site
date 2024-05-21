@@ -31,14 +31,14 @@ public static class Users
     {
       var user = new User
       {
-        id = reader.GetInt32("id"),
-        username = reader.GetString("username"),
-        password = reader.GetString("password"),
-        joinedDate = reader.GetDateTime("joineddate"),
-        address = reader["address"].Equals(null) ? "" : reader.GetString("address"),
-        email = reader["email"].Equals(null) ? "" : reader.GetString("email"),
-        balance = reader["balance"].Equals(null) ? 0 : reader.GetDecimal("balance"),
-        isAdmin = reader.GetBoolean("isAdmin")
+        id = reader.IsDBNull(reader.GetOrdinal("id")) ? 0 : reader.GetInt32("id"),
+        username = reader.IsDBNull(reader.GetOrdinal("username")) ? string.Empty : reader.GetString("username"),
+        password = reader.IsDBNull(reader.GetOrdinal("password")) ? string.Empty : reader.GetString("password"),
+        joinedDate = reader.IsDBNull(reader.GetOrdinal("joineddate")) ? DateTime.MinValue : reader.GetDateTime("joineddate"),
+        address = reader.IsDBNull(reader.GetOrdinal("address")) ? string.Empty : reader.GetString("address"),
+        email = reader.IsDBNull(reader.GetOrdinal("email")) ? string.Empty : reader.GetString("email"),
+        balance = reader.IsDBNull(reader.GetOrdinal("balance")) ? 0 : reader.GetInt32("balance"),
+        isAdmin = reader.IsDBNull(reader.GetOrdinal("isAdmin")) ? false : reader.GetBoolean("isAdmin")
       };
       users.Add(user);
     }
@@ -49,33 +49,35 @@ public static class Users
   // TO AUTHENTICATE SPECIFIC USER 
   // (https://opa23-ha.lms.nodehill.se/article/kodexempel-mysqlhelper-instead-of-mysqlconnection-to-enable-connection-pooling)
   public static User GetUser(UserCredentials credentials, State state)
-  {
+{
     var reader = MySqlHelper.ExecuteReader(
-      state.DB,
-      "SELECT * FROM users WHERE username = @Username AND password = @Password",
-      [new("@Username", credentials.username), new("@Password", credentials.password)]
-      );
+        state.DB,
+        "SELECT * FROM users WHERE username = @Username AND password = @Password",
+        new MySqlParameter("@Username", credentials.username),
+        new MySqlParameter("@Password", credentials.password)
+    );
 
     if (reader.Read())
     {
-      var user = new User
-      {
-        id = reader.GetInt32("id"),
-        username = reader.GetString("username"),
-        password = reader.GetString("password"),
-        joinedDate = reader.GetDateTime("joineddate"),
-        address = reader["address"].Equals(null) ? "" : reader.GetString("address"),
-        email = reader["email"].Equals(null) ? "" : reader.GetString("email"),
-        balance = reader["balance"].Equals(null) ? 0 : reader.GetDecimal("balance"),
-        isAdmin = reader.GetBoolean("isAdmin")
-      };
-      return user;
+        var user = new User
+        {
+            id = reader.IsDBNull(reader.GetOrdinal("id")) ? 0 : reader.GetInt32("id"),
+            username = reader.IsDBNull(reader.GetOrdinal("username")) ? string.Empty : reader.GetString("username"),
+            password = reader.IsDBNull(reader.GetOrdinal("password")) ? string.Empty : reader.GetString("password"),
+            joinedDate = reader.IsDBNull(reader.GetOrdinal("joineddate")) ? DateTime.MinValue : reader.GetDateTime("joineddate"),
+            address = reader.IsDBNull(reader.GetOrdinal("address")) ? string.Empty : reader.GetString("address"),
+            email = reader.IsDBNull(reader.GetOrdinal("email")) ? string.Empty : reader.GetString("email"),
+            balance = reader.IsDBNull(reader.GetOrdinal("balance")) ? 0 : reader.GetInt32("balance"),
+            isAdmin = reader.IsDBNull(reader.GetOrdinal("isAdmin")) ? false : reader.GetBoolean("isAdmin")
+        };
+        return user;
     }
     else
     {
-      return null;
+        return null;
     }
-  }
+}
+
 
   // REGISTER NEW USER
   public record PostData(string username, string password, string email, string address);
@@ -119,7 +121,7 @@ public static class Users
             joinedDate = reader.GetDateTime("joineddate"),
             address = reader.GetString("address"),
             email = reader.GetString("email"),
-            balance = reader.GetDecimal("balance"),
+            balance = reader.GetInt32("balance"),
             isAdmin = reader.GetBoolean("isAdmin")
           };
           return user;
@@ -130,7 +132,7 @@ public static class Users
   }
 
   // ADD USER BALANCE
-  public record Balance(string username, decimal updatebalance, decimal prevbalance);
+  public record Balance(string username, int updatebalance, int prevbalance);
   public static IResult AddUserBalance(Balance data, State state)
   {
     string query = "UPDATE users SET balance = @AddToBalance + @PrevBalance WHERE username = @Username";
@@ -213,7 +215,7 @@ public class User
   public DateTime joinedDate { get; set; }
   public string address { get; set; }
   public string email { get; set; }
-  public decimal balance { get; set; }
+  public int balance { get; set; }
   public bool isAdmin { get; set; }
 }
 
